@@ -1,0 +1,649 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E9C960F82EF18492003DE138 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C960EE2EF18492003DE138 /* AppDelegate.swift */; };
+		E9C960FA2EF18492003DE138 /* OnboardingVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C960F62EF18492003DE138 /* OnboardingVPN1ViewController.swift */; };
+		E9C960FB2EF18492003DE138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9C960EF2EF18492003DE138 /* Assets.xcassets */; };
+		E9C960FD2EF18492003DE138 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C960F22EF18492003DE138 /* LaunchScreen.storyboard */; };
+		E9C961012EF184FD003DE138 /* OnboardingVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961002EF184FD003DE138 /* OnboardingVPN1View.swift */; };
+		E9C961062EF18748003DE138 /* AlbertSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9C961052EF18748003DE138 /* AlbertSans-SemiBold.ttf */; };
+		E9C961092EF18847003DE138 /* TabBarVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961082EF18847003DE138 /* TabBarVPN1ViewController.swift */; };
+		E9C9610C2EF18863003DE138 /* ServiceVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9610B2EF18863003DE138 /* ServiceVPN1ViewController.swift */; };
+		E9C9610E2EF18865003DE138 /* ServiceVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9610D2EF18865003DE138 /* ServiceVPN1View.swift */; };
+		E9C961112EF18879003DE138 /* SpeedVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961102EF18879003DE138 /* SpeedVPN1ViewController.swift */; };
+		E9C961132EF1887B003DE138 /* SpeedVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961122EF1887B003DE138 /* SpeedVPN1View.swift */; };
+		E9C961162EF18886003DE138 /* SettingsVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961152EF18886003DE138 /* SettingsVPN1ViewController.swift */; };
+		E9C961182EF1888B003DE138 /* SettingsVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961172EF1888B003DE138 /* SettingsVPN1View.swift */; };
+		E9C9611B2EF22F4B003DE138 /* AppVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9611A2EF22F4B003DE138 /* AppVPN1ViewController.swift */; };
+		E9C9611D2EF22F4D003DE138 /* AppVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9611C2EF22F4D003DE138 /* AppVPN1View.swift */; };
+		E9C961202EF2321C003DE138 /* TunnelSettingsVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9611F2EF2321C003DE138 /* TunnelSettingsVPN1ViewController.swift */; };
+		E9C961222EF2321F003DE138 /* TunnelSettingsVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961212EF2321F003DE138 /* TunnelSettingsVPN1View.swift */; };
+		E9C9615D2EF46DED003DE138 /* RoutingVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9615C2EF46DED003DE138 /* RoutingVPN1ViewController.swift */; };
+		E9C9615F2EF46DF0003DE138 /* RoutingVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9615E2EF46DF0003DE138 /* RoutingVPN1View.swift */; };
+		E9C961622EF46E9A003DE138 /* OnDemandVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961612EF46E9A003DE138 /* OnDemandVPN1ViewController.swift */; };
+		E9C961642EF46E9D003DE138 /* OnDemandVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961632EF46E9D003DE138 /* OnDemandVPN1View.swift */; };
+		E9C961672EF46F37003DE138 /* PingVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961662EF46F37003DE138 /* PingVPN1ViewController.swift */; };
+		E9C961692EF46F3A003DE138 /* PingVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961682EF46F3A003DE138 /* PingVPN1View.swift */; };
+		E9C9616B2EF47094003DE138 /* AlbertSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9C9616A2EF47094003DE138 /* AlbertSans-Regular.ttf */; };
+		E9C9616E2EF470E6003DE138 /* PresetsVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9616D2EF470E6003DE138 /* PresetsVPN1ViewController.swift */; };
+		E9C961702EF470E9003DE138 /* PresetsVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9616F2EF470E9003DE138 /* PresetsVPN1View.swift */; };
+		E9C961732EF4736A003DE138 /* StatisticsVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961722EF4736A003DE138 /* StatisticsVPN1ViewController.swift */; };
+		E9C961752EF4736D003DE138 /* StatisticsVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961742EF4736D003DE138 /* StatisticsVPN1View.swift */; };
+		E9C961782EF4770D003DE138 /* TermsVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961772EF4770D003DE138 /* TermsVPN1ViewController.swift */; };
+		E9C9617A2EF4770F003DE138 /* TermsVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961792EF4770F003DE138 /* TermsVPN1View.swift */; };
+		E9C9617D2EF477A4003DE138 /* PrivacyPolicyVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9617C2EF477A4003DE138 /* PrivacyPolicyVPN1ViewController.swift */; };
+		E9C9617F2EF477A6003DE138 /* PrivacyPolicyVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9617E2EF477A6003DE138 /* PrivacyPolicyVPN1View.swift */; };
+		E9C961822EF47820003DE138 /* SupportVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961812EF47820003DE138 /* SupportVPN1ViewController.swift */; };
+		E9C961842EF47823003DE138 /* SupportVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961832EF47823003DE138 /* SupportVPN1View.swift */; };
+		E9C961872EF47A95003DE138 /* MyRulesVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961862EF47A95003DE138 /* MyRulesVPN1ViewController.swift */; };
+		E9C961892EF47A98003DE138 /* MyRulesVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961882EF47A98003DE138 /* MyRulesVPN1View.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E9C960D62EF1848D003DE138 /* FastVPNApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastVPNApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9C960EE2EF18492003DE138 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E9C960EF2EF18492003DE138 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E9C960F02EF18492003DE138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9C960F12EF18492003DE138 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E9C960F62EF18492003DE138 /* OnboardingVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961002EF184FD003DE138 /* OnboardingVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVPN1View.swift; sourceTree = "<group>"; };
+		E9C961052EF18748003DE138 /* AlbertSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AlbertSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		E9C961082EF18847003DE138 /* TabBarVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C9610B2EF18863003DE138 /* ServiceVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C9610D2EF18865003DE138 /* ServiceVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceVPN1View.swift; sourceTree = "<group>"; };
+		E9C961102EF18879003DE138 /* SpeedVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961122EF1887B003DE138 /* SpeedVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedVPN1View.swift; sourceTree = "<group>"; };
+		E9C961152EF18886003DE138 /* SettingsVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961172EF1888B003DE138 /* SettingsVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVPN1View.swift; sourceTree = "<group>"; };
+		E9C9611A2EF22F4B003DE138 /* AppVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C9611C2EF22F4D003DE138 /* AppVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVPN1View.swift; sourceTree = "<group>"; };
+		E9C9611F2EF2321C003DE138 /* TunnelSettingsVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelSettingsVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961212EF2321F003DE138 /* TunnelSettingsVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelSettingsVPN1View.swift; sourceTree = "<group>"; };
+		E9C9615C2EF46DED003DE138 /* RoutingVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C9615E2EF46DF0003DE138 /* RoutingVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingVPN1View.swift; sourceTree = "<group>"; };
+		E9C961612EF46E9A003DE138 /* OnDemandVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDemandVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961632EF46E9D003DE138 /* OnDemandVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDemandVPN1View.swift; sourceTree = "<group>"; };
+		E9C961662EF46F37003DE138 /* PingVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961682EF46F3A003DE138 /* PingVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingVPN1View.swift; sourceTree = "<group>"; };
+		E9C9616A2EF47094003DE138 /* AlbertSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AlbertSans-Regular.ttf"; sourceTree = "<group>"; };
+		E9C9616D2EF470E6003DE138 /* PresetsVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C9616F2EF470E9003DE138 /* PresetsVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsVPN1View.swift; sourceTree = "<group>"; };
+		E9C961722EF4736A003DE138 /* StatisticsVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961742EF4736D003DE138 /* StatisticsVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsVPN1View.swift; sourceTree = "<group>"; };
+		E9C961772EF4770D003DE138 /* TermsVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961792EF4770F003DE138 /* TermsVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsVPN1View.swift; sourceTree = "<group>"; };
+		E9C9617C2EF477A4003DE138 /* PrivacyPolicyVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C9617E2EF477A6003DE138 /* PrivacyPolicyVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyVPN1View.swift; sourceTree = "<group>"; };
+		E9C961812EF47820003DE138 /* SupportVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961832EF47823003DE138 /* SupportVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportVPN1View.swift; sourceTree = "<group>"; };
+		E9C961862EF47A95003DE138 /* MyRulesVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRulesVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961882EF47A98003DE138 /* MyRulesVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRulesVPN1View.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E9C960D32EF1848D003DE138 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E9C960CD2EF1848D003DE138 = {
+			isa = PBXGroup;
+			children = (
+				E9C960F72EF18492003DE138 /* FastVPNApp */,
+				E9C960D72EF1848D003DE138 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E9C960D72EF1848D003DE138 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E9C960D62EF1848D003DE138 /* FastVPNApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E9C960F72EF18492003DE138 /* FastVPNApp */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961142EF1887D003DE138 /* Settings */,
+				E9C9610F2EF1886F003DE138 /* Speed */,
+				E9C9610A2EF18857003DE138 /* Service */,
+				E9C961072EF1883C003DE138 /* TabBar */,
+				E9C960FF2EF18495003DE138 /* Onboarding */,
+				E9C961022EF1863F003DE138 /* Application */,
+				E9C961032EF18712003DE138 /* Resources */,
+				E9C960F02EF18492003DE138 /* Info.plist */,
+			);
+			path = FastVPNApp;
+			sourceTree = "<group>";
+		};
+		E9C960FF2EF18495003DE138 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				E9C960F62EF18492003DE138 /* OnboardingVPN1ViewController.swift */,
+				E9C961002EF184FD003DE138 /* OnboardingVPN1View.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		E9C961022EF1863F003DE138 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				E9C960EE2EF18492003DE138 /* AppDelegate.swift */,
+				E9C960F22EF18492003DE138 /* LaunchScreen.storyboard */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		E9C961032EF18712003DE138 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961042EF1873F003DE138 /* Fonts */,
+				E9C960EF2EF18492003DE138 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E9C961042EF1873F003DE138 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961052EF18748003DE138 /* AlbertSans-SemiBold.ttf */,
+				E9C9616A2EF47094003DE138 /* AlbertSans-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E9C961072EF1883C003DE138 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961082EF18847003DE138 /* TabBarVPN1ViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		E9C9610A2EF18857003DE138 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				E9C9610B2EF18863003DE138 /* ServiceVPN1ViewController.swift */,
+				E9C9610D2EF18865003DE138 /* ServiceVPN1View.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		E9C9610F2EF1886F003DE138 /* Speed */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961102EF18879003DE138 /* SpeedVPN1ViewController.swift */,
+				E9C961122EF1887B003DE138 /* SpeedVPN1View.swift */,
+			);
+			path = Speed;
+			sourceTree = "<group>";
+		};
+		E9C961142EF1887D003DE138 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961712EF4735E003DE138 /* Statistics */,
+				E9C9611E2EF23212003DE138 /* TunnelSettings */,
+				E9C961192EF22F42003DE138 /* App */,
+				E9C961152EF18886003DE138 /* SettingsVPN1ViewController.swift */,
+				E9C961172EF1888B003DE138 /* SettingsVPN1View.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		E9C961192EF22F42003DE138 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961802EF4781A003DE138 /* Support */,
+				E9C9617B2EF4779A003DE138 /* PrivacyPolicy */,
+				E9C961762EF47706003DE138 /* Terms */,
+				E9C9611A2EF22F4B003DE138 /* AppVPN1ViewController.swift */,
+				E9C9611C2EF22F4D003DE138 /* AppVPN1View.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E9C9611E2EF23212003DE138 /* TunnelSettings */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961852EF47A8B003DE138 /* MyRules */,
+				E9C9616C2EF470DC003DE138 /* Presets */,
+				E9C961652EF46F31003DE138 /* Ping */,
+				E9C961602EF46E8A003DE138 /* OnDemand */,
+				E9C9615B2EF46DE4003DE138 /* Routing */,
+				E9C9611F2EF2321C003DE138 /* TunnelSettingsVPN1ViewController.swift */,
+				E9C961212EF2321F003DE138 /* TunnelSettingsVPN1View.swift */,
+			);
+			path = TunnelSettings;
+			sourceTree = "<group>";
+		};
+		E9C9615B2EF46DE4003DE138 /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				E9C9615C2EF46DED003DE138 /* RoutingVPN1ViewController.swift */,
+				E9C9615E2EF46DF0003DE138 /* RoutingVPN1View.swift */,
+			);
+			path = Routing;
+			sourceTree = "<group>";
+		};
+		E9C961602EF46E8A003DE138 /* OnDemand */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961612EF46E9A003DE138 /* OnDemandVPN1ViewController.swift */,
+				E9C961632EF46E9D003DE138 /* OnDemandVPN1View.swift */,
+			);
+			path = OnDemand;
+			sourceTree = "<group>";
+		};
+		E9C961652EF46F31003DE138 /* Ping */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961662EF46F37003DE138 /* PingVPN1ViewController.swift */,
+				E9C961682EF46F3A003DE138 /* PingVPN1View.swift */,
+			);
+			path = Ping;
+			sourceTree = "<group>";
+		};
+		E9C9616C2EF470DC003DE138 /* Presets */ = {
+			isa = PBXGroup;
+			children = (
+				E9C9616D2EF470E6003DE138 /* PresetsVPN1ViewController.swift */,
+				E9C9616F2EF470E9003DE138 /* PresetsVPN1View.swift */,
+			);
+			path = Presets;
+			sourceTree = "<group>";
+		};
+		E9C961712EF4735E003DE138 /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961722EF4736A003DE138 /* StatisticsVPN1ViewController.swift */,
+				E9C961742EF4736D003DE138 /* StatisticsVPN1View.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		E9C961762EF47706003DE138 /* Terms */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961772EF4770D003DE138 /* TermsVPN1ViewController.swift */,
+				E9C961792EF4770F003DE138 /* TermsVPN1View.swift */,
+			);
+			path = Terms;
+			sourceTree = "<group>";
+		};
+		E9C9617B2EF4779A003DE138 /* PrivacyPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				E9C9617C2EF477A4003DE138 /* PrivacyPolicyVPN1ViewController.swift */,
+				E9C9617E2EF477A6003DE138 /* PrivacyPolicyVPN1View.swift */,
+			);
+			path = PrivacyPolicy;
+			sourceTree = "<group>";
+		};
+		E9C961802EF4781A003DE138 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961812EF47820003DE138 /* SupportVPN1ViewController.swift */,
+				E9C961832EF47823003DE138 /* SupportVPN1View.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		E9C961852EF47A8B003DE138 /* MyRules */ = {
+			isa = PBXGroup;
+			children = (
+				E9C961862EF47A95003DE138 /* MyRulesVPN1ViewController.swift */,
+				E9C961882EF47A98003DE138 /* MyRulesVPN1View.swift */,
+			);
+			path = MyRules;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E9C960D52EF1848D003DE138 /* FastVPNApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E9C960E92EF1848E003DE138 /* Build configuration list for PBXNativeTarget "FastVPNApp" */;
+			buildPhases = (
+				E9C960D22EF1848D003DE138 /* Sources */,
+				E9C960D32EF1848D003DE138 /* Frameworks */,
+				E9C960D42EF1848D003DE138 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FastVPNApp;
+			packageProductDependencies = (
+			);
+			productName = FastVPNApp;
+			productReference = E9C960D62EF1848D003DE138 /* FastVPNApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E9C960CE2EF1848D003DE138 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					E9C960D52EF1848D003DE138 = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+				};
+			};
+			buildConfigurationList = E9C960D12EF1848D003DE138 /* Build configuration list for PBXProject "FastVPNApp" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E9C960CD2EF1848D003DE138;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E9C960D72EF1848D003DE138 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E9C960D52EF1848D003DE138 /* FastVPNApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E9C960D42EF1848D003DE138 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9C9616B2EF47094003DE138 /* AlbertSans-Regular.ttf in Resources */,
+				E9C961062EF18748003DE138 /* AlbertSans-SemiBold.ttf in Resources */,
+				E9C960FB2EF18492003DE138 /* Assets.xcassets in Resources */,
+				E9C960FD2EF18492003DE138 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E9C960D22EF1848D003DE138 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9C961782EF4770D003DE138 /* TermsVPN1ViewController.swift in Sources */,
+				E9C961892EF47A98003DE138 /* MyRulesVPN1View.swift in Sources */,
+				E9C9610C2EF18863003DE138 /* ServiceVPN1ViewController.swift in Sources */,
+				E9C961622EF46E9A003DE138 /* OnDemandVPN1ViewController.swift in Sources */,
+				E9C961702EF470E9003DE138 /* PresetsVPN1View.swift in Sources */,
+				E9C9610E2EF18865003DE138 /* ServiceVPN1View.swift in Sources */,
+				E9C961642EF46E9D003DE138 /* OnDemandVPN1View.swift in Sources */,
+				E9C961162EF18886003DE138 /* SettingsVPN1ViewController.swift in Sources */,
+				E9C9617A2EF4770F003DE138 /* TermsVPN1View.swift in Sources */,
+				E9C961112EF18879003DE138 /* SpeedVPN1ViewController.swift in Sources */,
+				E9C9616E2EF470E6003DE138 /* PresetsVPN1ViewController.swift in Sources */,
+				E9C961872EF47A95003DE138 /* MyRulesVPN1ViewController.swift in Sources */,
+				E9C960F82EF18492003DE138 /* AppDelegate.swift in Sources */,
+				E9C961692EF46F3A003DE138 /* PingVPN1View.swift in Sources */,
+				E9C961732EF4736A003DE138 /* StatisticsVPN1ViewController.swift in Sources */,
+				E9C9615D2EF46DED003DE138 /* RoutingVPN1ViewController.swift in Sources */,
+				E9C961092EF18847003DE138 /* TabBarVPN1ViewController.swift in Sources */,
+				E9C960FA2EF18492003DE138 /* OnboardingVPN1ViewController.swift in Sources */,
+				E9C9615F2EF46DF0003DE138 /* RoutingVPN1View.swift in Sources */,
+				E9C961842EF47823003DE138 /* SupportVPN1View.swift in Sources */,
+				E9C961012EF184FD003DE138 /* OnboardingVPN1View.swift in Sources */,
+				E9C961222EF2321F003DE138 /* TunnelSettingsVPN1View.swift in Sources */,
+				E9C961202EF2321C003DE138 /* TunnelSettingsVPN1ViewController.swift in Sources */,
+				E9C9617F2EF477A6003DE138 /* PrivacyPolicyVPN1View.swift in Sources */,
+				E9C9611B2EF22F4B003DE138 /* AppVPN1ViewController.swift in Sources */,
+				E9C961672EF46F37003DE138 /* PingVPN1ViewController.swift in Sources */,
+				E9C9617D2EF477A4003DE138 /* PrivacyPolicyVPN1ViewController.swift in Sources */,
+				E9C9611D2EF22F4D003DE138 /* AppVPN1View.swift in Sources */,
+				E9C961182EF1888B003DE138 /* SettingsVPN1View.swift in Sources */,
+				E9C961822EF47820003DE138 /* SupportVPN1ViewController.swift in Sources */,
+				E9C961752EF4736D003DE138 /* StatisticsVPN1View.swift in Sources */,
+				E9C961132EF1887B003DE138 /* SpeedVPN1View.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E9C960F22EF18492003DE138 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E9C960F12EF18492003DE138 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E9C960EA2EF1848E003DE138 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FastVPNApp/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asdf.FastVPNApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E9C960EB2EF1848E003DE138 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FastVPNApp/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asdf.FastVPNApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		E9C960EC2EF1848E003DE138 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E9C960ED2EF1848E003DE138 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E9C960D12EF1848D003DE138 /* Build configuration list for PBXProject "FastVPNApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9C960EC2EF1848E003DE138 /* Debug */,
+				E9C960ED2EF1848E003DE138 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E9C960E92EF1848E003DE138 /* Build configuration list for PBXNativeTarget "FastVPNApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9C960EA2EF1848E003DE138 /* Debug */,
+				E9C960EB2EF1848E003DE138 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E9C960CE2EF1848D003DE138 /* Project object */;
+}

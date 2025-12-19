@@ -7,5 +7,14 @@
 		<string>AlbertSans-Regular.ttf</string>
 		<string>AlbertSans-SemiBold.ttf</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSVPNUsageDescription</key>
+	<string>Приложению требуется доступ к VPN для защиты вашего интернет-соединения</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Приложению требуется доступ к локальной сети для работы VPN</string>
 </dict>
 </plist>

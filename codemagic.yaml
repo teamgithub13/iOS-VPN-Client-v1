@@ -1,0 +1,42 @@
+workflows:
+  ios-native-quick-start:
+    name: iOS Native
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    integrations:
+      app_store_connect: FastConfigApp
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.gooseberry.colander
+      vars:
+        BUNDLE_ID: "com.gooseberry.colander"
+        XCODE_WORKSPACE: "TripAnalyzerApp.xcodeproj"
+        XCODE_SCHEME: "TripAnalyzerApp"
+        APP_STORE_APPLE_ID: 6756892913
+      xcode: 26.1 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
+      cocoapods: default
+    scripts:
+      - name: Set up provisioning profiles settings on Xcode project
+        script: xcode-project use-profiles
+      - name: Build ipa for distribution
+        script: |
+          xcode-project build-ipa \
+            --project "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      app_store_connect:
+        auth: integration
+
+        # Configuration related to TestFlight (optional)
+        # Note: This action is performed during post-processing.
+        submit_to_testflight: false
+
+        # Configuration related to App Store (optional)
+        # Note: This action is performed during post-processing.
+        # submit_to_app_store: false

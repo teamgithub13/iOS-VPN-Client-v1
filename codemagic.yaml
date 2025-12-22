@@ -11,8 +11,8 @@ workflows:
         bundle_identifier: com.gooseberry.colander
       vars:
         BUNDLE_ID: "com.gooseberry.colander"
-        XCODE_WORKSPACE: "TripAnalyzerApp.xcodeproj"
-        XCODE_SCHEME: "TripAnalyzerApp"
+        XCODE_WORKSPACE: "FastVPNApp.xcodeproj"
+        XCODE_SCHEME: "FastVPNApp"
         APP_STORE_APPLE_ID: 6756892913
       xcode: 26.1 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
       cocoapods: default

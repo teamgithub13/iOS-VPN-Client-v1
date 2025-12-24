@@ -79,6 +79,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1428ED1A2EFC8A8100994FAD /* FastVPNApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FastVPNApp.entitlements; sourceTree = "<group>"; };
 		14621F4F2EF58ABE001538E3 /* VPNConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfiguration.swift; sourceTree = "<group>"; };
 		14621F502EF58ABE001538E3 /* VPNProtocolType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNProtocolType.swift; sourceTree = "<group>"; };
 		14621F522EF58ABE001538E3 /* VPNConfigurationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfigurationService.swift; sourceTree = "<group>"; };
@@ -231,6 +232,7 @@
 		E9C960F72EF18492003DE138 /* FastVPNApp */ = {
 			isa = PBXGroup;
 			children = (
+				1428ED1A2EFC8A8100994FAD /* FastVPNApp.entitlements */,
 				14B2A9A02EF5879D00BED825 /* Application */,
 				E9C961142EF1887D003DE138 /* Settings */,
 				E9C9610F2EF1886F003DE138 /* Speed */,
@@ -686,6 +688,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FastVPNApp/FastVPNApp.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -726,6 +729,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FastVPNApp/FastVPNApp.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";

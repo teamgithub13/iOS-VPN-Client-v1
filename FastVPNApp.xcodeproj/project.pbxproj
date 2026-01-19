@@ -622,7 +622,7 @@
 		14621F7F2EF58C4F001538E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = FastVPNApp/NetworkExtension/FastVPNAppPacketTunnel.entitlements;
+				CODE_SIGN_ENTITLEMENTS = FastVPNAppPacketTunnel/FastVPNAppPacketTunnel.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -654,7 +654,7 @@
 		14621F802EF58C4F001538E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = FastVPNApp/NetworkExtension/FastVPNAppPacketTunnel.entitlements;
+				CODE_SIGN_ENTITLEMENTS = FastVPNAppPacketTunnel/FastVPNAppPacketTunnel.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;

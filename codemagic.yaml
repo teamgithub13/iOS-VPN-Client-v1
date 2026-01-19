@@ -1,6 +1,6 @@
 workflows:
   ios-native-quick-start:
-    name: iOS Native
+    name: iOS Native VPN
     max_build_duration: 120
     instance_type: mac_mini_m1
 
@@ -24,25 +24,56 @@ workflows:
         XCODE_PROJECT: "FastVPNApp.xcodeproj"
         XCODE_SCHEME: "FastVPNApp"
 
-        APP_STORE_APPLE_ID: 6756892913
-
       xcode: 26.1
       cocoapods: default
 
     scripts:
-      - name: Set up provisioning profiles settings on Xcode project
+      - name: Apply provisioning profiles to Xcode project
         script: |
           xcode-project use-profiles --verbose
 
-      - name: Create ExportOptions.plist (manual signing, map both profiles)
+      - name: DEBUG – list installed provisioning profiles
         script: |
-          cat > "$CM_BUILD_DIR/ExportOptions.plist" <<PLIST
+          echo "=============================="
+          echo "Provisioning Profiles directory:"
+          echo "=============================="
+          ls -la "$HOME/Library/MobileDevice/Provisioning Profiles" || true
+
+          echo ""
+          echo "=============================="
+          echo "Dumping installed provisioning profiles:"
+          echo "=============================="
+
+          for f in "$HOME/Library/MobileDevice/Provisioning Profiles"/*.mobileprovision; do
+            echo ""
+            echo "FILE: $f"
+            security cms -D -i "$f" > /tmp/profile.plist
+
+            echo "Name:"
+            /usr/libexec/PlistBuddy -c "Print :Name" /tmp/profile.plist || true
+
+            echo "UUID:"
+            /usr/libexec/PlistBuddy -c "Print :UUID" /tmp/profile.plist || true
+
+            echo "TeamIdentifier:"
+            /usr/libexec/PlistBuddy -c "Print :TeamIdentifier:0" /tmp/profile.plist || true
+
+            echo "Application Identifier:"
+            /usr/libexec/PlistBuddy -c "Print :Entitlements:application-identifier" /tmp/profile.plist || true
+
+            echo "Has Network Extension entitlement:"
+            /usr/libexec/PlistBuddy -c "Print :Entitlements:com.apple.developer.networking.networkextension" /tmp/profile.plist || echo "NO"
+          done || true
+
+      - name: Create ExportOptions.plist
+        script: |
+          cat > "$CM_BUILD_DIR/ExportOptions.plist" <<EOF
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
           <dict>
             <key>method</key>
-            <string>app-store</string>
+            <string>app-store-connect</string>
             <key>signingStyle</key>
             <string>manual</string>
             <key>teamID</key>
@@ -56,12 +87,12 @@ workflows:
             </dict>
           </dict>
           </plist>
-          PLIST
+          EOF
 
-          echo "---- ExportOptions.plist ----"
+          echo "======= ExportOptions.plist ======="
           cat "$CM_BUILD_DIR/ExportOptions.plist"
 
-      - name: Archive
+      - name: Archive app
         script: |
           mkdir -p "$CM_BUILD_DIR/build"
 
@@ -84,11 +115,5 @@ workflows:
 
     artifacts:
       - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
-
-    publishing:
-      app_store_connect:
-        auth: integration
-        submit_to_testflight: false
+      - /tmp/profile.plist
+      - $HOME/Library/MobileDevice/Provisioning Profiles/*.mobileprovision

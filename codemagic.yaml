@@ -3,42 +3,92 @@ workflows:
     name: iOS Native
     max_build_duration: 120
     instance_type: mac_mini_m1
+
     integrations:
       app_store_connect: FastConfigApp
+
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier:
-            - com.gooseberry.colander
-            - com.gooseberry.colander.tunnel
+        bundle_identifier: com.gooseberry.colander
+
       vars:
-        BUNDLE_ID: "com.gooseberry.colander"
-        XCODE_WORKSPACE: "FastVPNApp.xcodeproj"
+        TEAM_ID: "AC3YWJKKRK"
+
+        BUNDLE_ID_APP: "com.gooseberry.colander"
+        BUNDLE_ID_TUNNEL: "com.gooseberry.colander.tunnel"
+
+        PROFILE_NAME_APP: "cert v1"
+        PROFILE_NAME_TUNNEL: "tunnel profile"
+
+        XCODE_PROJECT: "FastVPNApp.xcodeproj"
         XCODE_SCHEME: "FastVPNApp"
+
         APP_STORE_APPLE_ID: 6756892913
-      xcode: 26.1 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
+
+      xcode: 26.1
       cocoapods: default
+
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
-        script: xcode-project use-profiles
-      - name: Build ipa for distribution
         script: |
-          xcode-project build-ipa \
-            --project "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
-            --scheme "$XCODE_SCHEME"
+          xcode-project use-profiles --verbose
+
+      - name: Create ExportOptions.plist (manual signing, map both profiles)
+        script: |
+          cat > "$CM_BUILD_DIR/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>teamID</key>
+            <string>${TEAM_ID}</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>${BUNDLE_ID_APP}</key>
+              <string>${PROFILE_NAME_APP}</string>
+              <key>${BUNDLE_ID_TUNNEL}</key>
+              <string>${PROFILE_NAME_TUNNEL}</string>
+            </dict>
+          </dict>
+          </plist>
+          PLIST
+
+          echo "---- ExportOptions.plist ----"
+          cat "$CM_BUILD_DIR/ExportOptions.plist"
+
+      - name: Archive
+        script: |
+          mkdir -p "$CM_BUILD_DIR/build"
+
+          xcodebuild archive \
+            -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME" \
+            -configuration Release \
+            -archivePath "$CM_BUILD_DIR/build/FastVPNApp.xcarchive" \
+            DEVELOPMENT_TEAM="$TEAM_ID" \
+            CODE_SIGN_STYLE=Manual
+
+      - name: Export IPA
+        script: |
+          mkdir -p "$CM_BUILD_DIR/build/ios/ipa"
+
+          xcodebuild -exportArchive \
+            -archivePath "$CM_BUILD_DIR/build/FastVPNApp.xcarchive" \
+            -exportPath "$CM_BUILD_DIR/build/ios/ipa" \
+            -exportOptionsPlist "$CM_BUILD_DIR/ExportOptions.plist"
+
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+
     publishing:
       app_store_connect:
         auth: integration
-
-        # Configuration related to TestFlight (optional)
-        # Note: This action is performed during post-processing.
         submit_to_testflight: false
-
-        # Configuration related to App Store (optional)
-        # Note: This action is performed during post-processing.
-        # submit_to_app_store: false

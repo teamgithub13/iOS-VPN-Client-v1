@@ -4,12 +4,15 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.asdf.FastVPNApp</string>
+		<string>group.com.gooseberry.colander</string>
 	</array>
 	<key>com.apple.developer.networking.vpn.api</key>
 	<array>
 		<string>allow-vpn</string>
 	</array>
+    <key>com.apple.developer.networking.networkextension</key>
+      <array>
+        <string>packet-tunnel-provider</string>
+      </array>
 </dict>
 </plist>
-

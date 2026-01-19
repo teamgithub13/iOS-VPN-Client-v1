@@ -8,7 +8,9 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.gooseberry.colander
+        bundle_identifier:
+            - com.gooseberry.colander
+            - com.gooseberry.colander.tunnel
       vars:
         BUNDLE_ID: "com.gooseberry.colander"
         XCODE_WORKSPACE: "FastVPNApp.xcodeproj"

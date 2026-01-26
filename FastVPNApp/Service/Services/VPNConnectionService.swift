@@ -20,9 +20,9 @@ class VPNConnectionService: ObservableObject {
     private var vpnManager: NEVPNManager?
     private var packetTunnelProvider: NETunnelProviderManager?
     private let vpnConfigurationKey = "com.fastvpn.configuration"
-    private let appGroupIdentifier = "group.com.asdf.FastVPNApp"
-    private let tunnelProviderBundleIdentifier = "com.asdf.FastVPNApp.PacketTunnel"
-    
+    private let appGroupIdentifier = "group.com.gooseberry.colander"
+    private let tunnelProviderBundleIdentifier = "com.gooseberry.colander.tunnel"
+
     private init() {
         loadVPNManager()
     }

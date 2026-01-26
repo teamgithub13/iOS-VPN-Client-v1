@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1438FDE42F28128F000F76A5 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1438FDE32F28128F000F76A5 /* WireGuardKit */; };
 		14621F552EF58ABE001538E3 /* VPNProtocolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F502EF58ABE001538E3 /* VPNProtocolType.swift */; };
 		14621F562EF58ABE001538E3 /* VPNConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F4F2EF58ABE001538E3 /* VPNConfiguration.swift */; };
 		14621F572EF58ABE001538E3 /* VPNConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F522EF58ABE001538E3 /* VPNConfigurationService.swift */; };
@@ -55,6 +56,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1438FDE12F281288000F76A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E9C960CE2EF1848D003DE138 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1438FDDB2F28117F000F76A5;
+			remoteInfo = WireGuardGoBridgeiOS;
+		};
 		14621F7A2EF58C4F001538E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E9C960CE2EF1848D003DE138 /* Project object */;
@@ -159,6 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1438FDE42F28128F000F76A5 /* WireGuardKit in Frameworks */,
 				14621F742EF58C4F001538E3 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,6 +441,25 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXLegacyTarget section */
+		1438FDDB2F28117F000F76A5 /* WireGuardGoBridgeiOS */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1438FDDC2F28117F000F76A5 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "${BUILD_DIR%Build/*}SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
+			dependencies = (
+			);
+			name = WireGuardGoBridgeiOS;
+			packageProductDependencies = (
+			);
+			passBuildSettingsInEnvironment = 0;
+			productName = WireGuardGoBridgeiOS;
+		};
+/* End PBXLegacyTarget section */
+
 /* Begin PBXNativeTarget section */
 		14621F722EF58C4F001538E3 /* FastVPNAppPacketTunnel */ = {
 			isa = PBXNativeTarget;
@@ -444,12 +472,14 @@
 			buildRules = (
 			);
 			dependencies = (
+				1438FDE22F281288000F76A5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				14621F752EF58C4F001538E3 /* FastVPNAppPacketTunnel */,
 			);
 			name = FastVPNAppPacketTunnel;
 			packageProductDependencies = (
+				1438FDE32F28128F000F76A5 /* WireGuardKit */,
 			);
 			productName = FastVPNAppPacketTunnel;
 			productReference = 14621F732EF58C4F001538E3 /* FastVPNAppPacketTunnel.appex */;
@@ -471,6 +501,7 @@
 			);
 			name = FastVPNApp;
 			packageProductDependencies = (
+				1438FDD92F2810F3000F76A5 /* WireGuardKit */,
 			);
 			productName = FastVPNApp;
 			productReference = E9C960D62EF1848D003DE138 /* FastVPNApp.app */;
@@ -486,6 +517,9 @@
 				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
+					1438FDDB2F28117F000F76A5 = {
+						CreatedOnToolsVersion = 26.2;
+					};
 					14621F722EF58C4F001538E3 = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
@@ -503,6 +537,9 @@
 			);
 			mainGroup = E9C960CD2EF1848D003DE138;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1438FDD82F2810F3000F76A5 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E9C960D72EF1848D003DE138 /* Products */;
 			projectDirPath = "";
@@ -510,6 +547,7 @@
 			targets = (
 				E9C960D52EF1848D003DE138 /* FastVPNApp */,
 				14621F722EF58C4F001538E3 /* FastVPNAppPacketTunnel */,
+				1438FDDB2F28117F000F76A5 /* WireGuardGoBridgeiOS */,
 			);
 		};
 /* End PBXProject section */
@@ -592,6 +630,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1438FDE22F281288000F76A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1438FDDB2F28117F000F76A5 /* WireGuardGoBridgeiOS */;
+			targetProxy = 1438FDE12F281288000F76A5 /* PBXContainerItemProxy */;
+		};
 		14621F7B2EF58C4F001538E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 14621F722EF58C4F001538E3 /* FastVPNAppPacketTunnel */;
@@ -619,6 +662,31 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1438FDDD2F28117F000F76A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1438FDDE2F28117F000F76A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		14621F7F2EF58C4F001538E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -636,6 +704,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"${BUILD_DIR%Build/*}SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo/out",
+					"${BUILD_DIR%Build/*}SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gooseberry.colander.tunnel;
@@ -668,6 +740,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"${BUILD_DIR%Build/*}SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo/out",
+					"${BUILD_DIR%Build/*}SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gooseberry.colander.tunnel;
@@ -889,6 +965,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1438FDDC2F28117F000F76A5 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1438FDDD2F28117F000F76A5 /* Debug */,
+				1438FDDE2F28117F000F76A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		14621F7E2EF58C4F001538E3 /* Build configuration list for PBXNativeTarget "FastVPNAppPacketTunnel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -917,6 +1002,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1438FDD82F2810F3000F76A5 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jgonfer/wireguard-apple";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1438FDD92F2810F3000F76A5 /* WireGuardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1438FDD82F2810F3000F76A5 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			productName = WireGuardKit;
+		};
+		1438FDE32F28128F000F76A5 /* WireGuardKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1438FDD82F2810F3000F76A5 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			productName = WireGuardKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E9C960CE2EF1848D003DE138 /* Project object */;
 }

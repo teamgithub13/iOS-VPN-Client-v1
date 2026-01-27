@@ -30,10 +30,47 @@ workflows:
     scripts:
       - name: Apply provisioning profiles to Xcode project
         script: |
+          set -e
           xcode-project use-profiles --verbose
+
+      - name: Install GNU make (brew) and export PATH
+        script: |
+          set -e
+          brew update
+          brew install make
+
+          # Homebrew "make" lives in gnubin as a "make" shim -> gmake
+          export PATH="$(brew --prefix make)/libexec/gnubin:$PATH"
+
+          echo "PATH=$PATH"
+          echo "which make: $(which make)"
+          make -v
+
+      - name: Patch project to use make from PATH (replace /usr/bin/make)
+        script: |
+          set -e
+          export PATH="$(brew --prefix make)/libexec/gnubin:$PATH"
+
+          PBXPROJ_PATH="$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
+          echo "Patching: $PBXPROJ_PATH"
+
+          if [ ! -f "$PBXPROJ_PATH" ]; then
+            echo "ERROR: project.pbxproj not found at $PBXPROJ_PATH"
+            exit 1
+          fi
+
+          echo "Before patch (matches):"
+          grep -n "/usr/bin/make" "$PBXPROJ_PATH" || true
+
+          # Replace hardcoded /usr/bin/make -> make (will be resolved via PATH)
+          sed -i '' 's|/usr/bin/make|make|g' "$PBXPROJ_PATH"
+
+          echo "After patch (matches):"
+          grep -n "/usr/bin/make" "$PBXPROJ_PATH" || true
 
       - name: DEBUG – list installed provisioning profiles
         script: |
+          set -e
           echo "=============================="
           echo "Provisioning Profiles directory:"
           echo "=============================="
@@ -67,6 +104,7 @@ workflows:
 
       - name: Create ExportOptions.plist
         script: |
+          set -e
           cat > "$CM_BUILD_DIR/ExportOptions.plist" <<EOF
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -94,18 +132,23 @@ workflows:
 
       - name: Archive app
         script: |
+          set -e
+          export PATH="$(brew --prefix make)/libexec/gnubin:$PATH"
+
           mkdir -p "$CM_BUILD_DIR/build"
 
           xcodebuild archive \
             -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
             -scheme "$XCODE_SCHEME" \
             -configuration Release \
+            -destination 'generic/platform=iOS' \
             -archivePath "$CM_BUILD_DIR/build/FastVPNApp.xcarchive" \
             DEVELOPMENT_TEAM="$TEAM_ID" \
             CODE_SIGN_STYLE=Manual
 
       - name: Export IPA
         script: |
+          set -e
           mkdir -p "$CM_BUILD_DIR/build/ios/ipa"
 
           xcodebuild -exportArchive \
@@ -117,7 +160,8 @@ workflows:
       - build/ios/ipa/*.ipa
       - /tmp/profile.plist
       - $HOME/Library/MobileDevice/Provisioning Profiles/*.mobileprovision
+
     publishing:
-        app_store_connect:
-            auth: integration
-            submit_to_testflight: false
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: false

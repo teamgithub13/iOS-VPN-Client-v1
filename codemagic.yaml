@@ -33,13 +33,21 @@ workflows:
           set -e
           xcode-project use-profiles --verbose
 
-      - name: Install GNU make (brew) and export PATH
+      - name: Fix Homebrew taps + install GNU make
         script: |
           set -e
-          brew update
-          brew install make
 
-          # Homebrew "make" lives in gnubin as a "make" shim -> gmake
+          # Some Codemagic images contain an old tap that no longer exists.
+          # It breaks `brew update`. Remove it safely.
+          brew untap robotsandpencils/homebrew-made || true
+
+          # Update can still fail due to transient network/tap issues; don't fail the build on update.
+          brew update || true
+
+          # Install make (idempotent)
+          brew install make || brew upgrade make || true
+
+          # Homebrew "make" is provided via gnubin as a 'make' shim
           export PATH="$(brew --prefix make)/libexec/gnubin:$PATH"
 
           echo "PATH=$PATH"
@@ -62,7 +70,6 @@ workflows:
           echo "Before patch (matches):"
           grep -n "/usr/bin/make" "$PBXPROJ_PATH" || true
 
-          # Replace hardcoded /usr/bin/make -> make (will be resolved via PATH)
           sed -i '' 's|/usr/bin/make|make|g' "$PBXPROJ_PATH"
 
           echo "After patch (matches):"

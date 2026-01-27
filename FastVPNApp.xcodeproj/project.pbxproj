@@ -18,6 +18,7 @@
 		14B2A9A22EF5879E00BED825 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2A99D2EF5879D00BED825 /* AppDelegate.swift */; };
 		14B2A9AC2EF58A8400BED825 /* ServiceVPN1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2A9AB2EF58A8400BED825 /* ServiceVPN1ViewModel.swift */; };
 		AC02037E2EF9D6CE00B48774 /* codemagic.yaml in Resources */ = {isa = PBXBuildFile; fileRef = AC02037D2EF9D6BF00B48774 /* codemagic.yaml */; };
+		CE9628A62F28C7AE00D59649 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1438FDD92F2810F3000F76A5 /* WireGuardKit */; };
 		E9C960FA2EF18492003DE138 /* OnboardingVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C960F62EF18492003DE138 /* OnboardingVPN1ViewController.swift */; };
 		E9C960FB2EF18492003DE138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9C960EF2EF18492003DE138 /* Assets.xcassets */; };
 		E9C960FD2EF18492003DE138 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C960F22EF18492003DE138 /* LaunchScreen.storyboard */; };
@@ -176,6 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9628A62F28C7AE00D59649 /* WireGuardKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,7 +784,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gooseberry.colander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -823,7 +825,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gooseberry.colander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

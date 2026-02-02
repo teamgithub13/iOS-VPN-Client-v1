@@ -28,6 +28,11 @@ workflows:
       cocoapods: default
 
     scripts:
+      - name: Install build tools (WireGuard)
+        script: |
+          brew update
+          brew install make
+
       - name: Apply provisioning profiles to Xcode project
         script: |
           xcode-project use-profiles --verbose

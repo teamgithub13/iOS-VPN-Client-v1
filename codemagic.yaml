@@ -30,8 +30,19 @@ workflows:
     scripts:
       - name: Install build tools (WireGuard)
         script: |
-          brew update
-          brew install make
+          if ! command -v make >/dev/null 2>&1; then
+            brew update
+            brew install make
+          fi
+
+          if [ ! -x /usr/bin/make ]; then
+            BREW_PREFIX="$(brew --prefix)"
+            if [ -x "$BREW_PREFIX/bin/make" ]; then
+              sudo ln -s "$BREW_PREFIX/bin/make" /usr/bin/make
+            elif [ -x "$BREW_PREFIX/bin/gmake" ]; then
+              sudo ln -s "$BREW_PREFIX/bin/gmake" /usr/bin/make
+            fi
+          fi
 
       - name: Apply provisioning profiles to Xcode project
         script: |

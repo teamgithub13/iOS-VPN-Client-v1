@@ -28,28 +28,9 @@ workflows:
       cocoapods: default
 
     scripts:
-      - name: Install build tools (WireGuard)
-        script: |
-          export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
-          if ! command -v make >/dev/null 2>&1; then
-            brew update
-            brew install make
-          fi
-
-          if ! command -v make >/dev/null 2>&1; then
-            echo "make still not available on PATH"
-            exit 1
-          fi
-
       - name: Apply provisioning profiles to Xcode project
         script: |
           xcode-project use-profiles --verbose
-      
-      - name: Resolve Swift package dependencies
-        script: |
-          xcodebuild -resolvePackageDependencies \
-            -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
-            -scheme "$XCODE_SCHEME"
 
       - name: DEBUG – list installed provisioning profiles
         script: |
@@ -119,12 +100,9 @@ workflows:
             -project "$CM_BUILD_DIR/$XCODE_PROJECT" \
             -scheme "$XCODE_SCHEME" \
             -configuration Release \
-            -sdk iphoneos \
-            -destination 'generic/platform=iOS' \
             -archivePath "$CM_BUILD_DIR/build/FastVPNApp.xcarchive" \
             DEVELOPMENT_TEAM="$TEAM_ID" \
-            CODE_SIGN_STYLE=Manual \
-            -allowProvisioningUpdates
+            CODE_SIGN_STYLE=Manual
 
       - name: Export IPA
         script: |

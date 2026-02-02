@@ -330,7 +330,7 @@ class VPNConfigurationService {
         var privateKey: String?
         var publicKey: String?
         var presharedKey: String?
-        var address: String?
+        var interfaceAddress: String?
         var dns: String?
         var allowedIPs: String?
         var endpoint: String?
@@ -357,7 +357,7 @@ class VPNConfigurationService {
                 case "presharedkey":
                     presharedKey = value
                 case "address":
-                    address = value
+                    interfaceAddress = value
                 case "dns":
                     dns = value
                 case "allowedips":
@@ -373,39 +373,36 @@ class VPNConfigurationService {
         }
         
         // Парсим endpoint для получения адреса и порта
+        var remoteAddress: String?
+        var remotePort: Int = port
+
         if let endpoint = endpoint {
             let endpointParts = endpoint.split(separator: ":")
-            if endpointParts.count == 2,
-               let endpointAddress = endpointParts.first.map(String.init),
-               let endpointPort = endpointParts.last.flatMap({ Int(String($0)) }) {
-                return VPNConfiguration(
-                    protocolType: .wireguard,
-                    address: endpointAddress,
-                    port: endpointPort,
-                    remark: remark,
-                    privateKey: privateKey,
-                    publicKey: publicKey,
-                    presharedKey: presharedKey,
-                    dns: dns,
-                    allowedIPs: allowedIPs,
-                    endpoint: endpoint
-                )
+            if endpointParts.count >= 2,
+               let endpointHost = endpointParts.first.map(String.init) {
+                remoteAddress = endpointHost
+                if let endpointPort = endpointParts.last.flatMap({ Int(String($0)) }) {
+                    remotePort = endpointPort
+                }
+            } else {
+                remoteAddress = endpoint
             }
         }
-        
-        guard let address = address else {
+
+        guard let address = remoteAddress else {
             return nil
         }
-        
+
         return VPNConfiguration(
             protocolType: .wireguard,
             address: address,
-            port: port,
+            port: remotePort,
             remark: remark,
             privateKey: privateKey,
             publicKey: publicKey,
             presharedKey: presharedKey,
             dns: dns,
+            interfaceAddress: interfaceAddress,
             allowedIPs: allowedIPs,
             endpoint: endpoint
         )

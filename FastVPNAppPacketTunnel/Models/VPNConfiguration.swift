@@ -27,6 +27,7 @@ struct VPNConfiguration: Codable {
     let publicKey: String?
     let presharedKey: String?
     let dns: String?
+    let interfaceAddress: String?
     let allowedIPs: String?
     let endpoint: String?
     
@@ -54,6 +55,7 @@ struct VPNConfiguration: Codable {
         publicKey: String? = nil,
         presharedKey: String? = nil,
         dns: String? = nil,
+        interfaceAddress: String? = nil,
         allowedIPs: String? = nil,
         endpoint: String? = nil,
         alterId: Int? = nil,
@@ -78,6 +80,7 @@ struct VPNConfiguration: Codable {
         self.publicKey = publicKey
         self.presharedKey = presharedKey
         self.dns = dns
+        self.interfaceAddress = interfaceAddress
         self.allowedIPs = allowedIPs
         self.endpoint = endpoint
         self.alterId = alterId
@@ -85,4 +88,3 @@ struct VPNConfiguration: Codable {
         self.tls = tls
     }
 }
-

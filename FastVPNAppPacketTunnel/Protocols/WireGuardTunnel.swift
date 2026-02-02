@@ -1,79 +1,88 @@
 import Foundation
 import NetworkExtension
+import WireGuardKit
 
 /// Обертка для WireGuard туннеля
-class WireGuardTunnel {
-    private var config: VPNConfiguration
-    private var packetFlow: NEPacketTunnelFlow?
+final class WireGuardTunnel {
+    private let config: VPNConfiguration
+    private let adapter: WireGuardAdapter
     
-    init(config: VPNConfiguration) {
+    init(config: VPNConfiguration, provider: NEPacketTunnelProvider) {
         self.config = config
+        self.adapter = WireGuardAdapter(with: provider, logHandler: { level, message in
+            NSLog("[WireGuard][\(level)] \(message)")
+        })
     }
     
     /// Запускает WireGuard туннель
-    func start(packetFlow: NEPacketTunnelFlow, completionHandler: @escaping (Error?) -> Void) {
-        self.packetFlow = packetFlow
-        
-        // Для реальной работы здесь должна быть интеграция с WireGuardKit
-        // Пример использования WireGuardKit:
-        /*
-        guard let privateKey = config.privateKey,
-              let publicKey = config.publicKey,
-              let endpoint = config.endpoint else {
-            completionHandler(NSError(domain: "WireGuardTunnel", code: 1, 
-                userInfo: [NSLocalizedDescriptionKey: "Отсутствуют необходимые ключи WireGuard"]))
-            return
+    func start(completionHandler: @escaping (Error?) -> Void) {
+        do {
+            let tunnelConfiguration = try Self.buildTunnelConfiguration(from: config)
+            adapter.start(tunnelConfiguration: tunnelConfiguration, completionHandler: completionHandler)
+        } catch {
+            completionHandler(error)
         }
-        
-        // Создаем конфигурацию WireGuard
-        var wgConfig = """
-        [Interface]
-        PrivateKey = \(privateKey)
-        Address = \(config.allowedIPs ?? "10.0.0.2/32")
-        DNS = \(config.dns ?? "8.8.8.8")
-        
-        [Peer]
-        PublicKey = \(publicKey)
-        Endpoint = \(endpoint)
-        AllowedIPs = \(config.allowedIPs ?? "0.0.0.0/0")
-        """
-        
-        if let presharedKey = config.presharedKey {
-            wgConfig += "\nPresharedKey = \(presharedKey)"
-        }
-        
-        // Здесь должна быть интеграция с WireGuardKit для запуска туннеля
-        // WireGuardKit.startTunnel(with: wgConfig, completionHandler: completionHandler)
-        */
-        
-        // Временная реализация - просто завершаем успешно
-        // В реальном приложении здесь будет вызов WireGuardKit
-        completionHandler(nil)
     }
     
     /// Останавливает туннель
-    func stop() {
-        // Остановка WireGuard туннеля
-        packetFlow = nil
-    }
-    
-    /// Обрабатывает входящие пакеты
-    func handlePackets() {
-        guard let packetFlow = packetFlow else { return }
-        
-        // Читаем пакеты из туннеля
-        packetFlow.readPackets { [weak self] packets, protocols in
-            guard let self = self else { return }
-            
-            // Обрабатываем пакеты через WireGuard
-            // В реальной реализации здесь будет шифрование и отправка через WireGuard
-            
-            // Отправляем обработанные пакеты обратно
-            packetFlow.writePackets(packets, withProtocols: protocols)
-            
-            // Продолжаем чтение
-            self.handlePackets()
+    func stop(completionHandler: @escaping () -> Void) {
+        adapter.stop { _ in
+            completionHandler()
         }
     }
-}
 
+    private static func buildTunnelConfiguration(from config: VPNConfiguration) throws -> TunnelConfiguration {
+        guard let privateKey = config.privateKey,
+              let publicKey = config.publicKey else {
+            throw NSError(domain: "WireGuardTunnel", code: 1,
+                          userInfo: [NSLocalizedDescriptionKey: "Отсутствуют ключи WireGuard (private/public)."])
+        }
+
+        let interfaceAddress = sanitized(config.interfaceAddress) ?? "10.0.0.2/32"
+        let allowedIPs = sanitized(config.allowedIPs) ?? "0.0.0.0/0"
+        let endpoint = buildEndpoint(from: config)
+
+        var wgConfig = """
+        [Interface]
+        PrivateKey = \(privateKey)
+        Address = \(interfaceAddress)
+        """
+
+        if let dns = sanitized(config.dns) {
+            wgConfig += "\nDNS = \(dns)"
+        }
+
+        wgConfig += """
+
+        [Peer]
+        PublicKey = \(publicKey)
+        Endpoint = \(endpoint)
+        AllowedIPs = \(allowedIPs)
+        """
+
+        if let presharedKey = sanitized(config.presharedKey) {
+            wgConfig += "\nPresharedKey = \(presharedKey)"
+        }
+
+        return try TunnelConfiguration(fromWgQuickConfig: wgConfig)
+    }
+
+    private static func buildEndpoint(from config: VPNConfiguration) -> String {
+        if let endpoint = sanitized(config.endpoint) {
+            if endpoint.contains(":") {
+                return endpoint
+            }
+            return "\(endpoint):\(config.port)"
+        }
+
+        return "\(config.address):\(config.port)"
+    }
+
+    private static func sanitized(_ value: String?) -> String? {
+        guard let value = value?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !value.isEmpty else {
+            return nil
+        }
+        return value
+    }
+}

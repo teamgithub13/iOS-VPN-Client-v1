@@ -34,7 +34,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         // Останавливаем все подключения
-        wireGuardTunnel?.stop()
+        wireGuardTunnel?.stop {
+            // no-op
+        }
         v2RayTunnel?.stop()
         shadowsocksTunnel?.stop()
         
@@ -64,43 +66,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     // MARK: - WireGuard Implementation
     
     private func startWireGuardTunnel(config: VPNConfiguration, completionHandler: @escaping (Error?) -> Void) {
-        // Определяем IP адрес для туннеля
-        let tunnelIP = config.allowedIPs?.components(separatedBy: "/").first ?? "10.0.0.2"
-        let subnetMask = "255.255.255.0"
-        
-        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: config.address)
-        
-        // Настройка IPv4
-        let ipv4Settings = NEIPv4Settings(addresses: [tunnelIP], subnetMasks: [subnetMask])
-        ipv4Settings.includedRoutes = [NEIPv4Route.default()]
-        settings.ipv4Settings = ipv4Settings
-        
-        // Настройка DNS
-        let dnsServers = config.dns?.components(separatedBy: ",") ?? ["8.8.8.8", "8.8.4.4"]
-        let dnsSettings = NEDNSSettings(servers: dnsServers)
-        settings.dnsSettings = dnsSettings
-        
-        // Применяем настройки сети
-        setTunnelNetworkSettings(settings) { [weak self] error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                completionHandler(error)
-                return
-            }
-            
-            // Создаем и запускаем WireGuard туннель
-            let tunnel = WireGuardTunnel(config: config)
-            self.wireGuardTunnel = tunnel
-            
-            tunnel.start(packetFlow: self.packetFlow) { error in
-                if let error = error {
-                    completionHandler(error)
-                } else {
-                    // Туннель успешно запущен
-                    completionHandler(nil)
-                }
-            }
+        let tunnel = WireGuardTunnel(config: config, provider: self)
+        wireGuardTunnel = tunnel
+
+        tunnel.start { error in
+            completionHandler(error)
         }
     }
     
@@ -186,4 +156,3 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 }
-

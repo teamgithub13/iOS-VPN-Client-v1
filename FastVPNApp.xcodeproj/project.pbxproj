@@ -446,11 +446,11 @@
 /* Begin PBXLegacyTarget section */
 		1438FDDB2F28117F000F76A5 /* WireGuardGoBridgeiOS */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
+			buildArgumentsString = "make $(ACTION)";
 			buildConfigurationList = 1438FDDC2F28117F000F76A5 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */;
 			buildPhases = (
 			);
-			buildToolPath = /usr/bin/make;
+			buildToolPath = /usr/bin/env;
 			buildWorkingDirectory = "${BUILD_DIR%Build/*}SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			dependencies = (
 			);

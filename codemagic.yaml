@@ -153,35 +153,33 @@ workflows:
           WRAPPER_DIR="$CM_BUILD_DIR/ci"
           WRAPPER="$WRAPPER_DIR/make-wrapper.sh"
           mkdir -p "$WRAPPER_DIR"
-          if [ ! -f "$WRAPPER" ]; then
-            cat > "$WRAPPER" <<'EOF'
-            #!/bin/sh
-            set -e
+          cat > "$WRAPPER" <<'EOF'
+          #!/bin/sh
+          set -e
 
-            if command -v gmake >/dev/null 2>&1; then
-              exec gmake "$@"
-            fi
-
-            if command -v make >/dev/null 2>&1; then
-              exec make "$@"
-            fi
-
-            for p in /opt/homebrew/Cellar/make/*/bin/gmake /usr/local/Cellar/make/*/bin/gmake; do
-              if [ -x "$p" ]; then
-                exec "$p" "$@"
-              fi
-            done
-
-            MAKE_XCRUN="$(xcrun --find make 2>/dev/null || true)"
-            if [ -n "$MAKE_XCRUN" ] && [ -x "$MAKE_XCRUN" ]; then
-              exec "$MAKE_XCRUN" "$@"
-            fi
-
-            echo "ERROR: make/gmake not found." >&2
-            exit 1
-            EOF
-            chmod +x "$WRAPPER"
+          if command -v gmake >/dev/null 2>&1; then
+            exec gmake "$@"
           fi
+
+          if command -v make >/dev/null 2>&1; then
+            exec make "$@"
+          fi
+
+          for p in /opt/homebrew/Cellar/make/*/bin/gmake /usr/local/Cellar/make/*/bin/gmake; do
+            if [ -x "$p" ]; then
+              exec "$p" "$@"
+            fi
+          done
+
+          MAKE_XCRUN="$(xcrun --find make 2>/dev/null || true)"
+          if [ -n "$MAKE_XCRUN" ] && [ -x "$MAKE_XCRUN" ]; then
+            exec "$MAKE_XCRUN" "$@"
+          fi
+
+          echo "ERROR: make/gmake not found." >&2
+          exit 1
+          EOF
+          chmod +x "$WRAPPER"
 
           if [ -f "$PROJECT_PBX" ]; then
             perl -pi -e "s|buildToolPath = .*;|buildToolPath = $WRAPPER;|g" "$PROJECT_PBX"

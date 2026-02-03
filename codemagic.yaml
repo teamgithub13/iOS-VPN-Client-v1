@@ -95,9 +95,12 @@ workflows:
       - name: Patch legacy target build tool (make)
         script: |
           set -euo pipefail
+          cd "$CM_BUILD_DIR"
 
           MAKE_PATH=""
           if command -v brew >/dev/null 2>&1; then
+            export HOMEBREW_NO_AUTO_UPDATE=1
+            export HOMEBREW_NO_INSTALL_CLEANUP=1
             brew install make
             MAKE_PATH="$(brew --prefix make)/bin/gmake"
           fi
@@ -112,12 +115,28 @@ workflows:
             exit 1
           fi
 
-          perl -pi -e "s|buildToolPath = .*;|buildToolPath = $MAKE_PATH;|g" "$CM_BUILD_DIR/FastVPNApp.xcodeproj/project.pbxproj"
+          PROJECT_PBX="$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
+          if [ ! -f "$PROJECT_PBX" ]; then
+            echo "ERROR: project file not found: $PROJECT_PBX"
+            exit 1
+          fi
+
+          perl -pi -e "s|buildToolPath = .*;|buildToolPath = $MAKE_PATH;|g" "$PROJECT_PBX"
+          echo "$MAKE_PATH" > "$CM_BUILD_DIR/.make_path"
           echo "Patched buildToolPath:"
-          grep -n "buildToolPath" "$CM_BUILD_DIR/FastVPNApp.xcodeproj/project.pbxproj"
+          grep -n "buildToolPath" "$PROJECT_PBX"
 
       - name: Archive app
         script: |
+          set -euo pipefail
+          cd "$CM_BUILD_DIR"
+
+          PROJECT_PBX="$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
+          if [ -f "$CM_BUILD_DIR/.make_path" ]; then
+            MAKE_PATH="$(cat "$CM_BUILD_DIR/.make_path")"
+            perl -pi -e "s|buildToolPath = .*;|buildToolPath = $MAKE_PATH;|g" "$PROJECT_PBX"
+          fi
+
           mkdir -p "$CM_BUILD_DIR/build"
 
           xcodebuild archive \

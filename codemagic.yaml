@@ -97,22 +97,10 @@ workflows:
           set -euo pipefail
           cd "$CM_BUILD_DIR"
 
-          MAKE_PATH=""
           if command -v brew >/dev/null 2>&1; then
             export HOMEBREW_NO_AUTO_UPDATE=1
             export HOMEBREW_NO_INSTALL_CLEANUP=1
             brew install make
-            MAKE_PATH="$(brew --prefix make)/bin/gmake"
-          fi
-
-          if [ -z "$MAKE_PATH" ] || [ ! -x "$MAKE_PATH" ]; then
-            MAKE_PATH="$(xcrun --find make 2>/dev/null || true)"
-          fi
-
-          if [ -z "$MAKE_PATH" ] || [ ! -x "$MAKE_PATH" ]; then
-            echo "ERROR: make not found."
-            echo "xcrun: $(xcrun --find make 2>/dev/null || true)"
-            exit 1
           fi
 
           PROJECT_PBX="$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
@@ -121,8 +109,38 @@ workflows:
             exit 1
           fi
 
-          perl -pi -e "s|buildToolPath = .*;|buildToolPath = $MAKE_PATH;|g" "$PROJECT_PBX"
-          echo "$MAKE_PATH" > "$CM_BUILD_DIR/.make_path"
+          WRAPPER_DIR="$CM_BUILD_DIR/ci"
+          WRAPPER="$WRAPPER_DIR/make-wrapper.sh"
+          mkdir -p "$WRAPPER_DIR"
+          cat > "$WRAPPER" <<'EOF'
+          #!/bin/sh
+          set -e
+
+          if command -v gmake >/dev/null 2>&1; then
+            exec gmake "$@"
+          fi
+
+          if command -v make >/dev/null 2>&1; then
+            exec make "$@"
+          fi
+
+          for p in /opt/homebrew/Cellar/make/*/bin/gmake /usr/local/Cellar/make/*/bin/gmake; do
+            if [ -x "$p" ]; then
+              exec "$p" "$@"
+            fi
+          done
+
+          MAKE_XCRUN="$(xcrun --find make 2>/dev/null || true)"
+          if [ -n "$MAKE_XCRUN" ] && [ -x "$MAKE_XCRUN" ]; then
+            exec "$MAKE_XCRUN" "$@"
+          fi
+
+          echo "ERROR: make/gmake not found." >&2
+          exit 1
+          EOF
+          chmod +x "$WRAPPER"
+
+          perl -pi -e "s|buildToolPath = .*;|buildToolPath = $WRAPPER;|g" "$PROJECT_PBX"
           echo "Patched buildToolPath:"
           grep -n "buildToolPath" "$PROJECT_PBX"
 
@@ -132,9 +150,9 @@ workflows:
           cd "$CM_BUILD_DIR"
 
           PROJECT_PBX="$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
-          if [ -f "$CM_BUILD_DIR/.make_path" ]; then
-            MAKE_PATH="$(cat "$CM_BUILD_DIR/.make_path")"
-            perl -pi -e "s|buildToolPath = .*;|buildToolPath = $MAKE_PATH;|g" "$PROJECT_PBX"
+          WRAPPER="$CM_BUILD_DIR/ci/make-wrapper.sh"
+          if [ -x "$WRAPPER" ]; then
+            perl -pi -e "s|buildToolPath = .*;|buildToolPath = $WRAPPER;|g" "$PROJECT_PBX"
           fi
 
           mkdir -p "$CM_BUILD_DIR/build"

@@ -92,17 +92,28 @@ workflows:
           echo "======= ExportOptions.plist ======="
           cat "$CM_BUILD_DIR/ExportOptions.plist"
 
-      - name: Install GNU make and patch Xcode legacy target
+      - name: Patch legacy target build tool (make)
         script: |
-          brew install make
+          set -euo pipefail
 
-          MAKE_PATH="$(brew --prefix make)/bin/gmake"
-          if [ ! -x "$MAKE_PATH" ]; then
-            echo "ERROR: gmake not found at $MAKE_PATH"
+          MAKE_PATH="$(xcrun --find make 2>/dev/null || true)"
+          if [ -z "$MAKE_PATH" ] || [ ! -x "$MAKE_PATH" ]; then
+            echo "xcrun make not found, trying Homebrew..."
+            if command -v brew >/dev/null 2>&1; then
+              brew install make
+              MAKE_PATH="$(brew --prefix make)/bin/gmake"
+            fi
+          fi
+
+          if [ -z "$MAKE_PATH" ] || [ ! -x "$MAKE_PATH" ]; then
+            echo "ERROR: make not found."
+            echo "xcrun: $(xcrun --find make 2>/dev/null || true)"
             exit 1
           fi
 
           perl -pi -e "s|/usr/bin/make|$MAKE_PATH|g" "$CM_BUILD_DIR/FastVPNApp.xcodeproj/project.pbxproj"
+          perl -pi -e "s|/opt/homebrew/opt/make/bin/gmake|$MAKE_PATH|g" "$CM_BUILD_DIR/FastVPNApp.xcodeproj/project.pbxproj"
+          perl -pi -e "s|/usr/local/opt/make/bin/gmake|$MAKE_PATH|g" "$CM_BUILD_DIR/FastVPNApp.xcodeproj/project.pbxproj"
           echo "Patched buildToolPath:"
           grep -n "buildToolPath" "$CM_BUILD_DIR/FastVPNApp.xcodeproj/project.pbxproj"
 

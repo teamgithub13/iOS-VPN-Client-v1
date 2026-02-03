@@ -92,6 +92,20 @@ workflows:
           echo "======= ExportOptions.plist ======="
           cat "$CM_BUILD_DIR/ExportOptions.plist"
 
+      - name: Install GNU make and patch Xcode legacy target
+        script: |
+          brew install make
+
+          MAKE_PATH="$(brew --prefix make)/bin/gmake"
+          if [ ! -x "$MAKE_PATH" ]; then
+            echo "ERROR: gmake not found at $MAKE_PATH"
+            exit 1
+          fi
+
+          perl -pi -e "s|/usr/bin/make|$MAKE_PATH|g" "$CM_BUILD_DIR/FastVPNApp.xcodeproj/project.pbxproj"
+          echo "Patched buildToolPath:"
+          grep -n "buildToolPath" "$CM_BUILD_DIR/FastVPNApp.xcodeproj/project.pbxproj"
+
       - name: Archive app
         script: |
           mkdir -p "$CM_BUILD_DIR/build"

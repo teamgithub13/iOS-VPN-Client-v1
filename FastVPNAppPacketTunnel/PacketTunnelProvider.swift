@@ -11,7 +11,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         // Получаем конфигурацию из UserDefaults (переданную из основного приложения)
-        guard let configData = UserDefaults(suiteName: "group.com.asdf.FastVPNApp")?.data(forKey: "com.fastvpn.configuration"),
+        guard let configData = UserDefaults(suiteName: "group.com.gooseberry.colander")?.data(forKey: "com.fastvpn.configuration"),
               let config = try? JSONDecoder().decode(VPNConfiguration.self, from: configData) else {
             completionHandler(NSError(domain: "PacketTunnelProvider", code: 1, userInfo: [NSLocalizedDescriptionKey: "Конфигурация VPN не найдена"]))
             return
@@ -115,44 +115,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     // MARK: - Shadowsocks Implementation
     
     private func startShadowsocksTunnel(config: VPNConfiguration, completionHandler: @escaping (Error?) -> Void) {
-        guard let method = config.method,
-              let password = config.password else {
-            completionHandler(NSError(domain: "PacketTunnelProvider", code: 3, userInfo: [NSLocalizedDescriptionKey: "Отсутствуют метод или пароль для Shadowsocks"]))
-            return
-        }
-        
-        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: config.address)
-        
-        // Настройка IPv4
-        let ipv4Settings = NEIPv4Settings(addresses: ["10.0.0.2"], subnetMasks: ["255.255.255.0"])
-        ipv4Settings.includedRoutes = [NEIPv4Route.default()]
-        settings.ipv4Settings = ipv4Settings
-        
-        // Настройка DNS
-        let dnsSettings = NEDNSSettings(servers: ["8.8.8.8", "8.8.4.4"])
-        settings.dnsSettings = dnsSettings
-        
-        // Применяем настройки сети
-        setTunnelNetworkSettings(settings) { [weak self] error in
-            guard let self = self else { return }
-            
-            if let error = error {
-                completionHandler(error)
-                return
-            }
-            
-            // Создаем и запускаем Shadowsocks туннель
-            let tunnel = ShadowsocksTunnel(config: config)
-            self.shadowsocksTunnel = tunnel
-            
-            tunnel.start(packetFlow: self.packetFlow) { error in
-                if let error = error {
-                    completionHandler(error)
-                } else {
-                    // Туннель успешно запущен
-                    completionHandler(nil)
-                }
-            }
-        }
+        let tunnel = ShadowsocksTunnel(config: config)
+        shadowsocksTunnel = tunnel
+        tunnel.start(packetFlow: packetFlow, completionHandler: completionHandler)
     }
 }

@@ -88,6 +88,7 @@ class VPNConnectionService: ObservableObject {
         // Добавляем специфичные параметры для каждого протокола
         switch config.protocolType {
         case .vless, .vmess:
+            if let sourceURL = config.sourceURL { providerConfiguration["sourceURL"] = sourceURL }
             if let uuid = config.uuid { providerConfiguration["uuid"] = uuid }
             if let security = config.security { providerConfiguration["security"] = security }
             if let sni = config.sni { providerConfiguration["sni"] = sni }
@@ -186,7 +187,7 @@ class VPNConnectionService: ObservableObject {
         currentConfiguration = config
         
         // Если менеджер еще не загружен, загружаем его
-        if vpnManager == nil {
+        if packetTunnelProvider == nil {
             loadVPNManager()
         } else {
             setupVPNManager()
@@ -243,4 +244,3 @@ class VPNConnectionService: ObservableObject {
         NotificationCenter.default.removeObserver(self)
     }
 }
-

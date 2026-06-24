@@ -2,6 +2,7 @@ import Foundation
 
 struct VPNConfiguration: Codable {
     let protocolType: VPNProtocolType
+    let sourceURL: String?
     
     // Общие параметры
     let address: String
@@ -38,6 +39,7 @@ struct VPNConfiguration: Codable {
     
     init(
         protocolType: VPNProtocolType,
+        sourceURL: String? = nil,
         address: String,
         port: Int,
         remark: String? = nil,
@@ -63,6 +65,7 @@ struct VPNConfiguration: Codable {
         tls: String? = nil
     ) {
         self.protocolType = protocolType
+        self.sourceURL = sourceURL
         self.address = address
         self.port = port
         self.remark = remark

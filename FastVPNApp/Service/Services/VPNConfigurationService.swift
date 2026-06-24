@@ -77,6 +77,7 @@ class VPNConfigurationService {
         
         return VPNConfiguration(
             protocolType: .vless,
+            sourceURL: urlString,
             address: host,
             port: port,
             remark: remark,
@@ -134,6 +135,7 @@ class VPNConfigurationService {
         
         return VPNConfiguration(
             protocolType: .vmess,
+            sourceURL: urlString,
             address: address,
             port: port,
             remark: remark,

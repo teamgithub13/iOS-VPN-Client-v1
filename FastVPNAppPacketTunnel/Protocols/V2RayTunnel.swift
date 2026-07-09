@@ -44,6 +44,14 @@ final class V2RayTunnel {
         }
     }
 
+    /// Возвращает текущую статистику трафика (received/sent) из XRayTunnel (actor).
+    /// `nil`, если туннель ещё не запущен.
+    func bytesTransferred() async -> (received: UInt32, sent: UInt32)? {
+        guard let tunnel = tunnel else { return nil }
+        let stats = await tunnel.bytesTransferred
+        return (stats.received, stats.sent)
+    }
+
     private func prepareRuntimeDirectory() throws -> (dataDirectory: URL, configPath: URL) {
         let baseDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupIdentifier)
             ?? FileManager.default.temporaryDirectory

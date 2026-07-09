@@ -3,12 +3,12 @@ import Foundation
 struct VPNConfiguration: Codable {
     let protocolType: VPNProtocolType
     let sourceURL: String?
-    
+
     // Общие параметры
     let address: String
     let port: Int
-    let remark: String?
-    
+    var remark: String?
+
     // VLESS/VMess параметры
     let uuid: String?
     let security: String?
@@ -18,25 +18,12 @@ struct VPNConfiguration: Codable {
     let type: String?
     let flow: String?
     let encryption: String?
-    
-    // Shadowsocks параметры
-    let method: String?  // метод шифрования
-    let password: String?
-    
-    // WireGuard параметры
-    let privateKey: String?
-    let publicKey: String?
-    let presharedKey: String?
-    let dns: String?
-    let interfaceAddress: String?
-    let allowedIPs: String?
-    let endpoint: String?
-    
+
     // VMess дополнительные параметры
     let alterId: Int?
     let network: String?
     let tls: String?
-    
+
     init(
         protocolType: VPNProtocolType,
         sourceURL: String? = nil,
@@ -51,15 +38,6 @@ struct VPNConfiguration: Codable {
         type: String? = nil,
         flow: String? = nil,
         encryption: String? = nil,
-        method: String? = nil,
-        password: String? = nil,
-        privateKey: String? = nil,
-        publicKey: String? = nil,
-        presharedKey: String? = nil,
-        dns: String? = nil,
-        interfaceAddress: String? = nil,
-        allowedIPs: String? = nil,
-        endpoint: String? = nil,
         alterId: Int? = nil,
         network: String? = nil,
         tls: String? = nil
@@ -77,15 +55,6 @@ struct VPNConfiguration: Codable {
         self.type = type
         self.flow = flow
         self.encryption = encryption
-        self.method = method
-        self.password = password
-        self.privateKey = privateKey
-        self.publicKey = publicKey
-        self.presharedKey = presharedKey
-        self.dns = dns
-        self.interfaceAddress = interfaceAddress
-        self.allowedIPs = allowedIPs
-        self.endpoint = endpoint
         self.alterId = alterId
         self.network = network
         self.tls = tls

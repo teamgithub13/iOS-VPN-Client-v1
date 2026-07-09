@@ -85,9 +85,8 @@ class VPNConnectionService: ObservableObject {
         providerConfiguration["address"] = config.address
         providerConfiguration["port"] = config.port
         
-        // Добавляем специфичные параметры для каждого протокола
-        switch config.protocolType {
-        case .vless, .vmess:
+        // Добавляем специфичные параметры для VLESS/VMess
+        if config.protocolType == .vless || config.protocolType == .vmess {
             if let sourceURL = config.sourceURL { providerConfiguration["sourceURL"] = sourceURL }
             if let uuid = config.uuid { providerConfiguration["uuid"] = uuid }
             if let security = config.security { providerConfiguration["security"] = security }
@@ -95,17 +94,6 @@ class VPNConnectionService: ObservableObject {
             if let alpn = config.alpn { providerConfiguration["alpn"] = alpn }
             if let type = config.type { providerConfiguration["type"] = type }
             if let flow = config.flow { providerConfiguration["flow"] = flow }
-        case .shadowsocks, .shadowsocksR:
-            if let method = config.method { providerConfiguration["method"] = method }
-            if let password = config.password { providerConfiguration["password"] = password }
-        case .wireguard:
-            if let privateKey = config.privateKey { providerConfiguration["privateKey"] = privateKey }
-            if let publicKey = config.publicKey { providerConfiguration["publicKey"] = publicKey }
-            if let presharedKey = config.presharedKey { providerConfiguration["presharedKey"] = presharedKey }
-            if let dns = config.dns { providerConfiguration["dns"] = dns }
-            if let allowedIPs = config.allowedIPs { providerConfiguration["allowedIPs"] = allowedIPs }
-        default:
-            break
         }
         
         protocolConfiguration.providerConfiguration = providerConfiguration
@@ -177,23 +165,27 @@ class VPNConnectionService: ObservableObject {
         }
     }
     
-    /// Устанавливает конфигурацию VPN из URL (поддерживает VLESS, VMess, Shadowsocks, WireGuard)
+    /// Устанавливает конфигурацию VPN из URL (поддерживает VLESS, VMess)
     func setConfiguration(from urlString: String) -> Bool {
         guard let config = VPNConfigurationService.shared.parse(urlString) else {
             connectionStatus = .error("Неверный формат VPN URL")
             return false
         }
-        
+
+        setSelectedConfiguration(config)
+        return true
+    }
+
+    /// Устанавливает уже разобранную конфигурацию (например, выбранную из списка серверов подписки)
+    func setSelectedConfiguration(_ config: VPNConfiguration) {
         currentConfiguration = config
-        
+
         // Если менеджер еще не загружен, загружаем его
         if packetTunnelProvider == nil {
             loadVPNManager()
         } else {
             setupVPNManager()
         }
-        
-        return true
     }
     
     /// Устанавливает конфигурацию VPN из VLESS URL (legacy метод для обратной совместимости)
@@ -239,7 +231,32 @@ class VPNConnectionService: ObservableObject {
             connect()
         }
     }
-    
+
+    /// Запрашивает статистику трафика у PacketTunnelProvider через IPC.
+    /// Ответ — 2 × UInt32 (received, sent). Возвращает `0, 0`, если туннель не запущен.
+    func requestTrafficStats(completion: @escaping (_ received: UInt64, _ sent: UInt64) -> Void) {
+        guard let manager = packetTunnelProvider,
+              let session = manager.connection as? NETunnelProviderSession else {
+            completion(0, 0)
+            return
+        }
+
+        do {
+            // Пустое сообщение = команда «дай статистику»
+            try session.sendProviderMessage(Data()) { data in
+                guard let data = data, data.count >= 8 else {
+                    completion(0, 0)
+                    return
+                }
+                let received = data.withUnsafeBytes { $0.load(as: UInt32.self) }
+                let sent = data.withUnsafeBytes { $0.load(fromByteOffset: 4, as: UInt32.self) }
+                completion(UInt64(received), UInt64(sent))
+            }
+        } catch {
+            completion(0, 0)
+        }
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }

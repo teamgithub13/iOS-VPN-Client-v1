@@ -7,17 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC5A00012F2A000000000001 /* SwiftyXrayKit in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00032F2A000000000003 /* SwiftyXrayKit */; };
 		14621F552EF58ABE001538E3 /* VPNProtocolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F502EF58ABE001538E3 /* VPNProtocolType.swift */; };
 		14621F562EF58ABE001538E3 /* VPNConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F4F2EF58ABE001538E3 /* VPNConfiguration.swift */; };
 		14621F572EF58ABE001538E3 /* VPNConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F522EF58ABE001538E3 /* VPNConfigurationService.swift */; };
 		14621F582EF58ABE001538E3 /* VPNConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F532EF58ABE001538E3 /* VPNConnectionService.swift */; };
+		14621F612EF58ABE001538E3 /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F622EF58ABE001538E3 /* SubscriptionService.swift */; };
+		14621F632EF58ABE001538E3 /* ServerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F642EF58ABE001538E3 /* ServerRepository.swift */; };
 		14621F742EF58C4F001538E3 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14621F602EF58BF8001538E3 /* NetworkExtension.framework */; };
 		14621F7C2EF58C4F001538E3 /* FastVPNAppPacketTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 14621F732EF58C4F001538E3 /* FastVPNAppPacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		14B2A9A12EF5879E00BED825 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14B2A99F2EF5879D00BED825 /* LaunchScreen.storyboard */; };
 		14B2A9A22EF5879E00BED825 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2A99D2EF5879D00BED825 /* AppDelegate.swift */; };
 		14B2A9AC2EF58A8400BED825 /* ServiceVPN1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2A9AB2EF58A8400BED825 /* ServiceVPN1ViewModel.swift */; };
+		14BE27473000483600969FB2 /* AddConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BE27463000483400969FB2 /* AddConfigurationView.swift */; };
 		AC02037E2EF9D6CE00B48774 /* codemagic.yaml in Resources */ = {isa = PBXBuildFile; fileRef = AC02037D2EF9D6BF00B48774 /* codemagic.yaml */; };
+		AC5A00012F2A000000000001 /* SwiftyXrayKit in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00032F2A000000000003 /* SwiftyXrayKit */; };
 		E9C960FA2EF18492003DE138 /* OnboardingVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C960F62EF18492003DE138 /* OnboardingVPN1ViewController.swift */; };
 		E9C960FB2EF18492003DE138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9C960EF2EF18492003DE138 /* Assets.xcassets */; };
 		E9C960FD2EF18492003DE138 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C960F22EF18492003DE138 /* LaunchScreen.storyboard */; };
@@ -56,13 +58,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1438FDE12F281288000F76A5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E9C960CE2EF1848D003DE138 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1438FDDB2F28117F000F76A5;
-			remoteInfo = WireGuardGoBridgeiOS;
-		};
 		14621F7A2EF58C4F001538E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E9C960CE2EF1848D003DE138 /* Project object */;
@@ -93,11 +88,14 @@
 		14621F522EF58ABE001538E3 /* VPNConfigurationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfigurationService.swift; sourceTree = "<group>"; };
 		14621F532EF58ABE001538E3 /* VPNConnectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConnectionService.swift; sourceTree = "<group>"; };
 		14621F602EF58BF8001538E3 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		14621F622EF58ABE001538E3 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
+		14621F642EF58ABE001538E3 /* ServerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerRepository.swift; sourceTree = "<group>"; };
 		14621F732EF58C4F001538E3 /* FastVPNAppPacketTunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FastVPNAppPacketTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		14B2A99D2EF5879D00BED825 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14B2A99E2EF5879D00BED825 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14B2A9A32EF587B200BED825 /* FastVPNApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FastVPNApp.entitlements; sourceTree = "<group>"; };
 		14B2A9AB2EF58A8400BED825 /* ServiceVPN1ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceVPN1ViewModel.swift; sourceTree = "<group>"; };
+		14BE27463000483400969FB2 /* AddConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddConfigurationView.swift; sourceTree = "<group>"; };
 		AC02037D2EF9D6BF00B48774 /* codemagic.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = codemagic.yaml; sourceTree = "<group>"; };
 		E9C960D62EF1848D003DE138 /* FastVPNApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastVPNApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9C960EE2EF18492003DE138 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -196,6 +194,8 @@
 			children = (
 				14621F522EF58ABE001538E3 /* VPNConfigurationService.swift */,
 				14621F532EF58ABE001538E3 /* VPNConnectionService.swift */,
+				14621F622EF58ABE001538E3 /* SubscriptionService.swift */,
+				14621F642EF58ABE001538E3 /* ServerRepository.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -302,6 +302,7 @@
 		E9C9610A2EF18857003DE138 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				14BE27463000483400969FB2 /* AddConfigurationView.swift */,
 				14621F512EF58ABE001538E3 /* Models */,
 				14621F542EF58ABE001538E3 /* Services */,
 				14B2A9AB2EF58A8400BED825 /* ServiceVPN1ViewModel.swift */,
@@ -441,25 +442,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXLegacyTarget section */
-		1438FDDB2F28117F000F76A5 /* WireGuardGoBridgeiOS */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = 1438FDDC2F28117F000F76A5 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = "${BUILD_DIR%Build/*}SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
-			dependencies = (
-			);
-			name = WireGuardGoBridgeiOS;
-			packageProductDependencies = (
-			);
-			passBuildSettingsInEnvironment = 0;
-			productName = WireGuardGoBridgeiOS;
-		};
-/* End PBXLegacyTarget section */
-
 /* Begin PBXNativeTarget section */
 		14621F722EF58C4F001538E3 /* FastVPNAppPacketTunnel */ = {
 			isa = PBXNativeTarget;
@@ -515,9 +497,6 @@
 				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
-					1438FDDB2F28117F000F76A5 = {
-						CreatedOnToolsVersion = 26.2;
-					};
 					14621F722EF58C4F001538E3 = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
@@ -545,7 +524,6 @@
 			targets = (
 				E9C960D52EF1848D003DE138 /* FastVPNApp */,
 				14621F722EF58C4F001538E3 /* FastVPNAppPacketTunnel */,
-				1438FDDB2F28117F000F76A5 /* WireGuardGoBridgeiOS */,
 			);
 		};
 /* End PBXProject section */
@@ -610,11 +588,14 @@
 				14621F562EF58ABE001538E3 /* VPNConfiguration.swift in Sources */,
 				14621F572EF58ABE001538E3 /* VPNConfigurationService.swift in Sources */,
 				14621F582EF58ABE001538E3 /* VPNConnectionService.swift in Sources */,
+				14621F612EF58ABE001538E3 /* SubscriptionService.swift in Sources */,
+				14621F632EF58ABE001538E3 /* ServerRepository.swift in Sources */,
 				E9C961222EF2321F003DE138 /* TunnelSettingsVPN1View.swift in Sources */,
 				E9C961202EF2321C003DE138 /* TunnelSettingsVPN1ViewController.swift in Sources */,
 				E9C9617F2EF477A6003DE138 /* PrivacyPolicyVPN1View.swift in Sources */,
 				E9C9611B2EF22F4B003DE138 /* AppVPN1ViewController.swift in Sources */,
 				E9C961672EF46F37003DE138 /* PingVPN1ViewController.swift in Sources */,
+				14BE27473000483600969FB2 /* AddConfigurationView.swift in Sources */,
 				E9C9617D2EF477A4003DE138 /* PrivacyPolicyVPN1ViewController.swift in Sources */,
 				E9C9611D2EF22F4D003DE138 /* AppVPN1View.swift in Sources */,
 				E9C961182EF1888B003DE138 /* SettingsVPN1View.swift in Sources */,
@@ -627,11 +608,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1438FDE22F281288000F76A5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1438FDDB2F28117F000F76A5 /* WireGuardGoBridgeiOS */;
-			targetProxy = 1438FDE12F281288000F76A5 /* PBXContainerItemProxy */;
-		};
 		14621F7B2EF58C4F001538E3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 14621F722EF58C4F001538E3 /* FastVPNAppPacketTunnel */;
@@ -659,31 +635,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1438FDDD2F28117F000F76A5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEBUGGING_SYMBOLS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		1438FDDE2F28117F000F76A5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		14621F7F2EF58C4F001538E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -954,15 +905,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1438FDDC2F28117F000F76A5 /* Build configuration list for PBXLegacyTarget "WireGuardGoBridgeiOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1438FDDD2F28117F000F76A5 /* Debug */,
-				1438FDDE2F28117F000F76A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		14621F7E2EF58C4F001538E3 /* Build configuration list for PBXNativeTarget "FastVPNAppPacketTunnel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -92,7 +92,7 @@ workflows:
           echo "======= ExportOptions.plist ======="
           cat "$CM_BUILD_DIR/ExportOptions.plist"
 
-      - name: Set build number to CM_BUILD_ID
+      - name: Set build number
         script: |
           set -euo pipefail
           cd "$CM_BUILD_DIR"
@@ -103,16 +103,20 @@ workflows:
             exit 1
           fi
 
-          # CM_BUILD_ID монотонно растёт с каждым билдом в Codemagic.
-          # App Store Connect требует, чтобы CFBundleVersion (CURRENT_PROJECT_VERSION)
-          # был выше, чем у ранее загруженного билда.
-          if [ -z "${CM_BUILD_ID:-}" ]; then
-            echo "WARNING: CM_BUILD_ID is not set — skipping build number patch."
-            exit 0
+          # App Store Connect требует, чтобы CFBundleVersion был целым числом
+          # (или 1-3 числами через точку) и строго выше предыдущего загруженного.
+          # CM_BUILD_NUMBER — целочисленный индекс билда в Codemagic (35, 36, ...).
+          # Фолбэк на Unix timestamp — гарантирует уникальность и возрастание
+          # даже при локальных/нештатных запусках.
+          BUILD_NUMBER="${CM_BUILD_NUMBER:-$(date +%s)}"
+          # На всякий случай: оставляем только цифры
+          BUILD_NUMBER="${BUILD_NUMBER//[^0-9]/}"
+          if [ -z "$BUILD_NUMBER" ]; then
+            BUILD_NUMBER="$(date +%s)"
           fi
 
-          echo "Setting CURRENT_PROJECT_VERSION = $CM_BUILD_ID"
-          perl -pi -e "s/CURRENT_PROJECT_VERSION = [^;]+;/CURRENT_PROJECT_VERSION = $CM_BUILD_ID;/g" "$PROJECT_PBX"
+          echo "Setting CURRENT_PROJECT_VERSION = $BUILD_NUMBER"
+          perl -pi -e "s/CURRENT_PROJECT_VERSION = [^;]+;/CURRENT_PROJECT_VERSION = $BUILD_NUMBER;/g" "$PROJECT_PBX"
 
           echo "Updated CURRENT_PROJECT_VERSION:"
           grep -n "CURRENT_PROJECT_VERSION" "$PROJECT_PBX" || true

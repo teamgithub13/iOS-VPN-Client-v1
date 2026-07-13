@@ -92,12 +92,30 @@ workflows:
           echo "======= ExportOptions.plist ======="
           cat "$CM_BUILD_DIR/ExportOptions.plist"
 
-      - name: Patch legacy target build tool (make)
+      - name: Set build number to CM_BUILD_ID
         script: |
-          # В проекте нет legacy-таргетов с buildToolPath (только PBXNativeTarget),
-          # поэтому патч make-обёртки не требуется. Шаг оставлен как no-op,
-          # чтобы не падать на grep под set -e.
-          echo "No buildToolPath entries in project.pbxproj — nothing to patch."
+          set -euo pipefail
+          cd "$CM_BUILD_DIR"
+
+          PROJECT_PBX="$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
+          if [ ! -f "$PROJECT_PBX" ]; then
+            echo "ERROR: project file not found: $PROJECT_PBX"
+            exit 1
+          fi
+
+          # CM_BUILD_ID монотонно растёт с каждым билдом в Codemagic.
+          # App Store Connect требует, чтобы CFBundleVersion (CURRENT_PROJECT_VERSION)
+          # был выше, чем у ранее загруженного билда.
+          if [ -z "${CM_BUILD_ID:-}" ]; then
+            echo "WARNING: CM_BUILD_ID is not set — skipping build number patch."
+            exit 0
+          fi
+
+          echo "Setting CURRENT_PROJECT_VERSION = $CM_BUILD_ID"
+          perl -pi -e "s/CURRENT_PROJECT_VERSION = [^;]+;/CURRENT_PROJECT_VERSION = $CM_BUILD_ID;/g" "$PROJECT_PBX"
+
+          echo "Updated CURRENT_PROJECT_VERSION:"
+          grep -n "CURRENT_PROJECT_VERSION" "$PROJECT_PBX" || true
 
       - name: Archive app
         script: |

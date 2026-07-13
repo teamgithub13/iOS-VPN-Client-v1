@@ -94,55 +94,10 @@ workflows:
 
       - name: Patch legacy target build tool (make)
         script: |
-          set -euo pipefail
-          cd "$CM_BUILD_DIR"
-
-          if command -v brew >/dev/null 2>&1; then
-            export HOMEBREW_NO_AUTO_UPDATE=1
-            export HOMEBREW_NO_INSTALL_CLEANUP=1
-            brew install make
-          fi
-
-          PROJECT_PBX="$CM_BUILD_DIR/$XCODE_PROJECT/project.pbxproj"
-          if [ ! -f "$PROJECT_PBX" ]; then
-            echo "ERROR: project file not found: $PROJECT_PBX"
-            exit 1
-          fi
-
-          WRAPPER_DIR="$CM_BUILD_DIR/ci"
-          WRAPPER="$WRAPPER_DIR/make-wrapper.sh"
-          mkdir -p "$WRAPPER_DIR"
-          cat > "$WRAPPER" <<'EOF'
-          #!/bin/sh
-          set -e
-
-          if command -v gmake >/dev/null 2>&1; then
-            exec gmake "$@"
-          fi
-
-          if command -v make >/dev/null 2>&1; then
-            exec make "$@"
-          fi
-
-          for p in /opt/homebrew/Cellar/make/*/bin/gmake /usr/local/Cellar/make/*/bin/gmake; do
-            if [ -x "$p" ]; then
-              exec "$p" "$@"
-            fi
-          done
-
-          MAKE_XCRUN="$(xcrun --find make 2>/dev/null || true)"
-          if [ -n "$MAKE_XCRUN" ] && [ -x "$MAKE_XCRUN" ]; then
-            exec "$MAKE_XCRUN" "$@"
-          fi
-
-          echo "ERROR: make/gmake not found." >&2
-          exit 1
-          EOF
-          chmod +x "$WRAPPER"
-
-          perl -pi -e "s|buildToolPath = .*;|buildToolPath = $WRAPPER;|g" "$PROJECT_PBX"
-          echo "Patched buildToolPath:"
-          grep -n "buildToolPath" "$PROJECT_PBX"
+          # В проекте нет legacy-таргетов с buildToolPath (только PBXNativeTarget),
+          # поэтому патч make-обёртки не требуется. Шаг оставлен как no-op,
+          # чтобы не падать на grep под set -e.
+          echo "No buildToolPath entries in project.pbxproj — nothing to patch."
 
       - name: Archive app
         script: |

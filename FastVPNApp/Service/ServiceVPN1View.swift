@@ -110,6 +110,11 @@ struct ServiceVPN1View: View {
         } message: {
             Text(alertMessage)
         }
+        .alert("Ошибка подключения", isPresented: $viewModel.showErrorAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(viewModel.errorMessage ?? "Неизвестная ошибка")
+        }
         .sheet(isPresented: $showManualInput) {
             AddConfigurationView(
                 urlText: $manualInputText,

@@ -10,6 +10,8 @@ class ServiceVPN1ViewModel: ObservableObject {
     @Published var sentBytes: Int64 = 0
     @Published var connectionTime: TimeInterval = 0
     @Published var errorMessage: String?
+    /// Триггер нативного alert при ошибке подключения
+    @Published var showErrorAlert: Bool = false
 
     /// Список серверов (из подписки или одиночной ссылки)
     @Published var servers: [VPNConfiguration] = []
@@ -78,6 +80,7 @@ class ServiceVPN1ViewModel: ObservableObject {
             receivedBytes = 0
             sentBytes = 0
             errorMessage = message
+            showErrorAlert = true
         }
     }
 

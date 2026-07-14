@@ -1,6 +1,7 @@
 import Foundation
 import NetworkExtension
 import Combine
+import os
 
 enum VPNConnectionStatus {
     case disconnected
@@ -11,9 +12,13 @@ enum VPNConnectionStatus {
 }
 
 class VPNConnectionService: ObservableObject {
-    
+
     static let shared = VPNConnectionService()
-    
+
+    /// Логгер для отладки VPN-подключения. Виден в Console.app даже в TestFlight/Release сборках.
+    /// Фильтр в Console.app: subsystem = "com.gooseberry.colander" ИЛИ "VPNConnection".
+    private let logger = Logger(subsystem: "com.gooseberry.colander", category: "VPNConnection")
+
     @Published var connectionStatus: VPNConnectionStatus = .disconnected
     @Published var currentConfiguration: VPNConfiguration?
     
@@ -34,7 +39,7 @@ class VPNConnectionService: ObservableObject {
             guard let self = self else { return }
 
             if let error = error {
-                print("❌ loadAllFromPreferences: \(error.localizedDescription)")
+                logger.error("loadAllFromPreferences failed: \(error.localizedDescription, privacy: .public)")
                 DispatchQueue.main.async {
                     self.connectionStatus = .error(error.localizedDescription)
                 }
@@ -45,10 +50,10 @@ class VPNConnectionService: ObservableObject {
             // Ищем существующий менеджер или создаем новый
             if let manager = managers?.first {
                 self.packetTunnelProvider = manager
-                print("ℹ️ Найден существующий VPN менеджер")
+                logger.info("Найден существующий VPN менеджер")
             } else {
                 self.packetTunnelProvider = NETunnelProviderManager()
-                print("ℹ️ Создан новый VPN менеджер")
+                logger.info("Создан новый VPN менеджер")
             }
 
             self.observeVPNStatus()
@@ -60,13 +65,16 @@ class VPNConnectionService: ObservableObject {
     private func setupVPNManager(completion: @escaping (Error?) -> Void) {
         guard let manager = packetTunnelProvider,
               let config = currentConfiguration else {
-            print("⚠️ setupVPNManager: нет менеджера или конфигурации")
+            logger.warning("setupVPNManager: нет менеджера или конфигурации")
             completion(NSError(domain: "VPNConnectionService", code: 10,
                                userInfo: [NSLocalizedDescriptionKey: "Нет конфигурации для сохранения"]))
             return
         }
 
-        manager.localizedDescription = config.remark ?? "FastVPN - \(config.protocolType.displayName)"
+        // Декодируем remark из URL-encoding (в подписках часто содержит %-escaping эмодзи/кириллицы),
+        // иначе в настройках iOS будет виден сырой текст вида %F0%9F%87%А9...
+        let displayName = config.remark?.removingPercentEncoding ?? config.remark ?? "FastVPN"
+        manager.localizedDescription = displayName.isEmpty ? "FastVPN" : displayName
         manager.isEnabled = true
 
         // Сохраняем конфигурацию в App Group для передачи в PacketTunnelProvider
@@ -114,20 +122,20 @@ class VPNConnectionService: ObservableObject {
     private func saveVPNConfiguration(_ manager: NETunnelProviderManager, completion: @escaping (Error?) -> Void) {
         manager.saveToPreferences { [weak self] error in
             if let error = error {
-                print("❌ saveToPreferences: \(error.localizedDescription)")
+                logger.error("saveToPreferences failed: \(error.localizedDescription, privacy: .public)")
                 DispatchQueue.main.async {
                     self?.connectionStatus = .error(error.localizedDescription)
                 }
                 completion(error)
                 return
             }
-            print("✅ VPN конфигурация сохранена")
+            logger.notice("VPN конфигурация сохранена")
             // iOS требует loadFromPreferences после save перед startVPNTunnel
             manager.loadFromPreferences { loadError in
                 if let loadError = loadError {
-                    print("❌ loadFromPreferences: \(loadError.localizedDescription)")
+                    logger.error("loadFromPreferences failed: \(loadError.localizedDescription, privacy: .public)")
                 } else {
-                    print("✅ Менеджер перезагружен после сохранения")
+                    logger.notice("Менеджер перезагружен после сохранения")
                 }
                 completion(loadError)
             }
@@ -158,7 +166,7 @@ class VPNConnectionService: ObservableObject {
         guard let manager = packetTunnelProvider else { return }
 
         let status = manager.connection.status
-        print("📊 VPN статус изменился: \(status.rawValue)")
+        logger.notice("VPN статус изменился: \(status.rawValue)")
 
         DispatchQueue.main.async {
             switch status {
@@ -194,7 +202,7 @@ class VPNConnectionService: ObservableObject {
     /// Устанавливает уже разобранную конфигурацию (например, выбранную из списка серверов подписки)
     func setSelectedConfiguration(_ config: VPNConfiguration) {
         currentConfiguration = config
-        print("📦 Конфигурация установлена: \(config.address):\(config.port)")
+        logger.notice("Конфигурация установлена: \(config.address, privacy: .public):\(config.port)")
 
         // Сохраняем конфигурацию (без запуска). Если менеджер ещё не загружен — загрузим и сохраним.
         if packetTunnelProvider == nil {
@@ -216,11 +224,11 @@ class VPNConnectionService: ObservableObject {
     /// и только потом стартует туннель. Устраняет race condition (saveToPreferences → startVPNTunnel).
     func connect() {
         DispatchQueue.main.async { self.connectionStatus = .connecting }
-        print("🔌 connect: начинаю flow подключения...")
+        logger.notice("connect: начинаю flow подключения...")
 
         // Если менеджер ещё не загружен — загрузить и повторить connect
         guard let manager = packetTunnelProvider else {
-            print("⏳ packetTunnelProvider == nil, загружаю менеджер, затем повторю connect...")
+            logger.info("packetTunnelProvider == nil, загружаю менеджер, затем повторю connect...")
             loadVPNManager { [weak self] in
                 self?.connect()
             }
@@ -228,7 +236,7 @@ class VPNConnectionService: ObservableObject {
         }
 
         guard currentConfiguration != nil else {
-            print("⚠️ Нет конфигурации для подключения")
+            logger.warning("Нет конфигурации для подключения")
             DispatchQueue.main.async {
                 self.connectionStatus = .error("Конфигурация VPN не установлена")
             }
@@ -239,14 +247,14 @@ class VPNConnectionService: ObservableObject {
         setupVPNManager { [weak self] error in
             guard let self = self else { return }
             guard error == nil else {
-                print("❌ Не удалось сохранить конфигурацию перед запуском")
+                logger.error("Не удалось сохранить конфигурацию перед запуском")
                 return
             }
             do {
                 try manager.connection.startVPNTunnel(options: nil)
-                print("🚀 startVPNTunnel успешно вызван")
+                logger.notice("startVPNTunnel успешно вызван")
             } catch {
-                print("❌ startVPNTunnel failed: \(error.localizedDescription)")
+                logger.error("startVPNTunnel failed: \(error.localizedDescription, privacy: .public)")
                 DispatchQueue.main.async {
                     self.connectionStatus = .error("Ошибка подключения: \(error.localizedDescription)")
                 }
@@ -257,7 +265,7 @@ class VPNConnectionService: ObservableObject {
     /// Отключается от VPN
     func disconnect() {
         guard let manager = packetTunnelProvider else { return }
-        print("🛑 disconnect")
+        logger.notice("disconnect")
         manager.connection.stopVPNTunnel()
         DispatchQueue.main.async { self.connectionStatus = .disconnecting }
     }

@@ -121,21 +121,25 @@ class VPNConnectionService: ObservableObject {
     /// Сохраняет VPN конфигурацию и перезагружает менеджер (iOS требует loadFromPreferences после save).
     private func saveVPNConfiguration(_ manager: NETunnelProviderManager, completion: @escaping (Error?) -> Void) {
         manager.saveToPreferences { [weak self] error in
+            guard let self = self else {
+                completion(error)
+                return
+            }
             if let error = error {
-                logger.error("saveToPreferences failed: \(error.localizedDescription, privacy: .public)")
+                self.logger.error("saveToPreferences failed: \(error.localizedDescription, privacy: .public)")
                 DispatchQueue.main.async {
-                    self?.connectionStatus = .error(error.localizedDescription)
+                    self.connectionStatus = .error(error.localizedDescription)
                 }
                 completion(error)
                 return
             }
-            logger.notice("VPN конфигурация сохранена")
+            self.logger.notice("VPN конфигурация сохранена")
             // iOS требует loadFromPreferences после save перед startVPNTunnel
             manager.loadFromPreferences { loadError in
                 if let loadError = loadError {
-                    logger.error("loadFromPreferences failed: \(loadError.localizedDescription, privacy: .public)")
+                    self.logger.error("loadFromPreferences failed: \(loadError.localizedDescription, privacy: .public)")
                 } else {
-                    logger.notice("Менеджер перезагружен после сохранения")
+                    self.logger.notice("Менеджер перезагружен после сохранения")
                 }
                 completion(loadError)
             }

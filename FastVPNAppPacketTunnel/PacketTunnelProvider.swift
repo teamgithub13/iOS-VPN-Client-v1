@@ -72,7 +72,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     // MARK: - V2Ray (VLESS/VMess) Implementation
 
     private func startV2RayTunnel(config: VPNConfiguration, completionHandler: @escaping (Error?) -> Void) {
-        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: config.address)
+        // tunnelRemoteAddress должен быть IP-адресом, а не доменом (иначе iOS отвергает:
+        // "Invalid NETunnelNetworkSettings tunnelRemoteAddress"). Реальный сервер
+        // обрабатывается внутри V2Ray-туннеля, поэтому здесь — фиктивный приватный IP.
+        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: "127.0.0.1")
 
         // Настройка IPv4
         let ipv4Settings = NEIPv4Settings(addresses: ["10.0.0.2"], subnetMasks: ["255.255.255.0"])

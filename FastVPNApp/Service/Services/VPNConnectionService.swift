@@ -291,22 +291,26 @@ class VPNConnectionService: ObservableObject {
     func requestTrafficStats(completion: @escaping (_ received: UInt64, _ sent: UInt64) -> Void) {
         guard let manager = packetTunnelProvider,
               let session = manager.connection as? NETunnelProviderSession else {
+            logger.warning("requestTrafficStats: нет session/manager")
             completion(0, 0)
             return
         }
 
         do {
             // Пустое сообщение = команда «дай статистику»
-            try session.sendProviderMessage(Data()) { data in
+            try session.sendProviderMessage(Data()) { [weak self] data in
                 guard let data = data, data.count >= 8 else {
+                    self?.logger.warning("requestTrafficStats: пустой/короткий ответ от туннеля (data.count=\(data?.count ?? -1))")
                     completion(0, 0)
                     return
                 }
                 let received = data.withUnsafeBytes { $0.load(as: UInt32.self) }
                 let sent = data.withUnsafeBytes { $0.load(fromByteOffset: 4, as: UInt32.self) }
+                self?.logger.notice("requestTrafficStats: received=\(received), sent=\(sent)")
                 completion(UInt64(received), UInt64(sent))
             }
         } catch {
+            logger.error("requestTrafficStats: sendProviderMessage error: \(error.localizedDescription, privacy: .public)")
             completion(0, 0)
         }
     }

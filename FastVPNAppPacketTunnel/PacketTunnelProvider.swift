@@ -1,7 +1,10 @@
 import NetworkExtension
 import Foundation
+import os
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
+
+    private let logger = Logger(subsystem: "com.gooseberry.colander", category: "PacketTunnel")
 
     private var tunnelInterface: String?
     private var configuration: VPNConfiguration?
@@ -38,8 +41,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
         // IPC-канал от основного приложения. Пустое сообщение или "stats" — запрос статистики.
+        logger.notice("handleAppMessage: получен запрос, размер=\(messageData.count)")
         let command = String(data: messageData, encoding: .utf8)
         guard messageData.isEmpty || command == "stats" else {
+            logger.warning("handleAppMessage: неизвестная команда, игнорирую")
             completionHandler?(nil)
             return
         }
@@ -49,9 +54,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 completionHandler?(nil)
                 return
             }
-            let stats = await self.v2RayTunnel?.bytesTransferred()
+            guard let v2RayTunnel = self.v2RayTunnel else {
+                logger.warning("handleAppMessage: v2RayTunnel == nil, туннель ещё не запущен")
+                completionHandler?(nil)
+                return
+            }
+            let stats = await v2RayTunnel.bytesTransferred()
             let received: UInt32 = stats?.received ?? 0
             let sent: UInt32 = stats?.sent ?? 0
+            self.logger.notice("handleAppMessage: stats received=\(received), sent=\(sent)")
 
             // Бинарный формат: 2 × UInt32 little-endian (8 байт)
             var payload = [received, sent]

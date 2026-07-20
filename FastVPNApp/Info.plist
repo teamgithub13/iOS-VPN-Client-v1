@@ -12,6 +12,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>AlbertSans-Regular.ttf</string>
+		<string>AlbertSans-Medium.ttf</string>
 		<string>AlbertSans-SemiBold.ttf</string>
 	</array>
 </dict>

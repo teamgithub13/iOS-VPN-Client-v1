@@ -1,15 +1,13 @@
 import UIKit
 import SwiftUI
 
-class SpeedVPN1ViewController: UIViewController {
+class TipsVPN1ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let vc = UIHostingController(rootView: SpeedVPN1View(tipsAction: {
-            let tipsVC = TipsVPN1ViewController()
-            tipsVC.modalPresentationStyle = .fullScreen
-            self.present(tipsVC, animated: true)
+        let vc = UIHostingController(rootView: TipsVPN1View(dismissVPN1Action: {
+            self.dismiss(animated: true)
         }))
 
         let swiftuiView = vc.view
@@ -23,7 +21,7 @@ class SpeedVPN1ViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             swiftuiView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            swiftuiView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            swiftuiView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             swiftuiView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             swiftuiView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])

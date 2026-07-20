@@ -15,8 +15,10 @@
 		14621F632EF58ABE001538E3 /* ServerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F642EF58ABE001538E3 /* ServerRepository.swift */; };
 		14621F742EF58C4F001538E3 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14621F602EF58BF8001538E3 /* NetworkExtension.framework */; };
 		14621F7C2EF58C4F001538E3 /* FastVPNAppPacketTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 14621F732EF58C4F001538E3 /* FastVPNAppPacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		14794C76300964FF008CC271 /* LCLSpeedtest in Frameworks */ = {isa = PBXBuildFile; productRef = 14794C75300964FF008CC271 /* LCLSpeedtest */; };
 		14B2A9A22EF5879E00BED825 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2A99D2EF5879D00BED825 /* AppDelegate.swift */; };
 		14B2A9AC2EF58A8400BED825 /* ServiceVPN1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2A9AB2EF58A8400BED825 /* ServiceVPN1ViewModel.swift */; };
+		14B8A81D300EB9DD006468BE /* AlbertSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14B8A81C300EB9DD006468BE /* AlbertSans-Medium.ttf */; };
 		14BE27473000483600969FB2 /* AddConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BE27463000483400969FB2 /* AddConfigurationView.swift */; };
 		AC02037E2EF9D6CE00B48774 /* codemagic.yaml in Resources */ = {isa = PBXBuildFile; fileRef = AC02037D2EF9D6BF00B48774 /* codemagic.yaml */; };
 		AC5A00012F2A000000000001 /* SwiftyXrayKit in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00032F2A000000000003 /* SwiftyXrayKit */; };
@@ -55,6 +57,9 @@
 		E9C961842EF47823003DE138 /* SupportVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961832EF47823003DE138 /* SupportVPN1View.swift */; };
 		E9C961872EF47A95003DE138 /* MyRulesVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961862EF47A95003DE138 /* MyRulesVPN1ViewController.swift */; };
 		E9C961892EF47A98003DE138 /* MyRulesVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961882EF47A98003DE138 /* MyRulesVPN1View.swift */; };
+		E9C961A12EF18879003DE138 /* SpeedVPN1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961A02EF18879003DE138 /* SpeedVPN1ViewModel.swift */; };
+		E9C961A32EF18879003DE138 /* TipsVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961A22EF18879003DE138 /* TipsVPN1View.swift */; };
+		E9C961A52EF18879003DE138 /* TipsVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961A42EF18879003DE138 /* TipsVPN1ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +100,7 @@
 		14B2A99E2EF5879D00BED825 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14B2A9A32EF587B200BED825 /* FastVPNApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FastVPNApp.entitlements; sourceTree = "<group>"; };
 		14B2A9AB2EF58A8400BED825 /* ServiceVPN1ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceVPN1ViewModel.swift; sourceTree = "<group>"; };
+		14B8A81C300EB9DD006468BE /* AlbertSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AlbertSans-Medium.ttf"; sourceTree = "<group>"; };
 		14BE27463000483400969FB2 /* AddConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddConfigurationView.swift; sourceTree = "<group>"; };
 		AC02037D2EF9D6BF00B48774 /* codemagic.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = codemagic.yaml; sourceTree = "<group>"; };
 		E9C960D62EF1848D003DE138 /* FastVPNApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastVPNApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +141,9 @@
 		E9C961832EF47823003DE138 /* SupportVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportVPN1View.swift; sourceTree = "<group>"; };
 		E9C961862EF47A95003DE138 /* MyRulesVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRulesVPN1ViewController.swift; sourceTree = "<group>"; };
 		E9C961882EF47A98003DE138 /* MyRulesVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRulesVPN1View.swift; sourceTree = "<group>"; };
+		E9C961A02EF18879003DE138 /* SpeedVPN1ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedVPN1ViewModel.swift; sourceTree = "<group>"; };
+		E9C961A22EF18879003DE138 /* TipsVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsVPN1View.swift; sourceTree = "<group>"; };
+		E9C961A42EF18879003DE138 /* TipsVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsVPN1ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -174,6 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14794C76300964FF008CC271 /* LCLSpeedtest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +297,7 @@
 			children = (
 				E9C961052EF18748003DE138 /* AlbertSans-SemiBold.ttf */,
 				E9C9616A2EF47094003DE138 /* AlbertSans-Regular.ttf */,
+				14B8A81C300EB9DD006468BE /* AlbertSans-Medium.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -317,6 +328,9 @@
 			children = (
 				E9C961102EF18879003DE138 /* SpeedVPN1ViewController.swift */,
 				E9C961122EF1887B003DE138 /* SpeedVPN1View.swift */,
+				E9C961A02EF18879003DE138 /* SpeedVPN1ViewModel.swift */,
+				E9C961A22EF18879003DE138 /* TipsVPN1View.swift */,
+				E9C961A42EF18879003DE138 /* TipsVPN1ViewController.swift */,
 			);
 			path = Speed;
 			sourceTree = "<group>";
@@ -482,6 +496,7 @@
 			);
 			name = FastVPNApp;
 			packageProductDependencies = (
+				14794C75300964FF008CC271 /* LCLSpeedtest */,
 			);
 			productName = FastVPNApp;
 			productReference = E9C960D62EF1848D003DE138 /* FastVPNApp.app */;
@@ -516,6 +531,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				AC5A00022F2A000000000002 /* XCRemoteSwiftPackageReference "SwiftyXrayKit" */,
+				14794C74300964FF008CC271 /* XCRemoteSwiftPackageReference "lcl-speedtest" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E9C960D72EF1848D003DE138 /* Products */;
@@ -542,6 +558,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9C9616B2EF47094003DE138 /* AlbertSans-Regular.ttf in Resources */,
+				14B8A81D300EB9DD006468BE /* AlbertSans-Medium.ttf in Resources */,
 				E9C961062EF18748003DE138 /* AlbertSans-SemiBold.ttf in Resources */,
 				E9C960FB2EF18492003DE138 /* Assets.xcassets in Resources */,
 				E9C960FD2EF18492003DE138 /* LaunchScreen.storyboard in Resources */,
@@ -602,6 +619,9 @@
 				E9C961822EF47820003DE138 /* SupportVPN1ViewController.swift in Sources */,
 				E9C961752EF4736D003DE138 /* StatisticsVPN1View.swift in Sources */,
 				E9C961132EF1887B003DE138 /* SpeedVPN1View.swift in Sources */,
+				E9C961A12EF18879003DE138 /* SpeedVPN1ViewModel.swift in Sources */,
+				E9C961A32EF18879003DE138 /* TipsVPN1View.swift in Sources */,
+				E9C961A52EF18879003DE138 /* TipsVPN1ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -717,6 +737,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -758,6 +779,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -935,6 +957,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		14794C74300964FF008CC271 /* XCRemoteSwiftPackageReference "lcl-speedtest" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Local-Connectivity-Lab/lcl-speedtest.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.7;
+			};
+		};
 		AC5A00022F2A000000000002 /* XCRemoteSwiftPackageReference "SwiftyXrayKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dima-u/SwiftyXrayKit.git";
@@ -946,6 +976,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		14794C75300964FF008CC271 /* LCLSpeedtest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14794C74300964FF008CC271 /* XCRemoteSwiftPackageReference "lcl-speedtest" */;
+			productName = LCLSpeedtest;
+		};
 		AC5A00032F2A000000000003 /* SwiftyXrayKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AC5A00022F2A000000000002 /* XCRemoteSwiftPackageReference "SwiftyXrayKit" */;

@@ -239,9 +239,53 @@ class ServiceVPN1ViewModel: ObservableObject {
     }
 
     /// URL-декодирует remark (в подписках часто содержит %-escaping эмодзи/кириллицы)
+    /// и переводит русские названия серверов на английский.
     func decodedRemark(_ remark: String?) -> String {
         guard let remark = remark else { return "VPN Server" }
-        return remark.removingPercentEncoding ?? remark
+        let decoded = remark.removingPercentEncoding ?? remark
+        return Self.translateServerName(decoded)
+    }
+
+    /// Переводит русские названия из подписок на английский (флаги-эмодзи сохраняем).
+    /// Если перевода нет — возвращает оригинал.
+    private static func translateServerName(_ name: String) -> String {
+        var result = name
+        let translations: [String: String] = [
+            "Авто (лучший выбор)": "Auto (best choice)",
+            "Авто": "Auto",
+            "Германия (надёжный)": "Germany (reliable)",
+            "Германия": "Germany",
+            "Нидерланды": "Netherlands",
+            "Франция": "France",
+            "США": "USA",
+            "Великобритания": "United Kingdom",
+            "Швеция": "Sweden",
+            "Польша": "Poland",
+            "Чехия": "Czech Republic",
+            "Финляндия": "Finland",
+            "Латвия": "Latvia",
+            "Эстония": "Estonia",
+            "Литва": "Lithuania",
+            "Япония": "Japan",
+            "Сингапур": "Singapore",
+            "Гонконг": "Hong Kong",
+            "Турция": "Turkey",
+            "ОАЭ": "UAE",
+            "Канада": "Canada",
+            "Только YouTube. Без рекламы": "YouTube only. Ad-free",
+            "лучший выбор": "best choice",
+            "надёжный": "reliable",
+            "надежный": "reliable",
+            "резвервный": "reserve",
+            "резервный": "reserve",
+            "быстрый": "fast",
+            "только": "only",
+            "без рекламы": "ad-free"
+        ]
+        for (ru, en) in translations {
+            result = result.replacingOccurrences(of: ru, with: en)
+        }
+        return result
     }
 
     deinit {

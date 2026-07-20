@@ -257,11 +257,6 @@ struct ServiceVPN1View: View {
                         .font(.custom("AlbertSans-SemiBold", size: 14))
                         .foregroundStyle(.black)
                         .lineLimit(1)
-
-                    Text("\(server.address):\(server.port)")
-                        .font(.custom("AlbertSans-Regular", size: 12))
-                        .foregroundStyle(.gray)
-                        .lineLimit(1)
                 }
 
                 Spacer()

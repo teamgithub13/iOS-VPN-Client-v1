@@ -4,6 +4,16 @@ import WebKit
 struct TermsVPN1View: View {
     
     var dismissVPN1Action: (() -> Void)?
+
+    @ObservedObject private var remoteConfig = RemoteConfigService.shared
+
+    private var termsOfUseURL: URL? {
+        let fallback = "https://www.google.com/"
+        return URL(string: remoteConfig.string(
+            forKey: RemoteConfigService.termsOfUseURLKey,
+            defaultValue: fallback
+        ) ?? fallback)
+    }
     
     var body: some View {
         VStack(spacing: 20) {
@@ -25,7 +35,7 @@ struct TermsVPN1View: View {
                     .font(.custom("AlbertSans-SemiBold", size: 28))
             }
             
-            if let urlVPN1 = URL(string: "https://www.google.com/") {
+            if let urlVPN1 = termsOfUseURL {
                 WebViewVPN1(urlVPN1: urlVPN1)
                     .frame(maxHeight: .infinity)
                     .overlay(
@@ -36,6 +46,11 @@ struct TermsVPN1View: View {
             }
         }
         .padding()
+        .onAppear {
+            if !InternetAvailabilityService.shared.isConnected {
+                InternetAvailabilityService.shared.showOfflineAlert()
+            }
+        }
     }
 }
 

@@ -22,6 +22,19 @@
 		14BE27473000483600969FB2 /* AddConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BE27463000483400969FB2 /* AddConfigurationView.swift */; };
 		AC02037E2EF9D6CE00B48774 /* codemagic.yaml in Resources */ = {isa = PBXBuildFile; fileRef = AC02037D2EF9D6BF00B48774 /* codemagic.yaml */; };
 		AC5A00012F2A000000000001 /* SwiftyXrayKit in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00032F2A000000000003 /* SwiftyXrayKit */; };
+		AC5A00122F2A000000000012 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00112F2A000000000011 /* FirebaseAnalytics */; };
+		AC5A00142F2A000000000014 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00132F2A000000000013 /* FirebaseCrashlytics */; };
+		AC5A00162F2A000000000016 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00152F2A000000000015 /* FirebaseMessaging */; };
+		AC5A00182F2A000000000018 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00172F2A000000000017 /* FirebaseCore */; };
+		AC5A001B2F2A00000000001B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC5A001A2F2A00000000001A /* GoogleService-Info.plist */; };
+		AC5A001E2F2A00000000001E /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A001D2F2A00000000001D /* FirebaseRemoteConfig */; };
+		AC5A00212F2A000000000021 /* RemoteConfigService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A00202F2A000000000020 /* RemoteConfigService.swift */; };
+		AC5A00242F2A000000000024 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00232F2A000000000023 /* Lottie */; };
+		AC5A00262F2A000000000026 /* LoadingVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A00252F2A000000000025 /* LoadingVPN1ViewController.swift */; };
+		AC5A00272F2A000000000027 /* GeometricLoaderVpn1.json in Resources */ = {isa = PBXBuildFile; fileRef = AC5A00282F2A000000000028 /* GeometricLoaderVpn1.json */; };
+		AC5A00292F2A000000000029 /* KeitaroService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A002B2F2A00000000002B /* KeitaroService.swift */; };
+		AC5A002A2F2A00000000002A /* KeitaroWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A002C2F2A00000000002C /* KeitaroWebViewController.swift */; };
+		AC5A002E2F2A00000000002E /* InternetAvailabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A002F2F2A00000000002F /* InternetAvailabilityService.swift */; };
 		E9C960FA2EF18492003DE138 /* OnboardingVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C960F62EF18492003DE138 /* OnboardingVPN1ViewController.swift */; };
 		E9C960FB2EF18492003DE138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9C960EF2EF18492003DE138 /* Assets.xcassets */; };
 		E9C960FD2EF18492003DE138 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C960F22EF18492003DE138 /* LaunchScreen.storyboard */; };
@@ -60,6 +73,7 @@
 		E9C961A12EF18879003DE138 /* SpeedVPN1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961A02EF18879003DE138 /* SpeedVPN1ViewModel.swift */; };
 		E9C961A32EF18879003DE138 /* TipsVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961A22EF18879003DE138 /* TipsVPN1View.swift */; };
 		E9C961A52EF18879003DE138 /* TipsVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961A42EF18879003DE138 /* TipsVPN1ViewController.swift */; };
+		E9C961A72EF18879003DE138 /* StatisticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C961A62EF18879003DE138 /* StatisticsRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +117,13 @@
 		14B8A81C300EB9DD006468BE /* AlbertSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AlbertSans-Medium.ttf"; sourceTree = "<group>"; };
 		14BE27463000483400969FB2 /* AddConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddConfigurationView.swift; sourceTree = "<group>"; };
 		AC02037D2EF9D6BF00B48774 /* codemagic.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = codemagic.yaml; sourceTree = "<group>"; };
+		AC5A001A2F2A00000000001A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC5A00202F2A000000000020 /* RemoteConfigService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigService.swift; sourceTree = "<group>"; };
+		AC5A00252F2A000000000025 /* LoadingVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVPN1ViewController.swift; sourceTree = "<group>"; };
+		AC5A00282F2A000000000028 /* GeometricLoaderVpn1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = GeometricLoaderVpn1.json; sourceTree = "<group>"; };
+		AC5A002B2F2A00000000002B /* KeitaroService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeitaroService.swift; sourceTree = "<group>"; };
+		AC5A002C2F2A00000000002C /* KeitaroWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeitaroWebViewController.swift; sourceTree = "<group>"; };
+		AC5A002F2F2A00000000002F /* InternetAvailabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetAvailabilityService.swift; sourceTree = "<group>"; };
 		E9C960D62EF1848D003DE138 /* FastVPNApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastVPNApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9C960EE2EF18492003DE138 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9C960EF2EF18492003DE138 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -144,6 +165,7 @@
 		E9C961A02EF18879003DE138 /* SpeedVPN1ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedVPN1ViewModel.swift; sourceTree = "<group>"; };
 		E9C961A22EF18879003DE138 /* TipsVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsVPN1View.swift; sourceTree = "<group>"; };
 		E9C961A42EF18879003DE138 /* TipsVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsVPN1ViewController.swift; sourceTree = "<group>"; };
+		E9C961A62EF18879003DE138 /* StatisticsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -184,6 +206,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				14794C76300964FF008CC271 /* LCLSpeedtest in Frameworks */,
+				AC5A00242F2A000000000024 /* Lottie in Frameworks */,
+				AC5A00122F2A000000000012 /* FirebaseAnalytics in Frameworks */,
+				AC5A00142F2A000000000014 /* FirebaseCrashlytics in Frameworks */,
+				AC5A00162F2A000000000016 /* FirebaseMessaging in Frameworks */,
+				AC5A00182F2A000000000018 /* FirebaseCore in Frameworks */,
+				AC5A001E2F2A00000000001E /* FirebaseRemoteConfig in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +233,9 @@
 				14621F522EF58ABE001538E3 /* VPNConfigurationService.swift */,
 				14621F532EF58ABE001538E3 /* VPNConnectionService.swift */,
 				14621F622EF58ABE001538E3 /* SubscriptionService.swift */,
+				AC5A00202F2A000000000020 /* RemoteConfigService.swift */,
+				AC5A002B2F2A00000000002B /* KeitaroService.swift */,
+				AC5A002F2F2A00000000002F /* InternetAvailabilityService.swift */,
 				14621F642EF58ABE001538E3 /* ServerRepository.swift */,
 			);
 			path = Services;
@@ -260,7 +291,9 @@
 				E9C960FF2EF18495003DE138 /* Onboarding */,
 				E9C961022EF1863F003DE138 /* Application */,
 				E9C961032EF18712003DE138 /* Resources */,
+				AC5A002D2F2A00000000002D /* Web */,
 				E9C960F02EF18492003DE138 /* Info.plist */,
+				AC5A001A2F2A00000000001A /* GoogleService-Info.plist */,
 			);
 			path = FastVPNApp;
 			sourceTree = "<group>";
@@ -278,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				E9C960EE2EF18492003DE138 /* AppDelegate.swift */,
+				AC5A00252F2A000000000025 /* LoadingVPN1ViewController.swift */,
 				E9C960F22EF18492003DE138 /* LaunchScreen.storyboard */,
 			);
 			path = Application;
@@ -288,8 +322,17 @@
 			children = (
 				E9C961042EF1873F003DE138 /* Fonts */,
 				E9C960EF2EF18492003DE138 /* Assets.xcassets */,
+				AC5A00282F2A000000000028 /* GeometricLoaderVpn1.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		AC5A002D2F2A00000000002D /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				AC5A002C2F2A00000000002C /* KeitaroWebViewController.swift */,
+			);
+			path = Web;
 			sourceTree = "<group>";
 		};
 		E9C961042EF1873F003DE138 /* Fonts */ = {
@@ -414,6 +457,7 @@
 			children = (
 				E9C961722EF4736A003DE138 /* StatisticsVPN1ViewController.swift */,
 				E9C961742EF4736D003DE138 /* StatisticsVPN1View.swift */,
+				E9C961A62EF18879003DE138 /* StatisticsRepository.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -488,6 +532,7 @@
 				E9C960D32EF1848D003DE138 /* Frameworks */,
 				E9C960D42EF1848D003DE138 /* Resources */,
 				14621F6E2EF58BF8001538E3 /* Embed Foundation Extensions */,
+				AC5A001C2F2A00000000001C /* Firebase Crashlytics Run Script */,
 			);
 			buildRules = (
 			);
@@ -497,6 +542,12 @@
 			name = FastVPNApp;
 			packageProductDependencies = (
 				14794C75300964FF008CC271 /* LCLSpeedtest */,
+				AC5A00112F2A000000000011 /* FirebaseAnalytics */,
+				AC5A00132F2A000000000013 /* FirebaseCrashlytics */,
+				AC5A00152F2A000000000015 /* FirebaseMessaging */,
+				AC5A00172F2A000000000017 /* FirebaseCore */,
+				AC5A001D2F2A00000000001D /* FirebaseRemoteConfig */,
+				AC5A00232F2A000000000023 /* Lottie */,
 			);
 			productName = FastVPNApp;
 			productReference = E9C960D62EF1848D003DE138 /* FastVPNApp.app */;
@@ -532,6 +583,8 @@
 			packageReferences = (
 				AC5A00022F2A000000000002 /* XCRemoteSwiftPackageReference "SwiftyXrayKit" */,
 				14794C74300964FF008CC271 /* XCRemoteSwiftPackageReference "lcl-speedtest" */,
+				AC5A00102F2A000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				AC5A00222F2A000000000022 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E9C960D72EF1848D003DE138 /* Products */;
@@ -562,10 +615,35 @@
 				E9C961062EF18748003DE138 /* AlbertSans-SemiBold.ttf in Resources */,
 				E9C960FB2EF18492003DE138 /* Assets.xcassets in Resources */,
 				E9C960FD2EF18492003DE138 /* LaunchScreen.storyboard in Resources */,
+				AC5A001B2F2A00000000001B /* GoogleService-Info.plist in Resources */,
+				AC5A00272F2A000000000027 /* GeometricLoaderVpn1.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AC5A001C2F2A00000000001C /* Firebase Crashlytics Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(DWARF_DSYM_FOLDER_PATH)/$(DWARF_DSYM_FILE_NAME)/Contents/Resources/DWARF/$(TARGET_NAME)",
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Firebase Crashlytics Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		14621F6F2EF58C4F001538E3 /* Sources */ = {
@@ -618,6 +696,12 @@
 				E9C961182EF1888B003DE138 /* SettingsVPN1View.swift in Sources */,
 				E9C961822EF47820003DE138 /* SupportVPN1ViewController.swift in Sources */,
 				E9C961752EF4736D003DE138 /* StatisticsVPN1View.swift in Sources */,
+				E9C961A72EF18879003DE138 /* StatisticsRepository.swift in Sources */,
+				AC5A00212F2A000000000021 /* RemoteConfigService.swift in Sources */,
+				AC5A00262F2A000000000026 /* LoadingVPN1ViewController.swift in Sources */,
+				AC5A00292F2A000000000029 /* KeitaroService.swift in Sources */,
+				AC5A002A2F2A00000000002A /* KeitaroWebViewController.swift in Sources */,
+				AC5A002E2F2A00000000002E /* InternetAvailabilityService.swift in Sources */,
 				E9C961132EF1887B003DE138 /* SpeedVPN1View.swift in Sources */,
 				E9C961A12EF18879003DE138 /* SpeedVPN1ViewModel.swift in Sources */,
 				E9C961A32EF18879003DE138 /* TipsVPN1View.swift in Sources */,
@@ -728,11 +812,15 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FastVPNApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Fast client config app";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Приложению требуется доступ к локальной сети для работы VPN";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please provide access to the camera to add photos and keep track of them.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "The application needs access to a local network to operate a VPN";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please provide access to the photo gallery to add photos to the gallery.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please provide access to the photo gallery to add photos to the gallery.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -769,12 +857,17 @@
 				CODE_SIGN_ENTITLEMENTS = FastVPNApp/FastVPNApp.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FastVPNApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Fast client config app";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Приложению требуется доступ к локальной сети для работы VPN";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please provide access to the camera to add photos and keep track of them.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "The application needs access to a local network to operate a VPN";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please provide access to the photo gallery to add photos to the gallery.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please provide access to the photo gallery to add photos to the gallery.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -973,6 +1066,22 @@
 				minimumVersion = 1.1.0;
 			};
 		};
+		AC5A00102F2A000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+		AC5A00222F2A000000000022 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -985,6 +1094,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AC5A00022F2A000000000002 /* XCRemoteSwiftPackageReference "SwiftyXrayKit" */;
 			productName = SwiftyXrayKit;
+		};
+		AC5A00112F2A000000000011 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC5A00102F2A000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		AC5A00132F2A000000000013 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC5A00102F2A000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		AC5A00152F2A000000000015 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC5A00102F2A000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		AC5A00172F2A000000000017 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC5A00102F2A000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		AC5A001D2F2A00000000001D /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC5A00102F2A000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		AC5A00232F2A000000000023 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC5A00222F2A000000000022 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

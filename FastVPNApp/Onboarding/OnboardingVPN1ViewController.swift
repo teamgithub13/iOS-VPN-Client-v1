@@ -7,9 +7,14 @@ class OnboardingVPN1ViewController: UIViewController {
         super.viewDidLoad()
         
         let vc = UIHostingController(rootView: OnboardingVPN1View(tabBarVPN1Action: {
+            RemoteConfigService.shared.markOnboardingCompleted()
+
+            guard let window = self.view.window else { return }
             let tabBarVPN1VC = TabBarVPN1ViewController()
-            tabBarVPN1VC.modalPresentationStyle = .fullScreen
-            self.present(tabBarVPN1VC, animated: true)
+            tabBarVPN1VC.initialSelectedIndex = RemoteConfigService.shared.initialTabBarScreenIndex()
+            UIView.transition(with: window, duration: 0.25, options: .transitionCrossDissolve) {
+                window.rootViewController = tabBarVPN1VC
+            }
         }))
         
         let swiftuiView = vc.view
@@ -33,4 +38,3 @@ class OnboardingVPN1ViewController: UIViewController {
 
 
 }
-

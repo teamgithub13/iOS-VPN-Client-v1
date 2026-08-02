@@ -46,6 +46,11 @@ final class SpeedVPN1ViewModel: ObservableObject {
     func startTest() {
         guard !isTesting else { return }
 
+        guard InternetAvailabilityService.shared.isConnected else {
+            InternetAvailabilityService.shared.showOfflineAlert()
+            return
+        }
+
         // Сброс
         download = 0
         upload = 0

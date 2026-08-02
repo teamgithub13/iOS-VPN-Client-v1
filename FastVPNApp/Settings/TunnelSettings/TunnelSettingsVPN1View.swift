@@ -236,6 +236,20 @@ struct TunnelSettingsVPN1View: View {
                         Spacer()
                         
                         VStack {
+                            HStack {
+                                Spacer()
+
+                                Button {
+                                    withAnimation {
+                                        showTypeIpVPN1 = false
+                                    }
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .frame(width: 24, height: 24)
+                                        .foregroundStyle(Color.black)
+                                }
+
+                            }
                             ForEach(typeIpsVPN1, id: \.self) { itemVPN1 in
                                 HStack {
                                     Image(typeIpVPN1 == itemVPN1 ? "circleFilledVPN1" : "circleEmptyVPN1")

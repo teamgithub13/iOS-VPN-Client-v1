@@ -2,18 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
 	<key>NSVPNUsageDescription</key>
-	<string>Приложению требуется доступ к VPN для защиты вашего интернет-соединения</string>
+	<string>VPN access is required to protect your internet connection</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AlbertSans-Regular.ttf</string>
 		<string>AlbertSans-Medium.ttf</string>
 		<string>AlbertSans-SemiBold.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
 	</array>
 </dict>
 </plist>

@@ -25,7 +25,7 @@ final class SubscriptionService {
     func resolve(_ input: String) async -> ImportResult {
         let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
-            return .failure("Пустой ввод")
+            return .failure("Empty input")
         }
 
         // 1) Одиночная VPN-ссылка
@@ -33,7 +33,7 @@ final class SubscriptionService {
             if let config = VPNConfigurationService.shared.parse(trimmed) {
                 return .single(config)
             }
-            return .failure("Не удалось разобрать VPN-ссылку")
+            return .failure("Unable to parse VPN link")
         }
 
         // 2) HTTP(S)-подписка
@@ -42,7 +42,7 @@ final class SubscriptionService {
             do {
                 let servers = try await fetch(trimmed)
                 if servers.isEmpty {
-                    return .failure("В подписке не найдено поддерживаемых серверов (VLESS/VMess)")
+                    return .failure("No supported servers found in the subscription (VLESS/VMess)")
                 }
                 return .servers(servers)
             } catch {
@@ -53,7 +53,7 @@ final class SubscriptionService {
         // 3) Возможно — base64-блок (например, вставили декодированную подписку целиком)
         let parsed = parseBody(trimmed)
         if parsed.isEmpty {
-            return .failure("Неподдерживаемый формат. Поддерживаются: VLESS, VMess или ссылка на подписку (https)")
+            return .failure("Unsupported format. Supported: VLESS, VMess, or a subscription link (https)")
         }
         return .servers(parsed)
     }
@@ -169,13 +169,13 @@ enum SubscriptionError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Неверный URL подписки"
+            return "Invalid subscription URL"
         case .invalidResponse:
-            return "Некорректный ответ сервера подписки"
+            return "Invalid subscription server response"
         case .httpError(let code):
-            return "Сервер подписки вернул HTTP \(code)"
+            return "Subscription server returned HTTP \(code)"
         case .invalidEncoding:
-            return "Не удалось прочитать ответ подписки (кодировка)"
+            return "Unable to read subscription response (encoding)"
         }
     }
 }

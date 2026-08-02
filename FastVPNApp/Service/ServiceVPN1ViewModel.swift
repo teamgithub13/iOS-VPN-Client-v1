@@ -25,6 +25,8 @@ class ServiceVPN1ViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var connectionTimer: Timer?
     private var startTime: Date?
+    /// Счётчик секунд для порционного добавления трафика (раз в 60с)
+    private var secondsElapsed: Int = 0
 
     init() {
         setupObservers()
@@ -66,6 +68,13 @@ class ServiceVPN1ViewModel: ObservableObject {
         case .disconnected:
             isConnected = false
             stopConnectionTimer()
+            // Сохраняем накопленный за сессию трафик в Proxy traffic volume (Statistics)
+            StatisticsRepository.shared.addSessionTraffic(
+                download: receivedBytes,
+                upload: sentBytes
+            )
+            // Traffic volume directly — отдельная рандомная прибавка
+            StatisticsRepository.shared.addRandomSessionTraffic()
             connectionTime = 0
             receivedBytes = 0
             sentBytes = 0
@@ -86,15 +95,19 @@ class ServiceVPN1ViewModel: ObservableObject {
 
     private func startConnectionTimer() {
         stopConnectionTimer()
+        secondsElapsed = 0
         connectionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self, let startTime = self.startTime else { return }
             self.connectionTime = Date().timeIntervalSince(startTime)
-            // Запрашиваем статистику трафика у туннеля
-            self.vpnService.requestTrafficStats { received, sent in
-                DispatchQueue.main.async {
-                    self.receivedBytes = Int64(received)
-                    self.sentBytes = Int64(sent)
-                }
+            self.secondsElapsed += 1
+
+            // Каждые 10 секунд добавляем порцию трафика (симуляция) с широким разбросом:
+            // received ~100 КБ–2 МБ, sent ~50–800 КБ.
+            if self.secondsElapsed % 10 == 0 {
+                let receivedBytes = Int64.random(in: 100_000...2_000_000)
+                let sentBytes = Int64.random(in: 50_000...800_000)
+                self.receivedBytes += receivedBytes
+                self.sentBytes += sentBytes
             }
         }
     }
@@ -113,6 +126,7 @@ class ServiceVPN1ViewModel: ObservableObject {
     var openSupport: (() -> Void)?
 
     func onTapGetKey() {
+        guard requireInternet() else { return }
         guard let url = URL(string: "https://www.google.com") else { return }
         openSafari?(url)
     }
@@ -125,6 +139,17 @@ class ServiceVPN1ViewModel: ObservableObject {
 
     /// Переключает состояние VPN подключения
     func toggleVPN() {
+        if case .connected = connectionStatus {
+            vpnService.toggleConnection()
+            return
+        }
+        if case .connecting = connectionStatus {
+            vpnService.toggleConnection()
+            return
+        }
+
+        guard requireInternet() else { return }
+
         // Если конфигурация не выбрана — выбираем первый доступный сервер
         if vpnService.currentConfiguration == nil {
             if !servers.isEmpty {
@@ -147,7 +172,14 @@ class ServiceVPN1ViewModel: ObservableObject {
     func importConfiguration(from input: String, customName: String? = nil) {
         let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
-            errorMessage = "Пустой ввод"
+            errorMessage = "Empty input"
+            return
+        }
+
+        if let url = URL(string: trimmed),
+           let scheme = url.scheme?.lowercased(),
+           ["http", "https"].contains(scheme),
+           !requireInternet() {
             return
         }
 
@@ -192,7 +224,7 @@ class ServiceVPN1ViewModel: ObservableObject {
             select(at: 0)
             errorMessage = nil
         case .servers:
-            errorMessage = "В подписке не найдено поддерживаемых серверов (VLESS/VMess)"
+            errorMessage = "No supported servers found in the subscription (VLESS/VMess)"
         case .failure(let message):
             errorMessage = message
         }
@@ -209,8 +241,9 @@ class ServiceVPN1ViewModel: ObservableObject {
 
     /// Обновление подписки по сохранённому URL
     func refreshSubscription() {
+        guard requireInternet() else { return }
         guard let url = repository.loadSubscriptionURL() else {
-            errorMessage = "URL подписки не сохранён"
+            errorMessage = "Subscription URL is not saved"
             return
         }
         importConfiguration(from: url)
@@ -219,6 +252,15 @@ class ServiceVPN1ViewModel: ObservableObject {
     /// Есть ли сохранённая подписка для обновления
     var hasSavedSubscription: Bool {
         repository.loadSubscriptionURL() != nil
+    }
+
+    @discardableResult
+    private func requireInternet() -> Bool {
+        guard InternetAvailabilityService.shared.isConnected else {
+            InternetAvailabilityService.shared.showOfflineAlert()
+            return false
+        }
+        return true
     }
 
     // MARK: - Formatting
@@ -230,11 +272,15 @@ class ServiceVPN1ViewModel: ObservableObject {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 
-    /// Форматирует байты в читаемый формат
+    /// Форматирует байты в читаемый формат (KB, MB, GB). Для нуля — «0 KB».
     func formatBytes(_ bytes: Int64) -> String {
+        if bytes <= 0 {
+            return "0 KB"
+        }
         let formatter = ByteCountFormatter()
         formatter.allowedUnits = [.useKB, .useMB, .useGB]
         formatter.countStyle = .binary
+        formatter.zeroPadsFractionDigits = false
         return formatter.string(fromByteCount: bytes)
     }
 

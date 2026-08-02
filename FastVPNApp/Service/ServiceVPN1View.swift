@@ -8,7 +8,7 @@ struct ServiceVPN1View: View {
     @State private var manualInputText = ""
     @State private var configNameText = ""
     @State private var showAlert = false
-    @State private var alertTitle = "Ошибка"
+    @State private var alertTitle = "Error"
     @State private var alertMessage = ""
 
     init(
@@ -110,10 +110,10 @@ struct ServiceVPN1View: View {
         } message: {
             Text(alertMessage)
         }
-        .alert("Ошибка подключения", isPresented: $viewModel.showErrorAlert) {
+        .alert("Connection Error", isPresented: $viewModel.showErrorAlert) {
             Button("OK", role: .cancel) { }
         } message: {
-            Text(viewModel.errorMessage ?? "Неизвестная ошибка")
+            Text(viewModel.errorMessage ?? "Unknown error")
         }
         .sheet(isPresented: $showManualInput) {
             AddConfigurationView(
@@ -292,7 +292,7 @@ struct ServiceVPN1View: View {
             VStack(spacing: 12) {
                 ProgressView()
                     .scaleEffect(1.4)
-                Text("Загрузка подписки…")
+                Text("Loading subscription…")
                     .font(.custom("AlbertSans-SemiBold", size: 14))
                     .foregroundStyle(.white)
             }
@@ -309,8 +309,8 @@ struct ServiceVPN1View: View {
     private func copyFromClipboard() {
         guard let clipboardText = UIPasteboard.general.string,
               !clipboardText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            alertTitle = "Ошибка"
-            alertMessage = "Буфер обмена пуст"
+            alertTitle = "Error"
+            alertMessage = "Clipboard is empty"
             showAlert = true
             return
         }

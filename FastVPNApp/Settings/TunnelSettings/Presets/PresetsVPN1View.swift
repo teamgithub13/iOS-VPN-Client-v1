@@ -53,11 +53,26 @@ struct PresetsVPN1View: View {
                 Text("My rules")
                     .font(.custom("AlbertSans-Regular", size: 16))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
-                ForEach(rulesVPN1) { itemVPN1 in
-                    Text(itemVPN1.textVPN1)
+
+                if rulesVPN1.isEmpty {
+                    Text("List is empty")
                         .font(.custom("AlbertSans-Regular", size: 16))
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundStyle(Color.black)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 80)
+                        .cornerRadius(20)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .inset(by: 0.50)
+                                .stroke(Color(red: 0.87, green: 0.87, blue: 0.87), lineWidth: 0.50)
+                        )
+                } else {
+                    ForEach(rulesVPN1) { itemVPN1 in
+                        Text(itemVPN1.textVPN1)
+                            .font(.custom("AlbertSans-Regular", size: 16))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
             }
             
@@ -65,6 +80,7 @@ struct PresetsVPN1View: View {
         }
         .padding()
         .onAppear {
+            rulesVPN1 = []
             if let dataVPN1 = UserDefaults.standard.data(forKey: "DirectlyDomainsVPN1"),
                let decodedItemsVPN1 = try? JSONDecoder().decode([DomainItemVPN1].self, from: dataVPN1) {
                 rulesVPN1 += decodedItemsVPN1

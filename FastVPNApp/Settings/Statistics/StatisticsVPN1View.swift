@@ -1,52 +1,33 @@
 import SwiftUI
 
 struct StatisticsVPN1View: View {
-    
+
     var dismissVPN1Action: (() -> Void)?
-    
+
     var body: some View {
         VStack(spacing: 25) {
-            ZStack {
-                HStack {
-                    Button {
-                        dismissVPN1Action?()
-                    } label: {
-                        Image("dismissVPN1")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 40, height: 40)
-                    }
-                    
-                    Spacer()
-                }
-                
-                Text("Statistics")
-                    .font(.custom("AlbertSans-SemiBold", size: 28))
-            }
-            
-            VStack {
+            header
+
+            // Proxy traffic volume — накопленный трафик из всех VPN-сессий
+            VStack(spacing: 8) {
                 Text("Proxy traffic volume")
-                    .font(.custom("AlbertSans-Regular", size: 16))
+                    .font(.custom("AlbertSans-SemiBold", size: 16))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 VStack(spacing: 25) {
                     HStack {
                         Text("Download")
                             .font(.custom("AlbertSans-Regular", size: 16))
-                        
                         Spacer()
-                        
-                        Text("0b")
+                        Text(formatBytes(StatisticsRepository.shared.proxyDownloadBytes))
                             .font(.custom("AlbertSans-Regular", size: 16))
                     }
-                    
+
                     HStack {
                         Text("Upload")
                             .font(.custom("AlbertSans-Regular", size: 16))
-                        
                         Spacer()
-                        
-                        Text("0b")
+                        Text(formatBytes(StatisticsRepository.shared.proxyUploadBytes))
                             .font(.custom("AlbertSans-Regular", size: 16))
                     }
                 }
@@ -57,30 +38,27 @@ struct StatisticsVPN1View: View {
                         .shadow(color: .black.opacity(0.05), radius: 30)
                 )
             }
-            
-            VStack {
+
+            // Traffic volume directly — накопительные данные (растут после каждого подключения)
+            VStack(spacing: 8) {
                 Text("Traffic volume directly")
                     .font(.custom("AlbertSans-Regular", size: 16))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 VStack(spacing: 25) {
                     HStack {
                         Text("Download")
                             .font(.custom("AlbertSans-Regular", size: 16))
-                        
                         Spacer()
-                        
-                        Text("0b")
+                        Text(formatBytes(StatisticsRepository.shared.directDownloadBytes))
                             .font(.custom("AlbertSans-Regular", size: 16))
                     }
-                    
+
                     HStack {
                         Text("Upload")
                             .font(.custom("AlbertSans-Regular", size: 16))
-                        
                         Spacer()
-                        
-                        Text("0b")
+                        Text(formatBytes(StatisticsRepository.shared.directUploadBytes))
                             .font(.custom("AlbertSans-Regular", size: 16))
                     }
                 }
@@ -91,10 +69,46 @@ struct StatisticsVPN1View: View {
                         .shadow(color: .black.opacity(0.05), radius: 30)
                 )
             }
-            
+
             Spacer()
         }
         .padding()
+    }
+
+    // MARK: - Header
+
+    private var header: some View {
+        ZStack {
+            HStack {
+                Button {
+                    dismissVPN1Action?()
+                } label: {
+                    Image("dismissVPN1")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                }
+
+                Spacer()
+            }
+
+            Text("Statistics")
+                .font(.custom("AlbertSans-SemiBold", size: 28))
+        }
+    }
+
+    // MARK: - Formatting
+
+    /// Форматирует байты в читаемый вид (KB, MB, GB). Для нуля — «0 KB».
+    private func formatBytes(_ bytes: Int64) -> String {
+        if bytes <= 0 {
+            return "0 KB"
+        }
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = [.useKB, .useMB, .useGB]
+        formatter.countStyle = .binary
+        formatter.zeroPadsFractionDigits = false
+        return formatter.string(fromByteCount: bytes)
     }
 }
 

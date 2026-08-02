@@ -3,6 +3,16 @@ import SwiftUI
 struct PrivacyPolicyVPN1View: View {
     
     var dismissVPN1Action: (() -> Void)?
+
+    @ObservedObject private var remoteConfig = RemoteConfigService.shared
+
+    private var privacyPolicyURL: URL? {
+        let fallback = "https://www.dzen.ru/"
+        return URL(string: remoteConfig.string(
+            forKey: RemoteConfigService.privacyPolicyURLKey,
+            defaultValue: fallback
+        ) ?? fallback)
+    }
     
     var body: some View {
         VStack(spacing: 20) {
@@ -24,7 +34,7 @@ struct PrivacyPolicyVPN1View: View {
                     .font(.custom("AlbertSans-SemiBold", size: 28))
             }
             
-            if let urlVPN1 = URL(string: "https://www.dzen.ru/") {
+            if let urlVPN1 = privacyPolicyURL {
                 WebViewVPN1(urlVPN1: urlVPN1)
                     .frame(maxHeight: .infinity)
                     .overlay(
@@ -35,6 +45,11 @@ struct PrivacyPolicyVPN1View: View {
             }
         }
         .padding()
+        .onAppear {
+            if !InternetAvailabilityService.shared.isConnected {
+                InternetAvailabilityService.shared.showOfflineAlert()
+            }
+        }
     }
 }
 

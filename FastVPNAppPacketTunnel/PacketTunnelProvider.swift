@@ -14,7 +14,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         // Получаем конфигурацию из UserDefaults (переданную из основного приложения)
         guard let configData = UserDefaults(suiteName: "group.com.gooseberry.colander")?.data(forKey: "com.fastvpn.configuration"),
               let config = try? JSONDecoder().decode(VPNConfiguration.self, from: configData) else {
-            completionHandler(NSError(domain: "PacketTunnelProvider", code: 1, userInfo: [NSLocalizedDescriptionKey: "Конфигурация VPN не найдена"]))
+            completionHandler(NSError(domain: "PacketTunnelProvider", code: 1, userInfo: [NSLocalizedDescriptionKey: "VPN configuration not found"]))
             return
         }
 
@@ -25,7 +25,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         case .vless, .vmess:
             startV2RayTunnel(config: config, completionHandler: completionHandler)
         case .unknown:
-            completionHandler(NSError(domain: "PacketTunnelProvider", code: 2, userInfo: [NSLocalizedDescriptionKey: "Неизвестный тип протокола"]))
+            completionHandler(NSError(domain: "PacketTunnelProvider", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unknown protocol type"]))
         }
     }
 
@@ -41,10 +41,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
         // IPC-канал от основного приложения. Пустое сообщение или "stats" — запрос статистики.
-        logger.notice("handleAppMessage: получен запрос, размер=\(messageData.count)")
+        logger.notice("handleAppMessage: request received, size=\(messageData.count)")
         let command = String(data: messageData, encoding: .utf8)
         guard messageData.isEmpty || command == "stats" else {
-            logger.warning("handleAppMessage: неизвестная команда, игнорирую")
+            logger.warning("handleAppMessage: unknown command, ignoring")
             completionHandler?(nil)
             return
         }
@@ -55,7 +55,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 return
             }
             guard let v2RayTunnel = self.v2RayTunnel else {
-                logger.warning("handleAppMessage: v2RayTunnel == nil, туннель ещё не запущен")
+            logger.warning("handleAppMessage: v2RayTunnel == nil, tunnel has not started yet")
                 completionHandler?(nil)
                 return
             }

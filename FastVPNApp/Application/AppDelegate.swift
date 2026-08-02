@@ -3,6 +3,7 @@ import StoreKit
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
+import AppMetricaCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Firebase
         FirebaseApp.configure()
+
+        // AppMetrica
+        if let configuration = AppMetricaConfiguration(apiKey: "a73f7779-8e1d-4a95-bd35-bd9d86f64556") {
+            AppMetrica.activate(with: configuration)
+        }
 
         // Push notifications (FCM)
         UNUserNotificationCenter.current().delegate = self

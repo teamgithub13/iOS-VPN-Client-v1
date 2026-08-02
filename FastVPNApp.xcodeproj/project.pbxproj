@@ -35,6 +35,7 @@
 		AC5A00292F2A000000000029 /* KeitaroService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A002B2F2A00000000002B /* KeitaroService.swift */; };
 		AC5A002A2F2A00000000002A /* KeitaroWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A002C2F2A00000000002C /* KeitaroWebViewController.swift */; };
 		AC5A002E2F2A00000000002E /* InternetAvailabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A002F2F2A00000000002F /* InternetAvailabilityService.swift */; };
+		AC5A00322F2A000000000032 /* AppMetricaCore in Frameworks */ = {isa = PBXBuildFile; productRef = AC5A00312F2A000000000031 /* AppMetricaCore */; };
 		E9C960FA2EF18492003DE138 /* OnboardingVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C960F62EF18492003DE138 /* OnboardingVPN1ViewController.swift */; };
 		E9C960FB2EF18492003DE138 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9C960EF2EF18492003DE138 /* Assets.xcassets */; };
 		E9C960FD2EF18492003DE138 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C960F22EF18492003DE138 /* LaunchScreen.storyboard */; };
@@ -212,6 +213,7 @@
 				AC5A00162F2A000000000016 /* FirebaseMessaging in Frameworks */,
 				AC5A00182F2A000000000018 /* FirebaseCore in Frameworks */,
 				AC5A001E2F2A00000000001E /* FirebaseRemoteConfig in Frameworks */,
+				AC5A00322F2A000000000032 /* AppMetricaCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,6 +550,7 @@
 				AC5A00172F2A000000000017 /* FirebaseCore */,
 				AC5A001D2F2A00000000001D /* FirebaseRemoteConfig */,
 				AC5A00232F2A000000000023 /* Lottie */,
+				AC5A00312F2A000000000031 /* AppMetricaCore */,
 			);
 			productName = FastVPNApp;
 			productReference = E9C960D62EF1848D003DE138 /* FastVPNApp.app */;
@@ -585,6 +588,7 @@
 				14794C74300964FF008CC271 /* XCRemoteSwiftPackageReference "lcl-speedtest" */,
 				AC5A00102F2A000000000010 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				AC5A00222F2A000000000022 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				AC5A00302F2A000000000030 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E9C960D72EF1848D003DE138 /* Products */;
@@ -831,6 +835,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "$(inherited) -ObjC";
 				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gooseberry.colander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -878,6 +883,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "$(inherited) -ObjC";
 				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gooseberry.colander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1082,6 +1088,14 @@
 				minimumVersion = 4.5.0;
 			};
 		};
+		AC5A00302F2A000000000030 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/appmetrica/appmetrica-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1124,6 +1138,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AC5A00222F2A000000000022 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		AC5A00312F2A000000000031 /* AppMetricaCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC5A00302F2A000000000030 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */;
+			productName = AppMetricaCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

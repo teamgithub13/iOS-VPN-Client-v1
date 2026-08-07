@@ -25,8 +25,6 @@ class ServiceVPN1ViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var connectionTimer: Timer?
     private var startTime: Date?
-    /// Счётчик секунд для порционного добавления трафика (раз в 60с)
-    private var secondsElapsed: Int = 0
 
     init() {
         setupObservers()
@@ -95,21 +93,19 @@ class ServiceVPN1ViewModel: ObservableObject {
 
     private func startConnectionTimer() {
         stopConnectionTimer()
-        secondsElapsed = 0
-        connectionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        startTime = Date()
+        let timer = Timer(timeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self, let startTime = self.startTime else { return }
             self.connectionTime = Date().timeIntervalSince(startTime)
-            self.secondsElapsed += 1
 
-            // Каждые 10 секунд добавляем порцию трафика (симуляция) с широким разбросом:
-            // received ~100 КБ–2 МБ, sent ~50–800 КБ.
-            if self.secondsElapsed % 10 == 0 {
-                let receivedBytes = Int64.random(in: 100_000...2_000_000)
-                let sentBytes = Int64.random(in: 50_000...800_000)
-                self.receivedBytes += receivedBytes
-                self.sentBytes += sentBytes
-            }
+            // Плавная симуляция трафика каждую секунду (небольшие прибавления).
+            // ~10–200 КБ/с received, ~5–80 КБ/с sent — значения «живые» и реалистичные.
+            self.receivedBytes += Int64.random(in: 10_000...200_000)
+            self.sentBytes += Int64.random(in: 5_000...80_000)
         }
+        // Добавляем в RunLoop с .common mode — таймер не «замрёт» при скролле/жестах
+        RunLoop.main.add(timer, forMode: .common)
+        connectionTimer = timer
     }
 
     private func stopConnectionTimer() {
@@ -120,15 +116,18 @@ class ServiceVPN1ViewModel: ObservableObject {
 
     // MARK: - Actions
 
-    /// Замыкание для открытия SFSafariViewController (инъектируется из ViewController)
-    var openSafari: ((URL) -> Void)?
-
     var openSupport: (() -> Void)?
 
     func onTapGetKey() {
         guard requireInternet() else { return }
-        guard let url = URL(string: "https://www.google.com") else { return }
-        openSafari?(url)
+        // URL из Remote Config (app_get_key_btn_url). Открываем во внешнем браузере по умолчанию.
+        let fallback = "https://www.google.com/"
+        let urlString = RemoteConfigService.shared.string(
+            forKey: RemoteConfigService.getKeyBtnURLKey,
+            defaultValue: fallback
+        ) ?? fallback
+        guard let url = URL(string: urlString) else { return }
+        UIApplication.shared.open(url)
     }
 
     func onTapSupport() {
@@ -150,10 +149,12 @@ class ServiceVPN1ViewModel: ObservableObject {
 
         guard requireInternet() else { return }
 
-        // Если конфигурация не выбрана — выбираем первый доступный сервер
+        // Гарантируем, что конфигурация выбрана.
+        // Если в сервисе её нет — берём выбранный/первый сервер из списка.
         if vpnService.currentConfiguration == nil {
             if !servers.isEmpty {
-                select(at: 0)
+                let index = selectedIndex ?? 0
+                select(at: min(index, servers.count - 1))
             } else {
                 // Фолбэк: пример из запроса (для обратной совместимости)
                 let exampleURL = "vless://33e24a0e-71e5-4fed-9e24-29d8364a65cd@83.143.113.229:443?security=reality&sni=www.bing.com&alpn=h2&fp=chrome&pbk=ckRcueERkPqqjZABwxqni_J_Nbb70Q6k5fEEUAjoImw&type=tcp&flow=xtls-rprx-vision&encryption=none#avovpn.com-5476184-4036300"
@@ -230,13 +231,21 @@ class ServiceVPN1ViewModel: ObservableObject {
         }
     }
 
-    /// Выбор сервера из списка
+    /// Выбор сервера из списка.
+    /// Если VPN уже подключен к другому серверу — переподключаемся на новый.
     func select(at index: Int) {
         guard servers.indices.contains(index) else { return }
+        let wasConnected = isConnected
+        let previousIndex = selectedIndex
         selectedIndex = index
         repository.saveSelectedIndex(index)
         let config = servers[index]
         vpnService.setSelectedConfiguration(config)
+
+        // Если уже были подключены и сменили сервер — переподключаемся.
+        if wasConnected && previousIndex != index {
+            vpnService.reconnect()
+        }
     }
 
     /// Обновление подписки по сохранённому URL

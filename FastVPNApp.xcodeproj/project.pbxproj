@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		140BA298302668E9003F4B0F /* DataCollectionVPN1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140BA297302668DC003F4B0F /* DataCollectionVPN1ViewController.swift */; };
+		140BA29A302668F5003F4B0F /* DataCollectionVPN1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140BA299302668F3003F4B0F /* DataCollectionVPN1View.swift */; };
 		14621F552EF58ABE001538E3 /* VPNProtocolType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F502EF58ABE001538E3 /* VPNProtocolType.swift */; };
 		14621F562EF58ABE001538E3 /* VPNConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F4F2EF58ABE001538E3 /* VPNConfiguration.swift */; };
 		14621F572EF58ABE001538E3 /* VPNConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14621F522EF58ABE001538E3 /* VPNConfigurationService.swift */; };
@@ -102,6 +104,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		140BA297302668DC003F4B0F /* DataCollectionVPN1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCollectionVPN1ViewController.swift; sourceTree = "<group>"; };
+		140BA299302668F3003F4B0F /* DataCollectionVPN1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCollectionVPN1View.swift; sourceTree = "<group>"; };
 		1428ED1A2EFC8A8100994FAD /* FastVPNApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FastVPNApp.entitlements; sourceTree = "<group>"; };
 		14621F4F2EF58ABE001538E3 /* VPNConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfiguration.swift; sourceTree = "<group>"; };
 		14621F502EF58ABE001538E3 /* VPNProtocolType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNProtocolType.swift; sourceTree = "<group>"; };
@@ -220,6 +224,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		140BA294302668CF003F4B0F /* DataCollection */ = {
+			isa = PBXGroup;
+			children = (
+				140BA299302668F3003F4B0F /* DataCollectionVPN1View.swift */,
+				140BA297302668DC003F4B0F /* DataCollectionVPN1ViewController.swift */,
+			);
+			path = DataCollection;
+			sourceTree = "<group>";
+		};
 		14621F512EF58ABE001538E3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +271,14 @@
 				14B2A99F2EF5879D00BED825 /* LaunchScreen.storyboard */,
 			);
 			path = Application;
+			sourceTree = "<group>";
+		};
+		AC5A002D2F2A00000000002D /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				AC5A002C2F2A00000000002C /* KeitaroWebViewController.swift */,
+			);
+			path = Web;
 			sourceTree = "<group>";
 		};
 		E9C960CD2EF1848D003DE138 = {
@@ -329,14 +350,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		AC5A002D2F2A00000000002D /* Web */ = {
-			isa = PBXGroup;
-			children = (
-				AC5A002C2F2A00000000002C /* KeitaroWebViewController.swift */,
-			);
-			path = Web;
-			sourceTree = "<group>";
-		};
 		E9C961042EF1873F003DE138 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +408,7 @@
 		E9C961192EF22F42003DE138 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				140BA294302668CF003F4B0F /* DataCollection */,
 				E9C961802EF4781A003DE138 /* Support */,
 				E9C9617B2EF4779A003DE138 /* PrivacyPolicy */,
 				E9C961762EF47706003DE138 /* Terms */,
@@ -676,6 +690,7 @@
 				E9C961872EF47A95003DE138 /* MyRulesVPN1ViewController.swift in Sources */,
 				E9C961692EF46F3A003DE138 /* PingVPN1View.swift in Sources */,
 				E9C961732EF4736A003DE138 /* StatisticsVPN1ViewController.swift in Sources */,
+				140BA29A302668F5003F4B0F /* DataCollectionVPN1View.swift in Sources */,
 				E9C9615D2EF46DED003DE138 /* RoutingVPN1ViewController.swift in Sources */,
 				E9C961092EF18847003DE138 /* TabBarVPN1ViewController.swift in Sources */,
 				E9C960FA2EF18492003DE138 /* OnboardingVPN1ViewController.swift in Sources */,
@@ -685,6 +700,7 @@
 				E9C961012EF184FD003DE138 /* OnboardingVPN1View.swift in Sources */,
 				14621F552EF58ABE001538E3 /* VPNProtocolType.swift in Sources */,
 				14621F562EF58ABE001538E3 /* VPNConfiguration.swift in Sources */,
+				140BA298302668E9003F4B0F /* DataCollectionVPN1ViewController.swift in Sources */,
 				14621F572EF58ABE001538E3 /* VPNConfigurationService.swift in Sources */,
 				14621F582EF58ABE001538E3 /* VPNConnectionService.swift in Sources */,
 				14621F612EF58ABE001538E3 /* SubscriptionService.swift in Sources */,
@@ -835,8 +851,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "$(inherited) -ObjC";
 				MARKETING_VERSION = 1.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gooseberry.colander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -883,8 +902,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "$(inherited) -ObjC";
 				MARKETING_VERSION = 1.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gooseberry.colander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

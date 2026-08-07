@@ -1,6 +1,5 @@
 import UIKit
 import SwiftUI
-import SafariServices
 
 class ServiceVPN1ViewController: UIViewController {
 
@@ -8,11 +7,6 @@ class ServiceVPN1ViewController: UIViewController {
         super.viewDidLoad()
 
         let viewModel = ServiceVPN1ViewModel()
-        viewModel.openSafari = { [weak self] url in
-            let safari = SFSafariViewController(url: url)
-            safari.modalPresentationStyle = .pageSheet
-            self?.present(safari, animated: true)
-        }
         viewModel.openSupport = { [weak self] in
             let supporvpn1 = SupportVPN1ViewController()
             supporvpn1.modalPresentationStyle = .fullScreen

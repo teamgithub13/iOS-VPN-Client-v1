@@ -10,10 +10,18 @@ class OnboardingVPN1ViewController: UIViewController {
             RemoteConfigService.shared.markOnboardingCompleted()
 
             guard let window = self.view.window else { return }
-            let tabBarVPN1VC = TabBarVPN1ViewController()
-            tabBarVPN1VC.initialSelectedIndex = RemoteConfigService.shared.initialTabBarScreenIndex()
+
+            // После онбординга → Data Collection (1 раз), иначе сразу TabBar
+            let nextVC: UIViewController
+            if RemoteConfigService.shared.shouldShowDataCollection() {
+                nextVC = DataCollectionVPN1ViewController()
+            } else {
+                let tabBarVPN1VC = TabBarVPN1ViewController()
+                tabBarVPN1VC.initialSelectedIndex = RemoteConfigService.shared.initialTabBarScreenIndex()
+                nextVC = tabBarVPN1VC
+            }
             UIView.transition(with: window, duration: 0.25, options: .transitionCrossDissolve) {
-                window.rootViewController = tabBarVPN1VC
+                window.rootViewController = nextVC
             }
         }))
         

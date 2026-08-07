@@ -12,7 +12,13 @@ class AppVPN1ViewController: UIViewController {
             let privacyVPN1VC = PrivacyPolicyVPN1ViewController()
             privacyVPN1VC.modalPresentationStyle = .fullScreen
             self.present(privacyVPN1VC, animated: true)
-        }, termsVPN1Action: {
+        },
+           dataCollectionVPN1Action: {
+            let dataCollectionVPN1VC = DataCollectionVPN1ViewController()
+            dataCollectionVPN1VC.modalPresentationStyle = .fullScreen
+            self.present(dataCollectionVPN1VC, animated: true)
+        },
+            termsVPN1Action: {
             let termsVPN1VC = TermsVPN1ViewController()
             termsVPN1VC.modalPresentationStyle = .fullScreen
             self.present(termsVPN1VC, animated: true)

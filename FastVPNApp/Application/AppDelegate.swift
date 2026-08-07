@@ -87,6 +87,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootViewController: UIViewController
         if RemoteConfigService.shared.shouldShowOnboarding() {
             rootViewController = OnboardingVPN1ViewController()
+        } else if RemoteConfigService.shared.shouldShowDataCollection() {
+            // Онбординг выключен/пройден — покажем Data Collection 1 раз
+            rootViewController = DataCollectionVPN1ViewController()
         } else {
             let tabBarViewController = TabBarVPN1ViewController()
             tabBarViewController.initialSelectedIndex = RemoteConfigService.shared.initialTabBarScreenIndex()

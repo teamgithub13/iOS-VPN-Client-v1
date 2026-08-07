@@ -11,13 +11,16 @@ final class RemoteConfigService: ObservableObject {
     static let shared = RemoteConfigService()
 
     static let termsOfUseURLKey = "app_terms_of_use_url"
+    static let appUsageDataURLKey = "app_usage_data"
     static let privacyPolicyURLKey = "privacy_policy_url"
     static let isShowOnboardingKey = "isShowOnboarding"
     static let initialTabBarScreenIndexKey = "init_tabBar_loan_screen_index"
     static let keitaroURLAfterAppLaunchKey = "app_keitaro_url_afterapplaunch"
     static let showLoaderByTimerKey = "app_show_loader_by_timer"
+    static let getKeyBtnURLKey = "app_get_key_btn_url"
 
     private let onboardingCompletedKey = "com.fastvpn.onboarding.completed"
+    private let dataCollectionAcceptedKey = "com.fastvpn.dataCollection.accepted"
 
     @Published private(set) var isActivated = false
 
@@ -27,11 +30,9 @@ final class RemoteConfigService: ObservableObject {
         remoteConfig = RemoteConfig.remoteConfig()
 
         let settings = RemoteConfigSettings()
-#if DEBUG
+        // Всегда тянем свежие значения при холодном старте — без часового кеша,
+        // чтобы актуальный URL Keitaro определялся при каждом запуске.
         settings.minimumFetchInterval = 0
-#else
-        settings.minimumFetchInterval = 3600
-#endif
         settings.fetchTimeout = 10
         remoteConfig.configSettings = settings
     }
@@ -105,5 +106,17 @@ final class RemoteConfigService: ObservableObject {
 
     func markOnboardingCompleted() {
         UserDefaults.standard.set(true, forKey: onboardingCompletedKey)
+    }
+
+    // MARK: - Data Collection (показ 1 раз после онбординга/запуска)
+
+    /// true, если экран Data Collection ещё не был принят на этом устройстве.
+    func shouldShowDataCollection() -> Bool {
+        !UserDefaults.standard.bool(forKey: dataCollectionAcceptedKey)
+    }
+
+    /// Отметить, что пользователь принял Data Collection (больше не показывать автоматически).
+    func markDataCollectionAccepted() {
+        UserDefaults.standard.set(true, forKey: dataCollectionAcceptedKey)
     }
 }

@@ -4,6 +4,7 @@ struct AppVPN1View: View {
     
     var dismissVPN1Action: (() -> Void)?
     var privacyVPN1Action: (() -> Void)?
+    var dataCollectionVPN1Action: (() -> Void)?
     var termsVPN1Action: (() -> Void)?
     var supportVPN1Action: (() -> Void)?
     
@@ -52,7 +53,33 @@ struct AppVPN1View: View {
             .onTapGesture {
                 privacyVPN1Action?()
             }
-            
+
+            HStack {
+                Image("dataCollectionUsage")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 56, height: 56)
+
+                Text("Data Collection & usage")
+                    .font(.custom("AlbertSans-SemiBold", size: 20))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Image("onbForwardVPN1")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 56, height: 32)
+            }
+            .padding()
+            .frame(height: 80)
+            .background(
+                RoundedRectangle(cornerRadius: 30)
+                    .fill(.white)
+                    .shadow(color: .black.opacity(0.05), radius: 30)
+            )
+            .onTapGesture {
+                dataCollectionVPN1Action?()
+            }
+
             HStack {
                 Image("termsVPN1")
                     .resizable()

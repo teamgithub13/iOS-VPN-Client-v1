@@ -223,6 +223,25 @@ class VPNConnectionService: ObservableObject {
         return setConfiguration(from: vlessURL)
     }
 
+    /// Переподключение к текущей выбранной конфигурации.
+    /// iOS требует остановить активный туннель перед применением новой конфигурации,
+    /// иначе смена сервера не сработает (туннель останется на старом).
+    func reconnect() {
+        guard let manager = packetTunnelProvider else {
+            connect()
+            return
+        }
+        logger.notice("reconnect: stopping current tunnel before applying new config")
+        manager.connection.stopVPNTunnel()
+        DispatchQueue.main.async {
+            self.connectionStatus = .disconnected
+        }
+        // Даём системе остановить туннель, затем подключаемся заново с новой конфигурацией.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+            self?.connect()
+        }
+    }
+
     /// Подключается к VPN.
     /// Самодостаточный flow: убеждается, что менеджер загружен и конфигурация сохранена,
     /// и только потом стартует туннель. Устраняет race condition (saveToPreferences → startVPNTunnel).

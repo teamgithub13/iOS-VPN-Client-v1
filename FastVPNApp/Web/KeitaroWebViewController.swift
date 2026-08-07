@@ -87,7 +87,14 @@ final class KeitaroWebViewController: UIViewController, WKNavigationDelegate, WK
         )
 
         toolbar.translatesAutoresizingMaskIntoConstraints = false
-        toolbar.items = [homeButton, .flexibleSpace(), backButton, forwardButton]
+        // Расположение: [назад] --- flex --- [домой] --- flex --- [вперёд]
+        toolbar.items = [
+            backButton,
+            .flexibleSpace(),
+            homeButton,
+            .flexibleSpace(),
+            forwardButton
+        ]
         view.addSubview(toolbar)
 
         NSLayoutConstraint.activate([
@@ -212,9 +219,10 @@ final class KeitaroWebViewController: UIViewController, WKNavigationDelegate, WK
     }
 
     private func updateNavigationButtons() {
-        guard let items = toolbar.items, items.count == 4 else { return }
-        items[2].isEnabled = webView.canGoBack
-        items[3].isEnabled = webView.canGoForward
+        // Порядок: [0]=back, [1]=flex, [2]=home, [3]=flex, [4]=forward
+        guard let items = toolbar.items, items.count == 5 else { return }
+        items[0].isEnabled = webView.canGoBack
+        items[4].isEnabled = webView.canGoForward
     }
 
     private func startLoaderTimerIfNeeded() {

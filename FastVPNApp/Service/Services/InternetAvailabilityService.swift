@@ -9,15 +9,24 @@ final class InternetAvailabilityService {
     private let monitor = NWPathMonitor()
     private let monitorQueue = DispatchQueue(label: "com.fastvpn.internet-monitor")
 
+    /// Последний полученный статус сети. Доступ — только на monitorQueue.
+    /// nil = первый path update ещё не пришёл (NWPathMonitor стартует асинхронно,
+    /// а его currentPath до первого апдейта — .unsatisfied, что давало ложный
+    /// «No Internet Connection» при первом нажатии VPN после запуска приложения).
+    private var lastStatus: NWPath.Status?
+
     private init() {
+        monitor.pathUpdateHandler = { [weak self] path in
+            self?.lastStatus = path.status
+        }
         monitor.start(queue: monitorQueue)
     }
 
     var isConnected: Bool {
-        // The monitor may report .requiresConnection before its first path update.
-        // Let the request proceed in that transitional state so WebView can report
-        // the actual network error instead of showing a false offline alert.
-        monitor.currentPath.status != .unsatisfied
+        let status = monitorQueue.sync { lastStatus }
+        // Пока статус неизвестен (nil) — не блокируем пользователя:
+        // если сети реально нет, сам запрос покажет настоящую ошибку.
+        return status != .unsatisfied
     }
 
     func showOfflineAlert() {

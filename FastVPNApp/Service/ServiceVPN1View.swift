@@ -1,10 +1,24 @@
 import SwiftUI
 import UIKit
 
+/// Активный sheet экрана Service.
+/// На iOS 15 два .sheet(isPresented:) на одном view конфликтуют — используем один .sheet(item:).
+enum ServiceActiveSheet: Identifiable {
+    case configuration   // ConfigurationView (Change / Delete)
+    case addConfig       // AddConfigurationView (Name / URL)
+
+    var id: Int {
+        switch self {
+        case .configuration: return 0
+        case .addConfig: return 1
+        }
+    }
+}
+
 struct ServiceVPN1View: View {
 
     @StateObject private var viewModel: ServiceVPN1ViewModel
-    @State private var showManualInput = false
+    @State private var activeSheet: ServiceActiveSheet?
     @State private var manualInputText = ""
     @State private var configNameText = ""
     @State private var showAlert = false
@@ -115,22 +129,44 @@ struct ServiceVPN1View: View {
         } message: {
             Text(viewModel.errorMessage ?? "Unknown error")
         }
-        .sheet(isPresented: $showManualInput) {
-            AddConfigurationView(
-                urlText: $manualInputText,
-                nameText: $configNameText,
-                onSave: { url, name in
-                    showManualInput = false
-                    manualInputText = ""
-                    configNameText = ""
-                    viewModel.importConfiguration(from: url, customName: name)
-                },
-                onCancel: {
-                    showManualInput = false
-                    manualInputText = ""
-                    configNameText = ""
-                }
-            )
+        .sheet(item: $activeSheet) { sheet in
+            switch sheet {
+            case .configuration:
+                ConfigurationView(
+                    onChangeConfig: {
+                        // Закрываем Configuration и открываем Add configuration.
+                        // Небольшая задержка — iOS не позволяет открыть новый sheet
+                        // в момент анимации закрытия предыдущего.
+                        activeSheet = nil
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                            activeSheet = .addConfig
+                        }
+                    },
+                    onDelete: {
+                        activeSheet = nil
+                        viewModel.deleteConfiguration()
+                    },
+                    onCancel: {
+                        activeSheet = nil
+                    }
+                )
+            case .addConfig:
+                AddConfigurationView(
+                    urlText: $manualInputText,
+                    nameText: $configNameText,
+                    onSave: { url, name in
+                        activeSheet = nil
+                        manualInputText = ""
+                        configNameText = ""
+                        viewModel.importConfiguration(from: url, customName: name)
+                    },
+                    onCancel: {
+                        activeSheet = nil
+                        manualInputText = ""
+                        configNameText = ""
+                    }
+                )
+            }
         }
     }
 
@@ -178,7 +214,7 @@ struct ServiceVPN1View: View {
                 }
 
                 Button {
-                    showManualInput = true
+                    activeSheet = .addConfig
                 } label: {
                     Text("Add manually")
                         .font(.custom("AlbertSans-SemiBold", size: 16))
@@ -221,7 +257,7 @@ struct ServiceVPN1View: View {
                 }
 
                 Button {
-                    showManualInput = true
+                    activeSheet = .configuration
                 } label: {
                     Image(systemName: "plus")
                         .font(.system(size: 18, weight: .semibold))

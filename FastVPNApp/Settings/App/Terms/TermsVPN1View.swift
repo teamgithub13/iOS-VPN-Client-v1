@@ -46,24 +46,39 @@ struct TermsVPN1View: View {
             }
         }
         .padding()
-        .onAppear {
-            if !InternetAvailabilityService.shared.isConnected {
-                InternetAvailabilityService.shared.showOfflineAlert()
-            }
-        }
     }
 }
 
 struct WebViewVPN1: UIViewRepresentable {
     let urlVPN1: URL
-    
-    func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
+
+    func makeCoordinator() -> NavigationDelegateVPN1 {
+        NavigationDelegateVPN1()
     }
-    
+
+    func makeUIView(context: Context) -> WKWebView {
+        let webView = WKWebView()
+        webView.navigationDelegate = context.coordinator
+        return webView
+    }
+
     func updateUIView(_ uiView: WKWebView, context: Context) {
         let requestVPN1 = URLRequest(url: urlVPN1)
         uiView.load(requestVPN1)
+    }
+}
+
+/// Делегат навигации WKWebView для показа алерта при реальной ошибке сети.
+/// Заменяет превентивную проверку isConnected при появлении экрана,
+/// которая часто ложно срабатывала в переходном состоянии NWPathMonitor.
+final class NavigationDelegateVPN1: NSObject, WKNavigationDelegate {
+    func webView(_ webView: WKWebView,
+                 didFailProvisionalNavigation navigation: WKNavigation!,
+                 withError error: Error) {
+        guard let urlError = error as? URLError,
+              urlError.code == .notConnectedToInternet
+                || urlError.code == .networkConnectionLost else { return }
+        InternetAvailabilityService.shared.showOfflineAlert()
     }
 }
 

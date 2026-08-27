@@ -18,6 +18,7 @@
 		14621F742EF58C4F001538E3 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14621F602EF58BF8001538E3 /* NetworkExtension.framework */; };
 		14621F7C2EF58C4F001538E3 /* FastVPNAppPacketTunnel.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 14621F732EF58C4F001538E3 /* FastVPNAppPacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		14794C76300964FF008CC271 /* LCLSpeedtest in Frameworks */ = {isa = PBXBuildFile; productRef = 14794C75300964FF008CC271 /* LCLSpeedtest */; };
+		147F167F3040DC0A008C05A1 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147F167E3040DC03008C05A1 /* ConfigurationView.swift */; };
 		14B2A9A22EF5879E00BED825 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2A99D2EF5879D00BED825 /* AppDelegate.swift */; };
 		14B2A9AC2EF58A8400BED825 /* ServiceVPN1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2A9AB2EF58A8400BED825 /* ServiceVPN1ViewModel.swift */; };
 		14B8A81D300EB9DD006468BE /* AlbertSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14B8A81C300EB9DD006468BE /* AlbertSans-Medium.ttf */; };
@@ -115,6 +116,7 @@
 		14621F622EF58ABE001538E3 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
 		14621F642EF58ABE001538E3 /* ServerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerRepository.swift; sourceTree = "<group>"; };
 		14621F732EF58C4F001538E3 /* FastVPNAppPacketTunnel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FastVPNAppPacketTunnel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		147F167E3040DC03008C05A1 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 		14B2A99D2EF5879D00BED825 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14B2A99E2EF5879D00BED825 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14B2A9A32EF587B200BED825 /* FastVPNApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FastVPNApp.entitlements; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 		E9C9610A2EF18857003DE138 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				147F167E3040DC03008C05A1 /* ConfigurationView.swift */,
 				14BE27463000483400969FB2 /* AddConfigurationView.swift */,
 				14621F512EF58ABE001538E3 /* Models */,
 				14621F542EF58ABE001538E3 /* Services */,
@@ -704,6 +707,7 @@
 				14621F572EF58ABE001538E3 /* VPNConfigurationService.swift in Sources */,
 				14621F582EF58ABE001538E3 /* VPNConnectionService.swift in Sources */,
 				14621F612EF58ABE001538E3 /* SubscriptionService.swift in Sources */,
+				147F167F3040DC0A008C05A1 /* ConfigurationView.swift in Sources */,
 				14621F632EF58ABE001538E3 /* ServerRepository.swift in Sources */,
 				E9C961222EF2321F003DE138 /* TunnelSettingsVPN1View.swift in Sources */,
 				E9C961202EF2321C003DE138 /* TunnelSettingsVPN1ViewController.swift in Sources */,

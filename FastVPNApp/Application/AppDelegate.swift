@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Firebase
         FirebaseApp.configure()
 
+        // Прогреваем сетевой монитор — первый path update асинхронный,
+        // без этого первое нажатие VPN может получить ложный offline.
+        _ = InternetAvailabilityService.shared
+
         // AppMetrica
         if let configuration = AppMetricaConfiguration(apiKey: "a73f7779-8e1d-4a95-bd35-bd9d86f64556") {
             AppMetrica.activate(with: configuration)
@@ -85,11 +89,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func showInitialViewController() {
         let rootViewController: UIViewController
-        if RemoteConfigService.shared.shouldShowOnboarding() {
+        if RemoteConfigService.shared.shouldShowDataCollection() {
+            // Согласие на сбор данных — ДО онбординга (политика Apple)
+            rootViewController = DataCollectionVPN1ViewController(isInitialPresentation: true)
+        } else if RemoteConfigService.shared.shouldShowOnboarding() {
             rootViewController = OnboardingVPN1ViewController()
-        } else if RemoteConfigService.shared.shouldShowDataCollection() {
-            // Онбординг выключен/пройден — покажем Data Collection 1 раз
-            rootViewController = DataCollectionVPN1ViewController()
         } else {
             let tabBarViewController = TabBarVPN1ViewController()
             tabBarViewController.initialSelectedIndex = RemoteConfigService.shared.initialTabBarScreenIndex()

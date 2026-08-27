@@ -45,11 +45,6 @@ struct PrivacyPolicyVPN1View: View {
             }
         }
         .padding()
-        .onAppear {
-            if !InternetAvailabilityService.shared.isConnected {
-                InternetAvailabilityService.shared.showOfflineAlert()
-            }
-        }
     }
 }
 

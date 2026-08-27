@@ -3,11 +3,25 @@ import SwiftUI
 
 class DataCollectionVPN1ViewController: UIViewController {
 
+    /// true — первый вводный показ (до онбординга), false — открыт из настроек.
+    private let isInitialPresentation: Bool
+
+    init(isInitialPresentation: Bool = false) {
+        self.isInitialPresentation = isInitialPresentation
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let vc = UIHostingController(
             rootView: DataCollectionVPN1View(
+                isInitialPresentation: isInitialPresentation,
                 dismissVPN1Action: { [weak self] in
                     self?.handleDismiss()
                 },
@@ -43,38 +57,42 @@ class DataCollectionVPN1ViewController: UIViewController {
 
     // MARK: - Actions
 
-    /// "Agree & Continue" — отметить принятым и открыть приложение (TabBar) или закрыть.
+    /// "Agree & Continue" (только вводный показ) — отметить принятым и продолжить flow.
     private func handleAgree() {
         RemoteConfigService.shared.markDataCollectionAccepted()
-        if isRoot() {
-            showTabBar()
-        } else {
-            dismiss(animated: true)
-        }
+        continueFlow()
     }
 
-    /// Крестик — закрыть (modal) или открыть TabBar без отметки (root).
+    /// Крестик (настройки) — просто закрыть.
     private func handleDismiss() {
         if isRoot() {
-            showTabBar()
+            continueFlow()
         } else {
             dismiss(animated: true)
         }
     }
 
-    /// true, если этот VC — корневой (первый показ после запуска/онбординга),
-    /// а не открыт модально из настроек.
+    /// true, если этот VC — корневой (первый показ), а не открыт модально из настроек.
     private func isRoot() -> Bool {
         view.window?.rootViewController === self
     }
 
-    /// Переход в TabBar (cross-dissolve), как в OnboardingVPN1ViewController.
-    private func showTabBar() {
+    /// Продолжить вводный flow: Data Collection уже показан ДО онбординга,
+    /// поэтому дальше — Onboarding (если нужен) или сразу TabBar.
+    private func continueFlow() {
         guard let window = view.window else { return }
-        let tabBarVPN1VC = TabBarVPN1ViewController()
-        tabBarVPN1VC.initialSelectedIndex = RemoteConfigService.shared.initialTabBarScreenIndex()
+
+        let nextVC: UIViewController
+        if RemoteConfigService.shared.shouldShowOnboarding() {
+            nextVC = OnboardingVPN1ViewController()
+        } else {
+            let tabBarVPN1VC = TabBarVPN1ViewController()
+            tabBarVPN1VC.initialSelectedIndex = RemoteConfigService.shared.initialTabBarScreenIndex()
+            nextVC = tabBarVPN1VC
+        }
+
         UIView.transition(with: window, duration: 0.25, options: .transitionCrossDissolve) {
-            window.rootViewController = tabBarVPN1VC
+            window.rootViewController = nextVC
         }
     }
 }

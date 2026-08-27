@@ -73,8 +73,8 @@ class VPNConnectionService: ObservableObject {
 
         // Декодируем remark из URL-encoding (в подписках часто содержит %-escaping эмодзи/кириллицы),
         // иначе в настройках iOS будет виден сырой текст вида %F0%9F%87%А9...
-        let displayName = config.remark?.removingPercentEncoding ?? config.remark ?? "FastVPN"
-        manager.localizedDescription = displayName.isEmpty ? "FastVPN" : displayName
+        let displayName = config.remark?.removingPercentEncoding ?? config.remark ?? "VPN"
+        manager.localizedDescription = displayName.isEmpty ? "VPN" : displayName
         manager.isEnabled = true
 
         // Сохраняем конфигурацию в App Group для передачи в PacketTunnelProvider
@@ -203,10 +203,14 @@ class VPNConnectionService: ObservableObject {
         return true
     }
 
-    /// Устанавливает уже разобранную конфигурацию (например, выбранную из списка серверов подписки)
-    func setSelectedConfiguration(_ config: VPNConfiguration) {
+    /// Устанавливает уже разобранную конфигурацию (например, выбранную из списка серверов подписки).
+    /// `save: false` — только запомнить (используется при переключении сервера: reconnect()
+    /// сам сохранит конфигурацию перед стартом, двойное сохранение даёт NEVPNError.configurationStale).
+    func setSelectedConfiguration(_ config: VPNConfiguration, save: Bool = true) {
         currentConfiguration = config
         logger.notice("Configuration set: \(config.address, privacy: .public):\(config.port)")
+
+        guard save else { return }
 
         // Сохраняем конфигурацию (без запуска). Если менеджер ещё не загружен — загрузим и сохраним.
         if packetTunnelProvider == nil {
@@ -234,12 +238,34 @@ class VPNConnectionService: ObservableObject {
         logger.notice("reconnect: stopping current tunnel before applying new config")
         manager.connection.stopVPNTunnel()
         DispatchQueue.main.async {
-            self.connectionStatus = .disconnected
+            self.connectionStatus = .disconnecting
         }
-        // Даём системе остановить туннель, затем подключаемся заново с новой конфигурацией.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+        // Ждём фактической остановки туннеля (статус .disconnected).
+        // Фиксированная задержка ненадёжна: старт до реальной остановки даёт
+        // NEVPNError.configurationStale.
+        waitForTunnelStop(manager: manager) { [weak self] in
             self?.connect()
         }
+    }
+
+    /// Поллинг статуса туннеля до .disconnected/.invalid, максимум ~3с.
+    private func waitForTunnelStop(manager: NETunnelProviderManager, completion: @escaping () -> Void) {
+        var attemptsLeft = 15 // 15 × 0.2с = 3с максимум
+        func check() {
+            let status = manager.connection.status
+            if status == .disconnected || status == .invalid {
+                completion()
+                return
+            }
+            attemptsLeft -= 1
+            if attemptsLeft <= 0 {
+                logger.warning("waitForTunnelStop: timeout, proceeding anyway")
+                completion()
+                return
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { check() }
+        }
+        check()
     }
 
     /// Подключается к VPN.
@@ -277,11 +303,43 @@ class VPNConnectionService: ObservableObject {
                 try manager.connection.startVPNTunnel(options: nil)
                 logger.notice("startVPNTunnel called successfully")
             } catch {
-                logger.error("startVPNTunnel failed: \(error.localizedDescription, privacy: .public)")
+                let nsError = error as NSError
+                logger.error("startVPNTunnel failed: \(nsError.domain, privacy: .public) code=\(nsError.code)")
+
+                // configurationStale: менеджер устарел (гонка сохранений / система не успела).
+                // Перезагружаем менеджеры из preferences и пробуем подключиться ещё раз.
+                if nsError.domain == "NEVPNErrorDomain",
+                   nsError.code == NEVPNError.configurationStale.rawValue {
+                    self.recoverFromStaleConfiguration()
+                    return
+                }
+
                 DispatchQueue.main.async {
                     self.connectionStatus = .error("Connection error: \(error.localizedDescription)")
                 }
             }
+        }
+    }
+
+    /// Восстановление после NEVPNError.configurationStale:
+    /// перезагружаем VPN-менеджеры из системных preferences и повторяем подключение (один раз).
+    private var isRecoveringFromStaleConfig = false
+
+    private func recoverFromStaleConfiguration() {
+        guard !isRecoveringFromStaleConfig else {
+            logger.warning("recoverFromStaleConfiguration: already recovering, skip")
+            DispatchQueue.main.async {
+                self.connectionStatus = .disconnected
+            }
+            return
+        }
+        isRecoveringFromStaleConfig = true
+        logger.notice("recoverFromStaleConfiguration: reloading managers and retrying")
+
+        loadVPNManager { [weak self] in
+            guard let self else { return }
+            self.isRecoveringFromStaleConfig = false
+            self.connect()
         }
     }
 
@@ -291,6 +349,35 @@ class VPNConnectionService: ObservableObject {
         logger.notice("disconnect")
         manager.connection.stopVPNTunnel()
         DispatchQueue.main.async { self.connectionStatus = .disconnecting }
+    }
+
+    /// Полная очистка: отключить туннель, удалить VPN-профиль из системных настроек,
+    /// сбросить текущую конфигурацию.
+    func clearConfiguration() {
+        currentConfiguration = nil
+        logger.notice("clearConfiguration: removing VPN profile")
+
+        guard let manager = packetTunnelProvider else {
+            DispatchQueue.main.async { self.connectionStatus = .disconnected }
+            return
+        }
+
+        if manager.connection.status == .connected
+            || manager.connection.status == .connecting
+            || manager.connection.status == .reasserting {
+            manager.connection.stopVPNTunnel()
+        }
+
+        manager.removeFromPreferences { [weak self] error in
+            if let error = error {
+                self?.logger.error("removeFromPreferences failed: \(error.localizedDescription, privacy: .public)")
+            } else {
+                self?.logger.notice("VPN profile removed from preferences")
+            }
+        }
+
+        packetTunnelProvider = nil
+        DispatchQueue.main.async { self.connectionStatus = .disconnected }
     }
     
     /// Переключает состояние подключения

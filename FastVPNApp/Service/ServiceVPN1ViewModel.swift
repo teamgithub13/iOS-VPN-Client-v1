@@ -151,15 +151,15 @@ class ServiceVPN1ViewModel: ObservableObject {
 
         // Гарантируем, что конфигурация выбрана.
         // Если в сервисе её нет — берём выбранный/первый сервер из списка.
+        // Без добавленных серверов подключение невозможно.
         if vpnService.currentConfiguration == nil {
-            if !servers.isEmpty {
-                let index = selectedIndex ?? 0
-                select(at: min(index, servers.count - 1))
-            } else {
-                // Фолбэк: пример из запроса (для обратной совместимости)
-                let exampleURL = "vless://33e24a0e-71e5-4fed-9e24-29d8364a65cd@83.143.113.229:443?security=reality&sni=www.bing.com&alpn=h2&fp=chrome&pbk=ckRcueERkPqqjZABwxqni_J_Nbb70Q6k5fEEUAjoImw&type=tcp&flow=xtls-rprx-vision&encryption=none#avovpn.com-5476184-4036300"
-                _ = vpnService.setConfiguration(from: exampleURL)
+            guard !servers.isEmpty else {
+                errorMessage = "Add a VPN configuration first"
+                showErrorAlert = true
+                return
             }
+            let index = selectedIndex ?? 0
+            select(at: min(index, servers.count - 1))
         }
 
         vpnService.toggleConnection()
@@ -240,11 +240,15 @@ class ServiceVPN1ViewModel: ObservableObject {
         selectedIndex = index
         repository.saveSelectedIndex(index)
         let config = servers[index]
-        vpnService.setSelectedConfiguration(config)
 
-        // Если уже были подключены и сменили сервер — переподключаемся.
         if wasConnected && previousIndex != index {
+            // Переключение сервера: только запоминаем конфиг (save: false) и переподключаемся.
+            // reconnect() сам сохранит конфигурацию перед стартом — двойное сохранение
+            // приводило к NEVPNError.configurationStale.
+            vpnService.setSelectedConfiguration(config, save: false)
             vpnService.reconnect()
+        } else {
+            vpnService.setSelectedConfiguration(config)
         }
     }
 
@@ -256,6 +260,19 @@ class ServiceVPN1ViewModel: ObservableObject {
             return
         }
         importConfiguration(from: url)
+    }
+
+    /// Полное удаление текущей конфигурации/подписки:
+    /// отключаем VPN, чистим список серверов, выбранный индекс, URL подписки
+    /// и VPN-профиль из системных настроек.
+    func deleteConfiguration() {
+        vpnService.clearConfiguration()
+        servers = []
+        selectedIndex = nil
+        repository.clearServers()
+        repository.saveSelectedIndex(nil)
+        repository.saveSubscriptionURL(nil)
+        errorMessage = nil
     }
 
     /// Есть ли сохранённая подписка для обновления

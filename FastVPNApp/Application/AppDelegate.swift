@@ -3,7 +3,6 @@ import StoreKit
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
-import AppMetricaCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,11 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Прогреваем сетевой монитор — первый path update асинхронный,
         // без этого первое нажатие VPN может получить ложный offline.
         _ = InternetAvailabilityService.shared
-
-        // AppMetrica
-        if let configuration = AppMetricaConfiguration(apiKey: "a73f7779-8e1d-4a95-bd35-bd9d86f64556") {
-            AppMetrica.activate(with: configuration)
-        }
 
         // Push notifications (FCM)
         UNUserNotificationCenter.current().delegate = self
@@ -114,7 +108,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func requestReviewIfNeeded() {
         guard #available(iOS 14.0, *) else { return }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { [weak self] in
+        // Запрос оценки через 20 секунд после попадания на основной экран —
+        // пользователь успевает освоиться, а алерт не мешает сразу при входе.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 20) { [weak self] in
             guard let self,
                   let scene = self.window?.windowScene,
                   scene.activationState == .foregroundActive else { return }

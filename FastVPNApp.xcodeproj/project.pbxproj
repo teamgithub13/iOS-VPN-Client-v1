@@ -836,6 +836,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FastVPNApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Fast client config app";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please provide access to the camera to add photos and keep track of them.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "The application needs access to a local network to operate a VPN";
@@ -887,6 +888,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FastVPNApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Fast client config app";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please provide access to the camera to add photos and keep track of them.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "The application needs access to a local network to operate a VPN";

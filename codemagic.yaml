@@ -18,8 +18,8 @@ workflows:
         BUNDLE_ID_APP: "com.gooseberry.colander"
         BUNDLE_ID_TUNNEL: "com.gooseberry.colander.tunnel"
 
-        PROFILE_NAME_APP: "Certificate vers1"
-        PROFILE_NAME_TUNNEL: "tunnel profile"
+        PROFILE_NAME_APP: "main"
+        PROFILE_NAME_TUNNEL: "tunnel"
 
         XCODE_PROJECT: "FastVPNApp.xcodeproj"
         XCODE_SCHEME: "FastVPNApp"

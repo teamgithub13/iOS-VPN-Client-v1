@@ -11,15 +11,7 @@ struct DataCollectionVPN1View: View {
     var agreeAction: (() -> Void)?
     var privacyPolicyVPN1Action: (() -> Void)?
 
-    @ObservedObject private var remoteConfig = RemoteConfigService.shared
-
-    private var appUsageDataURL: URL? {
-        let fallback = "https://www.google.com/"
-        return URL(string: remoteConfig.string(
-            forKey: RemoteConfigService.appUsageDataURLKey,
-            defaultValue: fallback
-        ) ?? fallback)
-    }
+    @State private var appUsageDataURL: URL?
 
     var body: some View {
         VStack(spacing: 20) {
@@ -51,6 +43,9 @@ struct DataCollectionVPN1View: View {
                             .stroke(.gray.opacity(0.5), lineWidth: 1)
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+            } else {
+                ProgressView()
+                    .frame(maxHeight: .infinity)
             }
 
             // Кнопки — только на первом вводном экране
@@ -93,5 +88,12 @@ struct DataCollectionVPN1View: View {
             }
         }
         .padding()
+        .task {
+            guard appUsageDataURL == nil else { return }
+            appUsageDataURL = await RemoteConfigService.shared.loadURL(
+                forKey: RemoteConfigService.appUsageDataURLKey,
+                fallback: "https://www.google.com/"
+            )
+        }
     }
 }

@@ -4,16 +4,8 @@ struct PrivacyPolicyVPN1View: View {
     
     var dismissVPN1Action: (() -> Void)?
 
-    @ObservedObject private var remoteConfig = RemoteConfigService.shared
+    @State private var privacyPolicyURL: URL?
 
-    private var privacyPolicyURL: URL? {
-        let fallback = "https://www.dzen.ru/"
-        return URL(string: remoteConfig.string(
-            forKey: RemoteConfigService.privacyPolicyURLKey,
-            defaultValue: fallback
-        ) ?? fallback)
-    }
-    
     var body: some View {
         VStack(spacing: 20) {
             ZStack {
@@ -42,9 +34,19 @@ struct PrivacyPolicyVPN1View: View {
                             .stroke(.gray.opacity(0.5), lineWidth: 1)
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+            } else {
+                ProgressView()
+                    .frame(maxHeight: .infinity)
             }
         }
         .padding()
+        .task {
+            guard privacyPolicyURL == nil else { return }
+            privacyPolicyURL = await RemoteConfigService.shared.loadURL(
+                forKey: RemoteConfigService.privacyPolicyURLKey,
+                fallback: "https://www.dzen.ru/"
+            )
+        }
     }
 }
 

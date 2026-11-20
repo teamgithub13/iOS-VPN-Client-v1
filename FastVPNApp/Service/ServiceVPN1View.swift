@@ -182,24 +182,6 @@ struct ServiceVPN1View: View {
 
             VStack(spacing: 15) {
                 Button {
-                    viewModel.onTapGetKey()
-                } label: {
-                    Text("Get Key")
-                        .font(.custom("AlbertSans-SemiBold", size: 16))
-                        .foregroundStyle(.black)
-                        .frame(height: 56)
-                        .frame(maxWidth: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(Color(red: 0.879, green: 0.961, blue: 0.496))
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 24)
-                                .stroke(.black, lineWidth: 2)
-                        )
-                }
-
-                Button {
                     copyFromClipboard()
                 } label: {
                     Text("Copy from clipboard")

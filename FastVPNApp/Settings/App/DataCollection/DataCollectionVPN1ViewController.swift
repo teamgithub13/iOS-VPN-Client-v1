@@ -3,6 +3,12 @@ import SwiftUI
 
 class DataCollectionVPN1ViewController: UIViewController {
 
+    private static let acceptedKey = "com.fastvpn.dataCollection.accepted"
+
+    static var shouldShowOnLaunch: Bool {
+        !UserDefaults.standard.bool(forKey: acceptedKey)
+    }
+
     /// true — первый вводный показ (до онбординга), false — открыт из настроек.
     private let isInitialPresentation: Bool
 
@@ -59,7 +65,7 @@ class DataCollectionVPN1ViewController: UIViewController {
 
     /// "Agree & Continue" (только вводный показ) — отметить принятым и продолжить flow.
     private func handleAgree() {
-        RemoteConfigService.shared.markDataCollectionAccepted()
+        UserDefaults.standard.set(true, forKey: Self.acceptedKey)
         continueFlow()
     }
 
@@ -82,14 +88,7 @@ class DataCollectionVPN1ViewController: UIViewController {
     private func continueFlow() {
         guard let window = view.window else { return }
 
-        let nextVC: UIViewController
-        if RemoteConfigService.shared.shouldShowOnboarding() {
-            nextVC = OnboardingVPN1ViewController()
-        } else {
-            let tabBarVPN1VC = TabBarVPN1ViewController()
-            tabBarVPN1VC.initialSelectedIndex = RemoteConfigService.shared.initialTabBarScreenIndex()
-            nextVC = tabBarVPN1VC
-        }
+        let nextVC = OnboardingVPN1ViewController.makeInitialViewController()
 
         UIView.transition(with: window, duration: 0.25, options: .transitionCrossDissolve) {
             window.rootViewController = nextVC

@@ -118,18 +118,6 @@ class ServiceVPN1ViewModel: ObservableObject {
 
     var openSupport: (() -> Void)?
 
-    func onTapGetKey() {
-        guard requireInternet() else { return }
-        // URL из Remote Config (app_get_key_btn_url). Открываем во внешнем браузере по умолчанию.
-        let fallback = "https://www.google.com/"
-        let urlString = RemoteConfigService.shared.string(
-            forKey: RemoteConfigService.getKeyBtnURLKey,
-            defaultValue: fallback
-        ) ?? fallback
-        guard let url = URL(string: urlString) else { return }
-        UIApplication.shared.open(url)
-    }
-
     func onTapSupport() {
         openSupport?()
     }

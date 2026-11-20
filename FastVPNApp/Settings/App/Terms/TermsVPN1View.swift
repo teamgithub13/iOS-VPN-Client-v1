@@ -5,16 +5,8 @@ struct TermsVPN1View: View {
     
     var dismissVPN1Action: (() -> Void)?
 
-    @ObservedObject private var remoteConfig = RemoteConfigService.shared
+    @State private var termsOfUseURL: URL?
 
-    private var termsOfUseURL: URL? {
-        let fallback = "https://www.google.com/"
-        return URL(string: remoteConfig.string(
-            forKey: RemoteConfigService.termsOfUseURLKey,
-            defaultValue: fallback
-        ) ?? fallback)
-    }
-    
     var body: some View {
         VStack(spacing: 20) {
             ZStack {
@@ -43,9 +35,19 @@ struct TermsVPN1View: View {
                             .stroke(.gray.opacity(0.5), lineWidth: 1)
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 20))
+            } else {
+                ProgressView()
+                    .frame(maxHeight: .infinity)
             }
         }
         .padding()
+        .task {
+            guard termsOfUseURL == nil else { return }
+            termsOfUseURL = await RemoteConfigService.shared.loadURL(
+                forKey: RemoteConfigService.termsOfUseURLKey,
+                fallback: "https://www.google.com/"
+            )
+        }
     }
 }
 
